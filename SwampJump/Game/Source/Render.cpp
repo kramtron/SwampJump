@@ -90,11 +90,11 @@ bool Render::CleanUp()
 
 // L02: DONE 6: Implement a method to load the state, for now load camera's x and y
 // Load Game State
-bool Render::LoadState(pugi::xml_node& data)
+bool Render::LoadState(pugi::xml_node& configRenderer)
 {
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
-
+	camera.x = configRenderer.child("camera").attribute("x").as_int();
+	camera.y = configRenderer.child("camera").attribute("y").as_int();
+	LOG("Camera position X:%d y:%d", camera.x, camera.y);
 	return true;
 }
 

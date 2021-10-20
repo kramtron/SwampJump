@@ -50,7 +50,7 @@ public:
 	const char* GetOrganization() const;
 
     // L02: DONE 1: Create methods to request Load / Save
-	void LoadGameRequest();
+	void LoadState();//Es LoadGameRequest
 	void SaveGameRequest() const;
 
 private:
@@ -58,6 +58,9 @@ private:
 	// Load config file
 	// NOTE: It receives config document
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	//Load Save_game file
+	pugi::xml_node LoadGame_Data(pugi::xml_document&) const;
+
 
 	// Call modules before each loop iteration
 	void PrepareUpdate();

@@ -37,8 +37,7 @@ bool Scene::Start()
 	
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
+	
 
 	return true;
 }
@@ -53,11 +52,11 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	rect1 = { Player.x,Player.y,50,50 };
-
+	//app->render->LoadState();
 	app->render->DrawRectangle(rect1, 200, 200, 200);
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		app->LoadGameRequest();
+		app->LoadState();
 
 	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
@@ -76,12 +75,9 @@ bool Scene::Update(float dt)
 	}
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		Player.x += 2;
-
 	}
 
-
-
-
+	
 
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
@@ -120,6 +116,7 @@ bool Scene::CleanUp()
 }
 bool Scene::LoadState(pugi::xml_node& data)
 {
+
 	Player.x = data.child("player").attribute("x").as_int();
 	Player.y = data.child("player").attribute("y").as_int();
 

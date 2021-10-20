@@ -7,7 +7,7 @@
 	<audio />
 	<scene />
 	<renderer>
-		<player x="100" y="25" />
-		<camera x="-200" y="0" />
+		<player x="100" y="225" />
+		<camera x="-2000" y="0" />
 	</renderer>
 </game_state>
