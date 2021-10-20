@@ -36,7 +36,7 @@ bool Scene::Start()
 	app->map->Load("iso_walk.tmx");
 	
 	// Load music
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
