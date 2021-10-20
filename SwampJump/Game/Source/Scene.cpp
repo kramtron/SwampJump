@@ -37,6 +37,8 @@ bool Scene::Start()
 	
 	// Load music
 	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
 
 	return true;
 }
@@ -50,6 +52,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	rect1 = { Player.x,Player.y,50,50 };
+
+	app->render->DrawRectangle(rect1, 200, 200, 200);
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
@@ -57,17 +62,28 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		app->render->camera.y -= 1;
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+		Player.y -= 2;
+		LOG("player moving %d", Player.y);
+	}
 
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		app->render->camera.y += 1;
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+		Player.y += 2;
+		LOG("player moving %d", Player.y);
 
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		app->render->camera.x -= 1;
 
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		app->render->camera.x += 1;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		Player.x -= 2;
+		LOG("player moving %d", Player.x);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		Player.x += 2;
+		LOG("player moving %d", Player.x);
+
+	}
+
+
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
 

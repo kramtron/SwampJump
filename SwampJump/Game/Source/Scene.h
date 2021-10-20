@@ -32,8 +32,16 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	struct player
+	{
+		int x=20;
+		int y=20;
+	};
+	player Player;
+
 private:
 	SDL_Texture* img;
+	SDL_Rect rect1;
 };
 
 #endif // __SCENE_H__
