@@ -64,24 +64,23 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 		Player.y -= 2;
-		LOG("player moving %d", Player.y);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		Player.y += 2;
-		LOG("player moving %d", Player.y);
 
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		Player.x -= 2;
-		LOG("player moving %d", Player.x);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		Player.x += 2;
-		LOG("player moving %d", Player.x);
 
 	}
+
+
+
 
 
 
@@ -116,6 +115,24 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	return true;
+}
+bool Scene::LoadState(pugi::xml_node& data)
+{
+	Player.x = data.child("player").attribute("x").as_int();
+	Player.y = data.child("player").attribute("y").as_int();
+
+	LOG("Player x %d", Player.x);
+
+	return true;
+}
+bool Scene::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node player = data.append_child("player");
+
+	player.append_attribute("x") = Player.x;
+	player.append_attribute("y") = Player.y;
 
 	return true;
 }

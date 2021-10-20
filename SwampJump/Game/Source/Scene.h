@@ -34,10 +34,17 @@ public:
 
 	struct player
 	{
-		int x=20;
-		int y=20;
+		int x = 20;
+		int y = 20;
 	};
 	player Player;
+
+	bool LoadState(pugi::xml_node&);
+
+	bool SaveState(pugi::xml_node&) const;
+
+
+
 
 private:
 	SDL_Texture* img;
