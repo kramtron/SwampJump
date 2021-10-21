@@ -1,4 +1,4 @@
-
+ 
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
@@ -394,6 +394,7 @@ bool Map::LoadAllLayers(pugi::xml_node mapNode) {
 	return ret;
 }
 
+
 // L06: TODO 6: Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
@@ -405,8 +406,17 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 		p->name = propertieNode.attribute("name").as_string();
 		p->value = propertieNode.attribute("value").as_int();
 
+		if (p->name == ("Draw")) {
+			LOG("OK");
+		}
+		else if (p->name == ("Navigation")) {
+			LOG("NYA");
+		}
+
+		LOG("Propiedades del layer %s, %d", p->name, p->value);
 		properties.list.add(p);
 	}
+
 	
 	return ret;
 }

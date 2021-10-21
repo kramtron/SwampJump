@@ -36,9 +36,8 @@ bool Scene::Start()
 	app->map->Load("iso_walk.tmx");
 	
 	// Load music
-	app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
+	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	
 
 	return true;
 }
@@ -53,36 +52,32 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	rect1 = { Player.x,Player.y,50,50 };
-
+	//app->render->LoadState();
 	app->render->DrawRectangle(rect1, 200, 200, 200);
     // L02: DONE 3: Request Load / Save when pressing L/S
 	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		app->LoadGameRequest();
+		app->LoadState();
 
 	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
 		Player.y -= 2;
-		LOG("player moving %d", Player.y);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
 		Player.y += 2;
-		LOG("player moving %d", Player.y);
 
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 		Player.x -= 2;
-		LOG("player moving %d", Player.x);
 	}
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 		Player.x += 2;
-		LOG("player moving %d", Player.x);
-
 	}
 
+	
 
 
 	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
@@ -116,6 +111,25 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	return true;
+}
+bool Scene::LoadState(pugi::xml_node& data)
+{
+
+	Player.x = data.child("player").attribute("x").as_int();
+	Player.y = data.child("player").attribute("y").as_int();
+
+	LOG("Player x %d", Player.x);
+
+	return true;
+}
+bool Scene::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node player = data.append_child("player");
+
+	player.append_attribute("x") = Player.x;
+	player.append_attribute("y") = Player.y;
 
 	return true;
 }

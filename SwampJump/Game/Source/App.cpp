@@ -152,7 +152,19 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 
 	return ret;
 }
+pugi::xml_node App::LoadGame_Data(pugi::xml_document& configFile)const {
+	pugi::xml_node ret;
 
+	pugi::xml_parse_result result = configFile.load_file(SAVE_STATE_FILENAME);
+
+	if (result == NULL) {
+		LOG("could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description());
+	}
+	else {
+		ret = configFile.child("game_state");
+	}
+	return ret;
+}
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
@@ -275,8 +287,24 @@ const char* App::GetOrganization() const
 }
 
 // Load / Save
-void App::LoadGameRequest()
+void App::LoadState()//Es loadGameRequest
 {
+	pugi::xml_document configFile;
+	pugi::xml_node config;
+	pugi::xml_node configRenderer;
+
+	bool ret = false;
+
+	config = LoadGame_Data(configFile);
+
+	if (config.empty() == false) {
+		ret = true;
+		configRenderer = config.child("renderer");
+		app->render->camera.x = configRenderer.child("camera").attribute("x").as_int();
+		app->render->camera.y = configRenderer.child("camera").attribute("y").as_int();
+
+	}
+	
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
 	loadGameRequested = true;
 }
