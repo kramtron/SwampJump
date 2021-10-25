@@ -38,8 +38,11 @@ public:
 		int y = 300;
 		int vx = 0;
 		int vy = 0;
+		int ay = 1;
 	};
 	player Player;
+	
+	int AcelerationTimer = 0;
 
 	SDL_Rect rectFons;
 

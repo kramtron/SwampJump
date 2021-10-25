@@ -61,25 +61,6 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		app->SaveGameRequest();
 
-
-	//PLAYER MOVE
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-		Player.vy = -2;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		Player.vy = 2;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		Player.vx = -2;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		Player.vx = 2;
-	}
-	//
-
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		app->render->camera.y -= 1;
 	}
@@ -95,49 +76,100 @@ bool Scene::Update(float dt)
 		
 	}
 
+	//MOVIMENT
+	Player.x += Player.vx;
+	Player.y += Player.vy;
+	Player.vx = 0;
+	//Player.vy = 0;
+	if (AcelerationTimer == 0) {
+		Player.vy += Player.ay;
+		AcelerationTimer = 10;
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) { //Aguantar el salt
+			AcelerationTimer = 25;
+		}
+			
+	}
+	else {
+		AcelerationTimer--;
+	}
+
+	//												COLISIONS COLISIONS
+	//												COLISIONS COLISIONS
 	//COLISIONS
 	for (int i = 0; i < 1177; ++i) {
 		if ((Player.x + 64 >= app->map->colisionCoords[i].x) && (Player.x <= app->map->colisionCoords[i].x + 32) &&
 			(Player.y + 64 >= app->map->colisionCoords[i].y) && (Player.y <= app->map->colisionCoords[i].y + 32)) {
 
-			if (Player.x + 64 >= app->map->colisionCoords[i].x) {
-				if (Player.vx < 0) { //parar mov a l'esquerra
-					Player.vx = 0;
-					Player.x = app->map->colisionCoords[i].x + 33;
+			//El player està colisionant amb una o més tiles
+
+			//index més alt = més aprop de la tile
+			int indexDreta = Player.x + 64 - app->map->colisionCoords[i].x;
+			int indexEsquerra = -(Player.x - (app->map->colisionCoords[i].x + 32));
+			int indexBaix = Player.y + 64 - app->map->colisionCoords[i].y;
+			int indexDalt = -(Player.y - (app->map->colisionCoords[i].y + 32));
+			
+			int index[4];
+			index[0] = indexDreta;
+			index[1] = indexEsquerra;
+			index[2] = indexBaix;
+			index[3] = indexDalt;
+
+			
+			for (int j = 0; j < 3; j++) {
+				for (int k = 0; k < 3 - j; k++) {
+					if (index[k] > index[k + 1]) {
+						int s = index[k];
+						index[k] = index[k + 1];
+						index[k + 1] = s;
+					}
 				}
 			}
-			if (Player.x <= app->map->colisionCoords[i].x + 32) {
-				if (Player.vx > 0) { //parar mov a la dreta
-					Player.vx = 0;
-					Player.x = app->map->colisionCoords[i].x - 65;
+
+			if (index[0] == indexDreta) {//colisió dreta
+				Player.vx = 0;
+				//Player.x--;
+				Player.x = app->map->colisionCoords[i].x - 64;
+			}
+			if (index[0] == indexEsquerra) {//colisió esquerra
+				Player.vx = 0;
+				//Player.x++;
+				Player.x = app->map->colisionCoords[i].x + 32;
+			}
+			if (index[0] == indexBaix) {//colisió baix
+				Player.vy = 0;
+				//Player.y-=2;
+				Player.y = app->map->colisionCoords[i].y - 64;
+				
+				if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { //saltar només quan toquis a terra
+					Player.vy = -5;
 				}
 			}
-			if (Player.y + 64 >= app->map->colisionCoords[i].y) {
-				if (Player.vy < 0) { //parar mov amunt
-					Player.vy = 0;
-					Player.y = app->map->colisionCoords[i].y + 33;
-				}
-			}
-			if (Player.y <= app->map->colisionCoords[i].y + 32) {
-				if (Player.vy > 0) { //parar mov avall
-					Player.vy = 0;
-					Player.y = app->map->colisionCoords[i].y - 65;
-				}
+			if (index[0] == indexDalt) {//colisió dalt
+				Player.vy = 0;
+				//Player.y++;
+				Player.y = app->map->colisionCoords[i].y + 33;
 			}
 		}
 	}
+	//												COLISIONS COLISIONS
+	//												COLISIONS COLISIONS
 
-	Player.x += Player.vx;
-	Player.y += Player.vy;
-	Player.vx = 0;
-	Player.vy = 0;
+	//PLAYER MOVE
+	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		Player.vx = -1;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		Player.vx = 1;
+	}
+	//
 
 	//RENDER IMATGES
 	app->render->DrawTexture(imgFons, 0, 0, NULL);
 	//Draw map
 	app->map->Draw();
 
-	rect1 = { Player.x,Player.y,64,64 };
+	rect1 = {Player.x, Player.y,64,64 };
 	app->render->DrawRectangle(rect1, 200, 200, 200);
 	
 	// L03: DONE 7: Set the window title with map/tileset info
