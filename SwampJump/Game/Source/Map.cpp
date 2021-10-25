@@ -94,22 +94,22 @@ void Map::GetColisionCoords() {
 	int i = 0;
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
-
 	mapLayerItem = mapLayerItem->next;
-			for (int x = 0; x < mapLayerItem->data->width; x++)
-			{
-				for (int y = 0; y < mapLayerItem->data->height; y++)
-				{
-					int gid = mapLayerItem->data->Get(x, y);
 
-					if (gid > 0) {
-						//iPoint pos = MapToWorld(x, y);
-						colisionCoords[i] = MapToWorld(x, y);
-						++i;
-					}
+	for (int x = 0; x < mapLayerItem->data->width; x++)
+	{
+		for (int y = 0; y < mapLayerItem->data->height; y++)
+		{
+			int gid = mapLayerItem->data->Get(x, y);
 
-				}
+			if (gid > 0) {
+				//iPoint pos = MapToWorld(x, y);
+				colisionCoords[i] = MapToWorld(x, y);
+				++i;
 			}
+
+		}
+	}
 }
 
 void Map::Draw()

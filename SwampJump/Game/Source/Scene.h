@@ -34,8 +34,10 @@ public:
 
 	struct player
 	{
-		int x = 20;
-		int y = 20;
+		int x = 300;
+		int y = 300;
+		int vx = 0;
+		int vy = 0;
 	};
 	player Player;
 

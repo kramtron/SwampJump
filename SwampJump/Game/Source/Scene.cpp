@@ -55,29 +55,30 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		app->SaveGameRequest();
 
+
+	//PLAYER MOVE
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-		Player.y -= 2;
+		Player.vy = -2;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-		Player.y += 2;
-
-
+		Player.vy = 2;
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		Player.x -= 2;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		Player.x += 2;
+		Player.vx = -2;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		Player.vx = 2;
+	}
+	//
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		app->render->camera.y -= 1;
@@ -94,13 +95,49 @@ bool Scene::Update(float dt)
 		
 	}
 
+	//COLISIONS
+	for (int i = 0; i < 1177; ++i) {
+		if ((Player.x + 64 >= app->map->colisionCoords[i].x) && (Player.x <= app->map->colisionCoords[i].x + 32) &&
+			(Player.y + 64 >= app->map->colisionCoords[i].y) && (Player.y <= app->map->colisionCoords[i].y + 32)) {
+
+			if (Player.x + 64 >= app->map->colisionCoords[i].x) {
+				if (Player.vx < 0) { //parar mov a l'esquerra
+					Player.vx = 0;
+					Player.x = app->map->colisionCoords[i].x + 33;
+				}
+			}
+			if (Player.x <= app->map->colisionCoords[i].x + 32) {
+				if (Player.vx > 0) { //parar mov a la dreta
+					Player.vx = 0;
+					Player.x = app->map->colisionCoords[i].x - 65;
+				}
+			}
+			if (Player.y + 64 >= app->map->colisionCoords[i].y) {
+				if (Player.vy < 0) { //parar mov amunt
+					Player.vy = 0;
+					Player.y = app->map->colisionCoords[i].y + 33;
+				}
+			}
+			if (Player.y <= app->map->colisionCoords[i].y + 32) {
+				if (Player.vy > 0) { //parar mov avall
+					Player.vy = 0;
+					Player.y = app->map->colisionCoords[i].y - 65;
+				}
+			}
+		}
+	}
+
+	Player.x += Player.vx;
+	Player.y += Player.vy;
+	Player.vx = 0;
+	Player.vy = 0;
 
 	//RENDER IMATGES
 	app->render->DrawTexture(imgFons, 0, 0, NULL);
 	//Draw map
 	app->map->Draw();
 
-	rect1 = { Player.x,Player.y,50,50 };
+	rect1 = { Player.x,Player.y,64,64 };
 	app->render->DrawRectangle(rect1, 200, 200, 200);
 	
 	// L03: DONE 7: Set the window title with map/tileset info
