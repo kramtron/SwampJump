@@ -133,22 +133,22 @@ bool Scene::CleanUp()
 	return true;
 }
 
-bool Scene::LoadState(pugi::xml_node& data)
+bool Scene::LoadState(pugi::xml_node& confirRenderer)
 {
 
-	Player.x = data.child("player").attribute("x").as_int();
-	Player.y = data.child("player").attribute("y").as_int();
+	Player.x = confirRenderer.child("player").attribute("x").as_int();
+	Player.y = confirRenderer.child("player").attribute("y").as_int();
 
 	LOG("Player x %d", Player.x);
 
 	return true;
 }
-bool Scene::SaveState(pugi::xml_node& data) const
+bool Scene::SaveState(pugi::xml_node& confirRenderer) const
 {
-	pugi::xml_node player = data.append_child("player");
+	pugi::xml_node player = confirRenderer.child("player");
 
-	player.append_attribute("x") = Player.x;
-	player.append_attribute("y") = Player.y;
+	player.attribute("x").set_value(Player.x);
+	player.attribute("y").set_value(Player.y);
 
 	return true;
 }

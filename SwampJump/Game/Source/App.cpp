@@ -336,7 +336,7 @@ bool App::SaveGame()
 
 	if (configSaveLoad.empty() == false) {
 		ret = true;
-	app->render->SaveState(configRenderer);
+		app->render->SaveState(configRenderer);
 		configSaveGame.save_file(SAVE_STATE_FILENAME);
 
 	}
