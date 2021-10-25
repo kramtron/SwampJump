@@ -7,27 +7,6 @@
 	<scene />
 	<renderer>
 		<player x="100" y="225" />
-		<camera x="-100" y="0" />
-		<camera x="-212" y="108" />
-		<camera x="-236" y="132" />
-		<camera x="-260" y="156" />
-		<camera x="-308" y="204" />
-		<camera x="-332" y="228" />
-		<camera x="-346" y="246" />
-		<camera x="-346" y="246" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-100" y="0" />
-		<camera x="-160" y="74" />
-		<camera x="-176" y="98" />
+		<camera x="0" y="-80" />
 	</renderer>
 </game_state>
