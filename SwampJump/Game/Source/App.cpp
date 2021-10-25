@@ -319,7 +319,8 @@ bool App::LoadGame()
 	if (configSaveLoad.empty() == false) {
 		ret = true;
 		configRenderer = configSaveLoad.child("renderer");
-		app->render->LoadState(configRenderer);
+		app->scene->LoadState(configRenderer);
+		//app->render->LoadState(configRenderer);
 	}
 
 	loadGameRequested = false;
@@ -336,7 +337,8 @@ bool App::SaveGame()
 
 	if (configSaveLoad.empty() == false) {
 		ret = true;
-		app->render->SaveState(configRenderer);
+		//app->render->SaveState(configRenderer);
+		app->scene->SaveState(configRenderer);
 		configSaveGame.save_file(SAVE_STATE_FILENAME);
 
 	}

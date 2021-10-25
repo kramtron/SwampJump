@@ -40,6 +40,8 @@ bool Scene::Start()
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	
+	app->render->camera.x = 0;
+	app->render->camera.y = -50;
 
 	return true;
 }
@@ -53,6 +55,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	LOG("Player x %d", Player.x);
+
 	rect1 = { Player.x,Player.y,50,50 };
 	//app->render->LoadState();
 	app->render->DrawRectangle(rect1, 200, 200, 200);
@@ -133,19 +137,19 @@ bool Scene::CleanUp()
 	return true;
 }
 
-bool Scene::LoadState(pugi::xml_node& confirRenderer)
+bool Scene::LoadState(pugi::xml_node& configRenderer)
 {
 
-	Player.x = confirRenderer.child("player").attribute("x").as_int();
-	Player.y = confirRenderer.child("player").attribute("y").as_int();
+	Player.x = configRenderer.child("player").attribute("x").as_int();
+	Player.y = configRenderer.child("player").attribute("y").as_int();
 
-	LOG("Player x %d", Player.x);
+	LOG("Loaddddddddddddddddddd Player x %d", Player.x);
 
 	return true;
 }
-bool Scene::SaveState(pugi::xml_node& confirRenderer) const
+bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {
-	pugi::xml_node player = confirRenderer.child("player");
+	pugi::xml_node player = configRenderer.child("player");
 
 	player.attribute("x").set_value(Player.x);
 	player.attribute("y").set_value(Player.y);

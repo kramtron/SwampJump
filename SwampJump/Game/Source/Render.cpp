@@ -101,9 +101,9 @@ bool Render::LoadState(pugi::xml_node& configRenderer)
 
 // L02: DONE 8: Create a method to save the state of the renderer
 // Save Game State
-bool Render::SaveState(pugi::xml_node& confirRenderer) const
+bool Render::SaveState(pugi::xml_node& configRenderer) const
 {
-	pugi::xml_node cam = confirRenderer.child("camera");
+	pugi::xml_node cam = configRenderer.child("camera");
 
 	cam.attribute("x").set_value(camera.x);
 	cam.attribute("y").set_value(camera.y);
