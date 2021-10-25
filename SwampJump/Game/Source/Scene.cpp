@@ -31,14 +31,14 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	// L03: DONE: Load map
-	//app->map->Load("hello.tmx");
-//	app->map->Load("Mapa1.tmx");
 	app->map->Load("Mapa1.tmx");
+	app->map->GetColisionCoords();
 	//app->map->Load("iso_walk.tmx");
 	
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	
+	imgFons = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Background.png");
 	
 	app->render->camera.x = 0;
 	app->render->camera.y = -50;
@@ -55,12 +55,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	//LOG("Player x %d", Player.x);
 
-	rect1 = { Player.x,Player.y,50,50 };
-	//app->render->LoadState();
-	app->render->DrawRectangle(rect1, 200, 200, 200);
-    // L02: DONE 3: Request Load / Save when pressing L/S
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
 
@@ -99,14 +94,15 @@ bool Scene::Update(float dt)
 		
 	}
 
-	
 
-
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
-
-	// Draw map
+	//RENDER IMATGES
+	app->render->DrawTexture(imgFons, 0, 0, NULL);
+	//Draw map
 	app->map->Draw();
 
+	rect1 = { Player.x,Player.y,50,50 };
+	app->render->DrawRectangle(rect1, 200, 200, 200);
+	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
@@ -142,8 +138,6 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 
 	Player.x = configRenderer.child("player").attribute("x").as_int();
 	Player.y = configRenderer.child("player").attribute("y").as_int();
-
-	//LOG("Loaddddddddddddddddddd Player x %d", Player.x);
 
 	return true;
 }

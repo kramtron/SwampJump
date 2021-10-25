@@ -125,6 +125,8 @@ public:
     // Called each loop iteration
     void Draw();
 
+	void GetColisionCoords();
+
     // Called before quitting
     bool CleanUp();
 
@@ -136,6 +138,8 @@ public:
 
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
+
+	iPoint colisionCoords[1177];
 
 private:
 
@@ -152,7 +156,7 @@ private:
 	// L06: TODO 6: Load a group of properties 
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	bool SeeDiferentLayers(pugi::xml_node& node, Properties& properties);
+	//bool SeeDiferentLayers(pugi::xml_node& node, Properties& properties);
 	// L06: TODO 3: Pick the right Tileset based on a tile id
 	TileSet* GetTilesetFromTileId(int id) const;
 

@@ -39,15 +39,14 @@ public:
 	};
 	player Player;
 
+	SDL_Rect rectFons;
+
 	bool LoadState(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
 
-
-
-
 private:
-	SDL_Texture* img;
+	SDL_Texture* imgFons;
 	SDL_Rect rect1;
 };
 
