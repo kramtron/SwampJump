@@ -32,7 +32,9 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 	// L03: DONE: Load map
-	app->map->Load("hello.tmx");
+	//app->map->Load("hello.tmx");
+//	app->map->Load("Mapa1.tmx");
+	app->map->Load("Mapa1.tmx");
 	//app->map->Load("iso_walk.tmx");
 	
 	// Load music

@@ -46,7 +46,7 @@ bool Map::Awake(pugi::xml_node& config)
 }
 
 // Draw the map (all requried layers)
-void Map::Draw()
+/*void Map::Draw()
 {
 	if (mapLoaded == false) return;
 
@@ -88,7 +88,7 @@ void Map::Draw()
 
 		mapLayerItem = mapLayerItem->next;
 //	}
-}/*
+}*/
 void Map::Draw()
 {
 	if (mapLoaded == false) return;
@@ -98,6 +98,8 @@ void Map::Draw()
 	mapLayerItem = mapData.layers.start;
 
 	while (mapLayerItem != NULL) {
+
+		//if (mapLayerItem->data->properties.GetProperty("name") != "colision") {
 
 		for (int x = 0; x < mapLayerItem->data->width; x++)
 		{
@@ -127,7 +129,7 @@ void Map::Draw()
 		mapLayerItem = mapLayerItem->next;
 	}
 }
-*/
+
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const
 {
