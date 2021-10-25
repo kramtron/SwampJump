@@ -143,7 +143,7 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 	Player.x = configRenderer.child("player").attribute("x").as_int();
 	Player.y = configRenderer.child("player").attribute("y").as_int();
 
-	LOG("Loaddddddddddddddddddd Player x %d", Player.x);
+	//LOG("Loaddddddddddddddddddd Player x %d", Player.x);
 
 	return true;
 }
