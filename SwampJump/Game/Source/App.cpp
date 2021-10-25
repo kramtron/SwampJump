@@ -152,16 +152,21 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 
 	return ret;
 }
-pugi::xml_node App::LoadGame_Data(pugi::xml_document& configFile)const {
+
+
+
+
+
+pugi::xml_node App::LoadGame_Data(pugi::xml_document& configSaveGame)const {
 	pugi::xml_node ret;
 
-	pugi::xml_parse_result result = configFile.load_file(SAVE_STATE_FILENAME);
+	pugi::xml_parse_result result = configSaveGame.load_file(SAVE_STATE_FILENAME);
 
 	if (result == NULL) {
 		LOG("could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description());
 	}
 	else {
-		ret = configFile.child("game_state");
+		ret = configSaveGame.child("game_state");
 	}
 	return ret;
 }
@@ -287,24 +292,10 @@ const char* App::GetOrganization() const
 }
 
 // Load / Save
-void App::LoadState()//Es loadGameRequest
+void App::LoadGameRequest()//Es loadGameRequest
 {
-	pugi::xml_document configFile;
-	pugi::xml_node config;
-	pugi::xml_node configRenderer;
 
 	bool ret = false;
-
-	config = LoadGame_Data(configFile);
-
-	if (config.empty() == false) {
-		ret = true;
-		configRenderer = config.child("renderer");
-		app->render->camera.x = configRenderer.child("camera").attribute("x").as_int();
-		app->render->camera.y = configRenderer.child("camera").attribute("y").as_int();
-
-	}
-	
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
 	loadGameRequested = true;
 }
@@ -323,7 +314,13 @@ bool App::LoadGame()
 {
 	bool ret = false;
 
-	//...
+	configSaveLoad = LoadGame_Data(configSaveGame);
+
+	if (configSaveLoad.empty() == false) {
+		ret = true;
+		configRenderer = configSaveLoad.child("renderer");
+		//app->render->LoadState();
+	}
 
 	loadGameRequested = false;
 
@@ -331,12 +328,18 @@ bool App::LoadGame()
 }
 
 // L02: TODO 7: Implement the xml save method for current state
-bool App::SaveGame() const
+bool App::SaveGame() 
 {
 	bool ret = true;
 
-	//...
+	configSaveLoad = LoadGame_Data(configSaveGame);
 
+	if (configSaveLoad.empty() == false) {
+		ret = true;
+		
+		configSaveGame.save_file(SAVE_STATE_FILENAME);
+
+	}
 	saveGameRequested = false;
 
 	return ret;

@@ -94,6 +94,7 @@ bool Render::LoadState(pugi::xml_node& configRenderer)
 {
 	camera.x = configRenderer.child("camera").attribute("x").as_int();
 	camera.y = configRenderer.child("camera").attribute("y").as_int();
+
 	LOG("Camera position X:%d y:%d", camera.x, camera.y);
 	return true;
 }

@@ -55,8 +55,8 @@ bool Scene::Update(float dt)
 	//app->render->LoadState();
 	app->render->DrawRectangle(rect1, 200, 200, 200);
     // L02: DONE 3: Request Load / Save when pressing L/S
-	if(app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-		app->LoadState();
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		app->LoadGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
@@ -114,6 +114,7 @@ bool Scene::CleanUp()
 
 	return true;
 }
+
 bool Scene::LoadState(pugi::xml_node& data)
 {
 

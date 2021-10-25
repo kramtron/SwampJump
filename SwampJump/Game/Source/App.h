@@ -50,7 +50,7 @@ public:
 	const char* GetOrganization() const;
 
     // L02: DONE 1: Create methods to request Load / Save
-	void LoadState();//Es LoadGameRequest
+	void LoadGameRequest();//Es LoadGameRequest
 	void SaveGameRequest() const;
 
 private:
@@ -79,7 +79,7 @@ private:
 
 	// Load / Save
 	bool LoadGame();
-	bool SaveGame() const;
+	bool SaveGame();
 
 public:
 
@@ -103,9 +103,15 @@ private:
 
 	// L01: DONE 2: Create new variables from pugui namespace
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables
-	//pugi::xml_document configFile;
-	//pugi::xml_node config;
-	//pugi::xml_node configApp;
+	pugi::xml_document configFile;
+	pugi::xml_node config;
+	pugi::xml_node configApp;
+
+
+	pugi::xml_document configSaveGame;
+	pugi::xml_node configSaveLoad;
+	pugi::xml_node configRenderer;
+
 
 	uint frames;
 	float dt;
