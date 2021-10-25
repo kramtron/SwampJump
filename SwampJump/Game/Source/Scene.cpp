@@ -55,7 +55,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	LOG("Player x %d", Player.x);
+	//LOG("Player x %d", Player.x);
 
 	rect1 = { Player.x,Player.y,50,50 };
 	//app->render->LoadState();
