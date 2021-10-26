@@ -55,11 +55,17 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	//Te coloca en el inicio del nivel
+	if (reset) {
+		Player.x = 400;
+		Player.y = 426;
+		reset=false;
+	}
 	//LOAD SAVE
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		app->LoadGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
 
 	//CAMERA
@@ -78,6 +84,10 @@ bool Scene::Update(float dt)
 		
 	}
 
+	if (app.input.GetKey(SDL_SCANCODE_F10)==KEY_DOWN) {
+		//GODMODE INSIDE
+
+	}
 	//MOVIMENT
 	Player.x += Player.vx;
 	Player.y += Player.vy;
@@ -191,6 +201,14 @@ bool Scene::Update(float dt)
 
 	app->win->SetTitle(title.GetString());
 
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+		debug = !debug;
+	}
+	
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		reset = true;
+	}
+
 	return true;
 }
 
@@ -201,6 +219,9 @@ bool Scene::PostUpdate()
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	if (debug)
+		DebugDraw();
 
 	return ret;
 }
@@ -229,4 +250,16 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 	player.attribute("y").set_value(Player.y);
 
 	return true;
+}
+
+
+
+void Scene::DebugDraw()
+{
+	for (int i = 0; i < 1177; ++i) {
+		SDL_Rect rectCollider = {app->map->colisionCoords[i].x,app->map->colisionCoords[i].y,32,32 };
+		app->render->DrawRectangle(rectCollider, 255, 0, 0,80);
+	}
+
+
 }

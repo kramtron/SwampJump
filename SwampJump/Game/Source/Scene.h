@@ -32,6 +32,12 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void DebugDraw();
+
+	bool debug = false;
+
+	bool reset = false;
+
 	struct player
 	{
 		int x = 300;
