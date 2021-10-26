@@ -55,12 +55,14 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	//LOAD SAVE
 	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		app->LoadGameRequest();
 
 	if(app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		app->SaveGameRequest();
 
+	//CAMERA
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		app->render->camera.y -= 1;
 	}
@@ -86,8 +88,7 @@ bool Scene::Update(float dt)
 		AcelerationTimer = 10;
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) { //Aguantar el salt
 			AcelerationTimer = 25;
-		}
-			
+		}	
 	}
 	else {
 		AcelerationTimer--;
@@ -114,7 +115,14 @@ bool Scene::Update(float dt)
 			index[2] = indexBaix;
 			index[3] = indexDalt;
 
-			
+			//Quin index és més petit?
+			for (int j = 0; j < 3; j++) {
+				if (index[0] > index[j + 1]) {
+					index[0] = index[j + 1];
+				}
+			}
+
+			/* BUBBLE SORT
 			for (int j = 0; j < 3; j++) {
 				for (int k = 0; k < 3 - j; k++) {
 					if (index[k] > index[k + 1]) {
@@ -123,30 +131,29 @@ bool Scene::Update(float dt)
 						index[k + 1] = s;
 					}
 				}
-			}
+			}*/
 
 			if (index[0] == indexDreta) {//colisió dreta
 				Player.vx = 0;
-				//Player.x--;
 				Player.x = app->map->colisionCoords[i].x - 64;
 			}
 			if (index[0] == indexEsquerra) {//colisió esquerra
 				Player.vx = 0;
-				//Player.x++;
 				Player.x = app->map->colisionCoords[i].x + 32;
 			}
 			if (index[0] == indexBaix) {//colisió baix
 				Player.vy = 0;
-				//Player.y-=2;
-				Player.y = app->map->colisionCoords[i].y - 64;
+				//Player.y = app->map->colisionCoords[i].y - 64;
 				
 				if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { //saltar només quan toquis a terra
 					Player.vy = -5;
 				}
+				else {
+					Player.y = app->map->colisionCoords[i].y - 64;
+				}
 			}
 			if (index[0] == indexDalt) {//colisió dalt
 				Player.vy = 0;
-				//Player.y++;
 				Player.y = app->map->colisionCoords[i].y + 33;
 			}
 		}
@@ -156,16 +163,20 @@ bool Scene::Update(float dt)
 
 	//PLAYER MOVE
 	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-		Player.vx = -1;
+		Player.vx = -2;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-		Player.vx = 1;
+		Player.vx = 2;
 	}
 	//
 
 	//RENDER IMATGES
-	app->render->DrawTexture(imgFons, 0, 0, NULL);
+	//camera
+	app->render->camera.x = 300 - Player.x; //CANVIAR
+
+	//Imatge
+	app->render->DrawTexture(imgFons, -app->render->camera.x, app->render->camera.y, NULL);
 	//Draw map
 	app->map->Draw();
 
