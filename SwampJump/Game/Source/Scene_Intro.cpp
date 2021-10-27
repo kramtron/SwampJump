@@ -48,7 +48,6 @@ bool Scene_Intro::Update(float dt)
 	if (active)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-			//app->render->CleanUp();
 			active = false;
 			app->scene->active = true;
 		}
