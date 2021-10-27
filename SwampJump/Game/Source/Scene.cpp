@@ -47,7 +47,7 @@ bool Scene::Start()
 	granota = app->tex->Load("Assets/textures/frog.png");
 	
 	app->render->camera.x = 0;
-	app->render->camera.y = -50;
+	app->render->camera.y = -120;
 
 	PlayerRect = { 16, 0, 16, 16 };
 	PlayerRectA1 = { 0, 0, 16, 16 };
@@ -100,24 +100,36 @@ bool Scene::Update(float dt)
 		LOG("GODMODE ON");
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			Player.x += -2;
+			Player.x += -5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			Player.x += 2;
+			Player.x += 5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			Player.y += -2;
+			Player.y += -5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			Player.y += 2;
+			Player.y += 5;
 		}
 
 	}
 	else if (!godMode) {
 		LOG("GODMODE OFF");
+		//ANIMACIO TERRA
+		if (!saltant) {
+			if ((SceneTimer < 40) || (SceneTimer > 80 && SceneTimer < 120)) {
+				playerAnim = A1;
+			}
+			else if (SceneTimer >= 120) {
+				playerAnim = IDLE;
+			}
+			else {
+				playerAnim = A2;
+			}
+		}
 		//MOVIMENT
 		Player.x += Player.vx;
 		Player.y += Player.vy;
@@ -133,8 +145,6 @@ bool Scene::Update(float dt)
 		else {
 			AcelerationTimer--;
 		}
-
-
 
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
@@ -164,17 +174,6 @@ bool Scene::Update(float dt)
 					}
 				}
 
-				/* BUBBLE SORT
-				for (int j = 0; j < 3; j++) {
-					for (int k = 0; k < 3 - j; k++) {
-						if (index[k] > index[k + 1]) {
-							int s = index[k];
-							index[k] = index[k + 1];
-							index[k + 1] = s;
-						}
-					}
-				}*/
-
 				if (index[0] == indexDreta) {//colisió dreta
 					Player.vx = 0;
 					Player.x = app->map->colisionCoords[i].x - 64;
@@ -185,12 +184,11 @@ bool Scene::Update(float dt)
 				}
 				if (index[0] == indexBaix) {//colisió baix
 					Player.vy = 0;
-					//Player.y = app->map->colisionCoords[i].y - 64;
-					playerAnim = IDLE;
-
+					saltant = false;
 					if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { //saltar només quan toquis a terra
 						Player.vy = -5;
 						playerAnim = JUMP;
+						saltant = true;
 					}
 					else {
 						Player.y = app->map->colisionCoords[i].y - 64;
@@ -223,15 +221,10 @@ bool Scene::Update(float dt)
 	app->render->camera.x = 300 - Player.x; //CANVIAR
 
 	//ImatgeFons
-	app->render->DrawTexture(imgFons, -app->render->camera.x, app->render->camera.y, NULL, 1, 3);
+	app->render->DrawTexture(imgFons, -app->render->camera.x, -app->render->camera.y, NULL, 1, 3);
 	
 	//Draw map
 	app->map->Draw();
-
-	/*
-	rect1 = {Player.x, Player.y,64,64 };
-	app->render->DrawRectangle(rect1, 200, 200, 200);
-	*/
 
 	//Draw Granota
 	switch (playerAnim) {
@@ -248,8 +241,17 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectJump, 1, 4);
 		break;
 	}
-
 	//
+
+	//SCENE TIMER
+	if (SceneTimer <= 0) {
+		SceneTimer = 200;
+	}
+	else {
+		SceneTimer--;
+	}
+	//
+
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -271,6 +273,12 @@ bool Scene::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		reset = true;
+	}
+
+	if (Player.y > 2500) {
+		reset = true;
+		active = false;
+		app->scene_intro->active = true;
 	}
 
 	return true;

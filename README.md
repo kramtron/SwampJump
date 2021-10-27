@@ -5,7 +5,7 @@
 
 # Description
 
-1.000 years after the fatal nuclear war the animals are starting to avitate the dense forest. Pass thrue the dense forest and recolect food for your family. Eat or be eated.
+1.000 years after the fatal nuclear war the animals are starting to habitate the dense forest. Pass thrue the dense forest and recolect food for your family. Eat or be eated.
 
 
 # How to play the game

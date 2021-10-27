@@ -40,6 +40,8 @@ public:
 
 	bool reset = false;
 
+	int timer = 0;
+
 	struct player
 	{
 		int x = 300;
@@ -51,6 +53,8 @@ public:
 	player Player;
 	
 	int AcelerationTimer = 0;
+	int SceneTimer = 0;
+	bool saltant = false;
 
 	SDL_Rect rectFons;
 
