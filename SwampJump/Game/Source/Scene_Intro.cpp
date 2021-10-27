@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene_Intro.h"
+#include "Scene.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -44,6 +45,15 @@ bool Scene_Intro::PreUpdate()
 // Called each loop iteration
 bool Scene_Intro::Update(float dt)
 {
+	if (active)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			//app->render->CleanUp();
+			active = false;
+			app->scene->active = true;
+		}
+	}
+
 	return true;
 }
 

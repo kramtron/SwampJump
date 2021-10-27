@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "Scene_Intro.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -25,12 +26,16 @@ bool Scene::Awake()
 	LOG("Loading Scene");
 	bool ret = true;
 
+
 	return ret;
 }
 
 // Called before the first frame
 bool Scene::Start()
 {
+	if(app->scene_intro->active == true)
+		active = false;
+
 	app->map->Load("Mapa1.tmx");
 	app->map->GetColisionCoords();
 	//app->map->Load("iso_walk.tmx");

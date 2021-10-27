@@ -24,8 +24,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
-	scene = new Scene();
 	scene_intro = new Scene_Intro();
+	scene = new Scene();
 	map = new Map();
 
 	// Ordered for awake / Start / Update
@@ -137,6 +137,8 @@ bool App::Update()
 
 	if(ret == true)
 		ret = PostUpdate();
+
+	
 
 	FinishUpdate();
 	return ret;
