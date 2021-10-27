@@ -84,7 +84,7 @@ bool Scene::Update(float dt)
 		
 	}
 
-	if (app.input.GetKey(SDL_SCANCODE_F10)==KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F10)==KEY_DOWN) {
 		//GODMODE INSIDE
 
 	}
