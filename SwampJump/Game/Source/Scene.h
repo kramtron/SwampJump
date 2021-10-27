@@ -36,6 +36,8 @@ public:
 
 	bool debug = false;
 
+	bool godMode = false;
+
 	bool reset = false;
 
 	struct player
