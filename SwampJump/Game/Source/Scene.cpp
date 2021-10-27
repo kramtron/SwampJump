@@ -78,41 +78,40 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		app->SaveGameRequest();
-
-	//CAMERA
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		app->render->camera.y -= 1;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		app->render->camera.y += 1;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		app->render->camera.x -= 5;
-		
-	}
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		app->render->camera.x += 5;
-		
-	}
-
 	
 	if (godMode) {
 		LOG("GODMODE ON");
 		//PLAYER MOVE
-		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			Player.x += -5;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			Player.x += 5;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 			Player.y += -5;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 			Player.y += 5;
+		}
+
+		//CAMERA
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
+			app->render->camera.y -= 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
+			app->render->camera.y += 1;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+			app->render->camera.x -= 5;
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+			app->render->camera.x += 5;
+
 		}
 
 	}
@@ -138,7 +137,7 @@ bool Scene::Update(float dt)
 		if (AcelerationTimer == 0) {
 			Player.vy += Player.ay;
 			AcelerationTimer = 10;
-			if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) { //Aguantar el salt
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //Aguantar el salt
 				AcelerationTimer = 25;
 			}
 		}
@@ -185,7 +184,7 @@ bool Scene::Update(float dt)
 				if (index[0] == indexBaix) {//colisió baix
 					Player.vy = 0;
 					saltant = false;
-					if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { //saltar només quan toquis a terra
+					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
 						Player.vy = -5;
 						playerAnim = JUMP;
 						saltant = true;
@@ -204,12 +203,14 @@ bool Scene::Update(float dt)
 		//												COLISIONS COLISIONS
 
 		//PLAYER MOVE
-		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			Player.vx = -2;
+			sentitMoviment = false;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			Player.vx = 2;
+			sentitMoviment = true;
 		}
 		//
 	}
@@ -226,6 +227,19 @@ bool Scene::Update(float dt)
 	app->map->Draw();
 
 	//Draw Granota
+	if (sentitMoviment){
+		PlayerRect.y = 0;
+		PlayerRectA1.y = 0;
+		PlayerRectA2.y = 16;
+		PlayerRectJump.y = 0;
+	}
+	else {
+		PlayerRect.y = 32;
+		PlayerRectA1.y = 32;
+		PlayerRectA2.y = 48;
+		PlayerRectJump.y = 32;
+	}
+
 	switch (playerAnim) {
 	case IDLE:
 		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRect, 1, 4);
