@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "Scene_Intro.h"
+#include "Scene_Logo.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -24,6 +25,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
+	scene_logo = new Scene_Logo();
 	scene_intro = new Scene_Intro();
 	scene = new Scene();
 	map = new Map();
@@ -34,6 +36,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(scene_logo);
 	AddModule(scene_intro);
 	AddModule(scene);
 	AddModule(map);

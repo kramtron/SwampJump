@@ -216,6 +216,7 @@ bool Scene::Update(float dt)
 	}
 	
 
+
 	//RENDER IMATGES
 	//camera
 	app->render->camera.x = 300 - Player.x; //CANVIAR

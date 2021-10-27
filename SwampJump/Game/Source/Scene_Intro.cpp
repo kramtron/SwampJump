@@ -32,7 +32,7 @@ bool Scene_Intro::Awake()
 // Called before the first frame
 bool Scene_Intro::Start()
 {
-	
+	active = false;
 	return true;
 }
 
@@ -50,17 +50,26 @@ bool Scene_Intro::Update(float dt)
 	//si esta activa la scene
 	if (active)
 	{
+
+		RectMenu1 = {700,400,200,50 };
+		RectMenu2 = { 700,600,200,50 };
+
 		//acceptar opció
 		if (opcion == 0)
 		{
+			app->render->DrawRectangle(RectMenu1, 250, 0, 0);
+			app->render->DrawRectangle(RectMenu2, 250, 250, 250);
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 			{
 				active = false;
 				app->scene->active = true;
 			}
 		}
-		if (opcion == 1)
+
+		else if (opcion == 1)
 		{
+			app->render->DrawRectangle(RectMenu1, 250, 250, 250);
+			app->render->DrawRectangle(RectMenu2, 250, 0, 0);
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
 				ret = false;

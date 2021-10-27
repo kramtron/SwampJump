@@ -1,18 +1,18 @@
-#ifndef __SCENE_INTRO_H__
-#define __SCENE_INTRO_H__
+#ifndef __SCENE_LOGO_H__
+#define __SCENE_LOGO_H__
 
 #include "Module.h"
 
 struct SDL_Texture;
 
-class Scene_Intro : public Module
+class Scene_Logo : public Module
 {
 public:
 
-	Scene_Intro();
+	Scene_Logo();
 
 	// Destructor
-	virtual ~Scene_Intro();
+	virtual ~Scene_Logo();
 
 	// Called before render is available
 	bool Awake();
@@ -34,13 +34,10 @@ public:
 
 	void DebugDraw();
 
-	int opcion = 0;
+	int timerLogo = 0;
+
 private:
-
-	SDL_Rect RectMenu1;
-	SDL_Rect RectMenu2;
-
 };
 
 
-#endif // __SCENE_INTRO_H__
+#endif // __SCENE_LOGO_H__
