@@ -220,15 +220,10 @@ bool Scene::Update(float dt)
 	app->render->camera.x = 300 - Player.x; //CANVIAR
 
 	//ImatgeFons
-	app->render->DrawTexture(imgFons, -app->render->camera.x, app->render->camera.y, NULL, 1, 3);
+	app->render->DrawTexture(imgFons, -app->render->camera.x, -app->render->camera.y, NULL, 1, 3);
 	
 	//Draw map
 	app->map->Draw();
-
-	/*
-	rect1 = {Player.x, Player.y,64,64 };
-	app->render->DrawRectangle(rect1, 200, 200, 200);
-	*/
 
 	//Draw Granota
 	switch (playerAnim) {
