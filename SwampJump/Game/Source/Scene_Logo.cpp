@@ -51,7 +51,7 @@ bool Scene_Logo::Update(float dt)
 	if (active)
 	{
 		//acceptar opció
-		if (timerLogo == 1000)
+		if (timerLogo == 2000)
 		{
 			active = false;
 			app->scene_intro->active = true;
