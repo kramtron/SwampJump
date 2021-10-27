@@ -34,6 +34,7 @@ public:
 
 	void DebugDraw();
 
+	int opcion = 0;
 private:
 };
 
