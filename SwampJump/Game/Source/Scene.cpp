@@ -303,8 +303,8 @@ bool Scene::Update(float dt)
 
 	if (Player.y > 2500) {
 		reset = true;
-		active = false;
 		app->scene_end->active = true;
+		active = false;
 	}
 
 	return true;
