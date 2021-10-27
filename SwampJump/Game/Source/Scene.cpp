@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Scene_Intro.h"
+#include "Scene_Logo.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -33,7 +34,7 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	if(app->scene_intro->active == true)
+	if(app->scene_logo->active == true)
 		active = false;
 
 	app->map->Load("Mapa1.tmx");
