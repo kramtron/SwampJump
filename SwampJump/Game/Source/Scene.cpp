@@ -44,9 +44,15 @@ bool Scene::Start()
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	
 	imgFons = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Background.png");
+	granota = app->tex->Load("Assets/textures/frog.png");
 	
 	app->render->camera.x = 0;
 	app->render->camera.y = -50;
+
+	PlayerRect = { 16, 0, 16, 16 };
+	PlayerRectA1 = { 0, 0, 16, 16 };
+	PlayerRectA2 = { 0, 16, 16, 16 };
+	PlayerRectJump = { 32, 0, 16, 16 };
 
 	return true;
 }
@@ -128,6 +134,8 @@ bool Scene::Update(float dt)
 			AcelerationTimer--;
 		}
 
+
+
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
 		//COLISIONS
@@ -178,9 +186,11 @@ bool Scene::Update(float dt)
 				if (index[0] == indexBaix) {//colisió baix
 					Player.vy = 0;
 					//Player.y = app->map->colisionCoords[i].y - 64;
+					playerAnim = IDLE;
 
 					if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) { //saltar només quan toquis a terra
 						Player.vy = -5;
+						playerAnim = JUMP;
 					}
 					else {
 						Player.y = app->map->colisionCoords[i].y - 64;
@@ -211,13 +221,34 @@ bool Scene::Update(float dt)
 	//camera
 	app->render->camera.x = 300 - Player.x; //CANVIAR
 
-	//Imatge
-	app->render->DrawTexture(imgFons, -app->render->camera.x, app->render->camera.y, NULL);
+	//ImatgeFons
+	app->render->DrawTexture(imgFons, -app->render->camera.x, app->render->camera.y, NULL, 1, 3);
+	
 	//Draw map
 	app->map->Draw();
 
+	/*
 	rect1 = {Player.x, Player.y,64,64 };
 	app->render->DrawRectangle(rect1, 200, 200, 200);
+	*/
+
+	//Draw Granota
+	switch (playerAnim) {
+	case IDLE:
+		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRect, 1, 4);
+		break;
+	case A1:
+		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectA1, 1, 4);
+		break;
+	case A2:
+		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectA2, 1, 4);
+		break;
+	case JUMP:
+		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectJump, 1, 4);
+		break;
+	}
+
+	//
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",

@@ -60,7 +60,14 @@ public:
 
 private:
 	SDL_Texture* imgFons;
-	SDL_Rect rect1;
+	SDL_Texture* granota;
+	//SDL_Rect rect1;
+	SDL_Rect PlayerRect;
+	SDL_Rect PlayerRectA1;
+	SDL_Rect PlayerRectA2;
+	SDL_Rect PlayerRectJump;
+	enum PAnim {IDLE, A1, A2, JUMP};
+	PAnim playerAnim = IDLE;
 };
 
 #endif // __SCENE_H__
