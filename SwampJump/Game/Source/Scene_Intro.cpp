@@ -47,8 +47,10 @@ bool Scene_Intro::Update(float dt)
 {
 	bool ret = true;
 
+	//si esta activa la scene
 	if (active)
 	{
+		//acceptar opció
 		if (opcion == 0)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
@@ -65,10 +67,13 @@ bool Scene_Intro::Update(float dt)
 			}
 		}
 
+		//seleccionar opció
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && opcion != 0)
 			opcion--;
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && opcion != 1)
 			opcion++;
+
+
 	}
 
 	return ret;
