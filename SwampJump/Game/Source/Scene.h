@@ -40,6 +40,8 @@ public:
 
 	bool reset = false;
 
+	int timer = 0;
+
 	struct player
 	{
 		int x = 300;

@@ -100,19 +100,19 @@ bool Scene::Update(float dt)
 		LOG("GODMODE ON");
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			Player.x += -2;
+			Player.x += -5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			Player.x += 2;
+			Player.x += 5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			Player.y += -2;
+			Player.y += -5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			Player.y += 2;
+			Player.y += 5;
 		}
 
 	}
@@ -274,8 +274,10 @@ bool Scene::Update(float dt)
 		reset = true;
 	}
 
-	if (Player.y > 1000) {
+	if (Player.y > 2500) {
 		reset = true;
+		active = false;
+		app->scene_intro->active = true;
 	}
 
 	return true;
