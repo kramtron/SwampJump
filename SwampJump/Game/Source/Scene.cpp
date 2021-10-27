@@ -207,11 +207,21 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			Player.vx = -2;
 			sentitMoviment = false;
+			
+			if (playerAnim == JUMP)
+				playerAnim = A2;
+			if (playerAnim == A2)
+				playerAnim = JUMP;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			Player.vx = 2;
 			sentitMoviment = true;
+			
+			if(playerAnim == JUMP)
+			playerAnim = A2;	
+			if(playerAnim == A2)
+			playerAnim = JUMP;
 		}
 		//
 	}
