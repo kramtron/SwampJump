@@ -32,7 +32,7 @@ bool Scene_Intro::Awake()
 // Called before the first frame
 bool Scene_Intro::Start()
 {
-	
+	active = false;
 	return true;
 }
 
