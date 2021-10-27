@@ -45,15 +45,38 @@ bool Scene_Intro::PreUpdate()
 // Called each loop iteration
 bool Scene_Intro::Update(float dt)
 {
+	bool ret = true;
+
+	//si esta activa la scene
 	if (active)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-			active = false;
-			app->scene->active = true;
+		//acceptar opció
+		if (opcion == 0)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+			{
+				active = false;
+				app->scene->active = true;
+			}
 		}
+		if (opcion == 1)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			{
+				ret = false;
+			}
+		}
+
+		//seleccionar opció
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && opcion != 0)
+			opcion--;
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && opcion != 1)
+			opcion++;
+
+
 	}
 
-	return true;
+	return ret;
 }
 
 // Called each loop iteration
