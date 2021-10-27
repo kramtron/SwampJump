@@ -55,6 +55,7 @@ public:
 	int AcelerationTimer = 0;
 	int SceneTimer = 0;
 	bool saltant = false;
+	bool sentitMoviment = true; //true cap a la dreta
 
 	SDL_Rect rectFons;
 
