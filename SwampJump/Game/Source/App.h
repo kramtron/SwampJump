@@ -15,6 +15,7 @@ class Input;
 class Render;
 class Textures;
 class Audio;
+class Scene_Intro;
 class Scene;
 class Map;
 
@@ -89,6 +90,7 @@ public:
 	Render* render;
 	Textures* tex;
 	Audio* audio;
+	Scene_Intro* scene_intro;
 	Scene* scene;
 	Map* map;
 

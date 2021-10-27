@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "Scene_Intro.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -24,6 +25,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	scene = new Scene();
+	scene_intro = new Scene_Intro();
 	map = new Map();
 
 	// Ordered for awake / Start / Update
@@ -32,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(scene_intro);
 	AddModule(scene);
 	AddModule(map);
 
