@@ -51,6 +51,8 @@ public:
 	player Player;
 	
 	int AcelerationTimer = 0;
+	int SceneTimer = 0;
+	bool saltant = false;
 
 	SDL_Rect rectFons;
 
