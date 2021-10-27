@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Scene_Intro.h"
 #include "Scene_Logo.h"
+#include "Scene_END.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -303,7 +304,7 @@ bool Scene::Update(float dt)
 	if (Player.y > 2500) {
 		reset = true;
 		active = false;
-		app->scene_intro->active = true;
+		app->scene_end->active = true;
 	}
 
 	return true;

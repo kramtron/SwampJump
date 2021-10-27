@@ -47,13 +47,9 @@ bool Scene_Intro::Update(float dt)
 {
 	bool ret = true;
 
-	//si esta activa la scene
-	if (active)
-	{
-
-		RectMenu1 = {700,400,200,50 };
-		RectMenu2 = { 700,600,200,50 };
-
+	RectMenu1 = { 700,400,200,50 };
+ 	RectMenu2 = { 700,600,200,50 };
+	
 		//acceptar opció
 		if (opcion == 0)
 		{
@@ -81,9 +77,6 @@ bool Scene_Intro::Update(float dt)
 			opcion--;
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && opcion != 1)
 			opcion++;
-
-
-	}
 
 	return ret;
 }

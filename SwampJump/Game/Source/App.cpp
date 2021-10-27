@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Scene_Intro.h"
 #include "Scene_Logo.h"
+#include "Scene_END.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -28,6 +29,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene_logo = new Scene_Logo();
 	scene_intro = new Scene_Intro();
 	scene = new Scene();
+	scene_end = new Scene_END();
 	map = new Map();
 
 	// Ordered for awake / Start / Update
@@ -39,6 +41,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene_logo);
 	AddModule(scene_intro);
 	AddModule(scene);
+	AddModule(scene_end);
 	AddModule(map);
 
 	// Render last to swap buffer

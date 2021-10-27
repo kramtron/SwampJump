@@ -96,6 +96,7 @@
     <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
+    <ClCompile Include="Source\Scene_END.cpp" />
     <ClCompile Include="Source\Scene_Intro.cpp" />
     <ClCompile Include="Source\Scene_Logo.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Source\App.h" />
     <ClInclude Include="Source\Module.h" />
     <ClInclude Include="Source\Render.h" />
+    <ClInclude Include="Source\Scene_END.h" />
     <ClInclude Include="Source\Scene_Intro.h" />
     <ClInclude Include="Source\Scene_Logo.h" />
     <ClInclude Include="Source\Textures.h" />

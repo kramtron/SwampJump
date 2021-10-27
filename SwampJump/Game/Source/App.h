@@ -18,6 +18,7 @@ class Audio;
 class Scene_Logo;
 class Scene_Intro;
 class Scene;
+class Scene_END;
 class Map;
 
 class App
@@ -94,6 +95,7 @@ public:
 	Scene_Logo* scene_logo;
 	Scene_Intro* scene_intro;
 	Scene* scene;
+	Scene_END* scene_end;
 	Map* map;
 
 private:
