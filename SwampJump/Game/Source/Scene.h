@@ -51,27 +51,37 @@ public:
 		int ay = 1;
 	};
 	player Player;
+	iPoint beforePlayer;
+	
 	
 	int AcelerationTimer = 0;
 	int SceneTimer = 0;
+	int timerSalt = 0;
 	bool saltant = false;
+	bool doblesalt = false;
+	bool walking = false;
 	bool sentitMoviment = true; //true cap a la dreta
-
-	SDL_Rect rectFons;
 
 	bool LoadState(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
 
 private:
-	SDL_Texture* imgFons;
+	SDL_Texture* imgFons1;
+	SDL_Texture* imgFons2;
+	SDL_Texture* imgFons3;
+	SDL_Texture* imgFons4;
 	SDL_Texture* granota;
+	float parallax1 = 0;
+	int parallax2 = 0;
+	float parallax3 = 0;
 	//SDL_Rect rect1;
 	SDL_Rect PlayerRect;
 	SDL_Rect PlayerRectA1;
 	SDL_Rect PlayerRectA2;
 	SDL_Rect PlayerRectJump;
-	enum PAnim {IDLE, A1, A2, JUMP};
+	SDL_Rect PlayerRectWalk;
+	enum PAnim {IDLE, A1, A2, JUMP, WALK};
 	PAnim playerAnim = IDLE;
 };
 

@@ -103,8 +103,9 @@ void Map::GetColisionCoords() {
 			int gid = mapLayerItem->data->Get(x, y);
 
 			if (gid > 0) {
-				//iPoint pos = MapToWorld(x, y);
-				colisionCoords[i] = MapToWorld(x, y);
+				// iPoint pos = MapToWorld(x, y);
+				
+				colisionCoords[i] = new iPoint (MapToWorld(x, y));
 				++i;
 			}
 

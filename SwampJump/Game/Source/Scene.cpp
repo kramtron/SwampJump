@@ -45,7 +45,10 @@ bool Scene::Start()
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	
-	imgFons = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Background.png");
+	imgFons1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/1.png");
+	imgFons2 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/2.png");
+	imgFons3 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/3.png");
+	imgFons4 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/5.png");
 	granota = app->tex->Load("Assets/textures/frog.png");
 	
 	app->render->camera.x = 0;
@@ -55,6 +58,9 @@ bool Scene::Start()
 	PlayerRectA1 = { 0, 0, 16, 16 };
 	PlayerRectA2 = { 0, 16, 16, 16 };
 	PlayerRectJump = { 32, 0, 16, 16 };
+	PlayerRectWalk = { 48, 0, 16, 16 };
+
+	sentitMoviment = true;
 
 	return true;
 }
@@ -68,10 +74,17 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	//beforeCoords player
+	beforePlayer.x = Player.x;
+	beforePlayer.y = Player.y;
+
 	//Te coloca en el inicio del nivel
 	if (reset) {
 		Player.x = 400;
 		Player.y = 426;
+		parallax1 = 0;
+		parallax2 = 0;
+		parallax3 = 0;
 		reset=false;
 	}
 	//LOAD SAVE
@@ -120,7 +133,7 @@ bool Scene::Update(float dt)
 	else if (!godMode) {
 		LOG("GODMODE OFF");
 		//ANIMACIO TERRA
-		if (!saltant) {
+		if (!saltant && !walking) {
 			if ((SceneTimer < 40) || (SceneTimer > 80 && SceneTimer < 120)) {
 				playerAnim = A1;
 			}
@@ -131,6 +144,17 @@ bool Scene::Update(float dt)
 				playerAnim = A2;
 			}
 		}
+		else if (walking && !saltant) {
+			if (SceneTimer % 40 == 0) {
+				if (playerAnim != WALK) {
+					playerAnim = WALK;
+				}
+				else {
+					playerAnim = IDLE;
+				}
+			}
+		}
+
 		//MOVIMENT
 		Player.x += Player.vx;
 		Player.y += Player.vy;
@@ -147,20 +171,37 @@ bool Scene::Update(float dt)
 			AcelerationTimer--;
 		}
 
+		//doble salt
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) { //saltar només quan toquis a terra
+			Player.vy = -5;
+			doblesalt = false;
+			playerAnim = WALK;
+			timerSalt = 60;
+		}
+
+		if (timerSalt > 0) {
+			timerSalt--;
+		}
+		else if (timerSalt == 0) {
+			playerAnim = JUMP;
+			timerSalt--;
+		}
+		
+
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
 		//COLISIONS
 		for (int i = 0; i < 1177; ++i) {
-			if ((Player.x + 64 >= app->map->colisionCoords[i].x) && (Player.x <= app->map->colisionCoords[i].x + 32) &&
-				(Player.y + 64 >= app->map->colisionCoords[i].y) && (Player.y <= app->map->colisionCoords[i].y + 32)) {
+			if ((Player.x + 64 >= app->map->colisionCoords[i]->x) && (Player.x <= app->map->colisionCoords[i]->x + 32) &&
+				(Player.y + 64 >= app->map->colisionCoords[i]->y) && (Player.y <= app->map->colisionCoords[i]->y + 32)) {
 
 				//El player està colisionant amb una o més tiles
 
 				//index més alt = més aprop de la tile
-				int indexDreta = Player.x + 64 - app->map->colisionCoords[i].x;
-				int indexEsquerra = -(Player.x - (app->map->colisionCoords[i].x + 32));
-				int indexBaix = Player.y + 64 - app->map->colisionCoords[i].y;
-				int indexDalt = -(Player.y - (app->map->colisionCoords[i].y + 32));
+				int indexDreta = Player.x + 64 - app->map->colisionCoords[i]->x;
+				int indexEsquerra = -(Player.x - (app->map->colisionCoords[i]->x + 32));
+				int indexBaix = Player.y + 64 - app->map->colisionCoords[i]->y;
+				int indexDalt = -(Player.y - (app->map->colisionCoords[i]->y + 32));
 
 				int index[4];
 				index[0] = indexDreta;
@@ -177,11 +218,11 @@ bool Scene::Update(float dt)
 
 				if (index[0] == indexDreta) {//colisió dreta
 					Player.vx = 0;
-					Player.x = app->map->colisionCoords[i].x - 64;
+					Player.x = app->map->colisionCoords[i]->x - 64;
 				}
 				if (index[0] == indexEsquerra) {//colisió esquerra
 					Player.vx = 0;
-					Player.x = app->map->colisionCoords[i].x + 32;
+					Player.x = app->map->colisionCoords[i]->x + 32;
 				}
 				if (index[0] == indexBaix) {//colisió baix
 					Player.vy = 0;
@@ -190,14 +231,15 @@ bool Scene::Update(float dt)
 						Player.vy = -5;
 						playerAnim = JUMP;
 						saltant = true;
+						doblesalt = true;
 					}
 					else {
-						Player.y = app->map->colisionCoords[i].y - 64;
+						Player.y = app->map->colisionCoords[i]->y - 64;
 					}
 				}
 				if (index[0] == indexDalt) {//colisió dalt
 					Player.vy = 0;
-					Player.y = app->map->colisionCoords[i].y + 33;
+					Player.y = app->map->colisionCoords[i]->y + 33;
 				}
 			}
 		}
@@ -208,21 +250,18 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 			Player.vx = -2;
 			sentitMoviment = false;
-			
-			if (playerAnim == JUMP)
-				playerAnim = A2;
-			if (playerAnim == A2)
-				playerAnim = JUMP;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			Player.vx = 2;
 			sentitMoviment = true;
-			
-			if(playerAnim == JUMP)
-			playerAnim = A2;	
-			if(playerAnim == A2)
-			playerAnim = JUMP;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			walking = true;
+		}
+		else {
+			walking = false;
 		}
 		//
 	}
@@ -233,9 +272,50 @@ bool Scene::Update(float dt)
 	//camera
 	app->render->camera.x = 300 - Player.x; //CANVIAR
 
-	//ImatgeFons
-	app->render->DrawTexture(imgFons, -app->render->camera.x, -app->render->camera.y, NULL, 1, 3);
+	//parallax
+	if (Player.x < beforePlayer.x) {
+		parallax2--;
+		parallax1 -= 0.5;
+		parallax3 -= 1.5;
+	}
+	else if (Player.x > beforePlayer.x) {
+		parallax2++;
+		parallax1 += 0.5;
+		parallax3 += 1.5;
+	}
+
+	if (parallax2 > 1728) {
+		parallax2 = 0;
+	}
+	else if (parallax2 < 0) {
+		parallax2 = 1728;
+	}
+
+	if (parallax1 > 1728) {
+		parallax1 = 0;
+	}
+	else if (parallax1 < 0) {
+		parallax1 = 1728;
+	}
+
+	if (parallax3 > 1728) {
+		parallax3 = 0;
+	}
+	else if (parallax3 < 0) {
+		parallax3 = 1728;
+	}
+
+	//ImatgeFons Parallax
+	app->render->DrawTexture(imgFons1, -app->render->camera.x, -app->render->camera.y, NULL, 1, 3);
+	app->render->DrawTexture(imgFons2, -app->render->camera.x - parallax1, -app->render->camera.y, NULL, 1, 3);
+	app->render->DrawTexture(imgFons2, -app->render->camera.x - parallax1 + 1728, -app->render->camera.y, NULL, 1, 3);
+	app->render->DrawTexture(imgFons3, -app->render->camera.x - parallax2, -app->render->camera.y, NULL, 1, 3);
+	app->render->DrawTexture(imgFons3, -app->render->camera.x - parallax2 + 1728, -app->render->camera.y, NULL, 1, 3);
+	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3, -app->render->camera.y - 70, NULL, 1, 3);
+	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3 + 1728, -app->render->camera.y - 70, NULL, 1, 3);
+	//app->render->DrawTexture(imgFons2, -app->render->camera.x + 1600 - parallax, -app->render->camera.y, NULL, 1, 3);
 	
+
 	//Draw map
 	app->map->Draw();
 
@@ -245,12 +325,14 @@ bool Scene::Update(float dt)
 		PlayerRectA1.y = 0;
 		PlayerRectA2.y = 16;
 		PlayerRectJump.y = 0;
+		PlayerRectWalk.y = 0;
 	}
 	else {
 		PlayerRect.y = 32;
 		PlayerRectA1.y = 32;
 		PlayerRectA2.y = 48;
 		PlayerRectJump.y = 32;
+		PlayerRectWalk.y = 32;
 	}
 
 	switch (playerAnim) {
@@ -266,12 +348,15 @@ bool Scene::Update(float dt)
 	case JUMP:
 		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectJump, 1, 4);
 		break;
+	case WALK:
+		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectWalk, 1, 4);
+		break;
 	}
 	//
 
 	//SCENE TIMER
 	if (SceneTimer <= 0) {
-		SceneTimer = 200;
+		SceneTimer = 199;
 	}
 	else {
 		SceneTimer--;
@@ -355,7 +440,7 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 void Scene::DebugDraw()
 {
 	for (int i = 0; i < 1177; ++i) {
-		SDL_Rect rectCollider = {app->map->colisionCoords[i].x,app->map->colisionCoords[i].y,32,32 };
+		SDL_Rect rectCollider = {app->map->colisionCoords[i]->x,app->map->colisionCoords[i]->y,32,32 };
 		app->render->DrawRectangle(rectCollider, 255, 0, 0,80);
 	}
 
