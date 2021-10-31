@@ -96,6 +96,9 @@ bool Scene_END::Update(float dt)
 bool Scene_END::PostUpdate()
 {
 	bool ret = true;
+	
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
 
 	return ret;
 }
