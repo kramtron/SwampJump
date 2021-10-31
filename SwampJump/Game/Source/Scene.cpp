@@ -180,7 +180,7 @@ bool Scene::Update(float dt)
 
 		//doble salt
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) { //saltar només quan toquis a terra
-			Player.vy = -5;
+			Player.vy = -4;
 			doblesalt = false;
 			playerAnim = WALK;
 			timerSalt = 60;
@@ -235,7 +235,7 @@ bool Scene::Update(float dt)
 					Player.vy = 0;
 					saltant = false;
 					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
-						Player.vy = -5;
+						Player.vy = -4;
 						playerAnim = JUMP;
 						saltant = true;
 						doblesalt = true;
