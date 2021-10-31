@@ -59,6 +59,7 @@ public:
 	int timerSalt = 0;
 	bool saltant = false;
 	bool doblesalt = false;
+	bool coyotejump = false;
 	bool walking = false;
 	bool sentitMoviment = true; //true cap a la dreta
 

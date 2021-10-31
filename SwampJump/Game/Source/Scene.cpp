@@ -85,7 +85,7 @@ bool Scene::Update(float dt)
 		parallax1 = 0;
 		parallax2 = 0;
 		parallax3 = 0;
-		reset=false;
+		reset = false;
 	}
 	//LOAD SAVE
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -171,6 +171,13 @@ bool Scene::Update(float dt)
 			AcelerationTimer--;
 		}
 
+		//coyote jump
+		if (coyotejump) {
+			coyotejump = false;
+			doblesalt = true;
+			saltant = true;
+		}
+
 		//doble salt
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) { //saltar només quan toquis a terra
 			Player.vy = -5;
@@ -236,6 +243,7 @@ bool Scene::Update(float dt)
 					else {
 						Player.y = app->map->colisionCoords[i]->y - 64;
 					}
+					coyotejump = true;
 				}
 				if (index[0] == indexDalt) {//colisió dalt
 					Player.vy = 0;
