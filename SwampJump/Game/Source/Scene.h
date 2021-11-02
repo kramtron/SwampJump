@@ -51,7 +51,7 @@ public:
 		int ay = 1;
 	};
 	player Player;
-	iPoint beforePlayer;
+	iPoint beforeCamera;
 	
 	
 	int AcelerationTimer = 0;

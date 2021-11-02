@@ -75,8 +75,8 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	//beforeCoords player
-	beforePlayer.x = Player.x;
-	beforePlayer.y = Player.y;
+	beforeCamera.x = app->render->camera.x;
+	beforeCamera.y = app->render->camera.y;
 
 	//Te coloca en el inicio del nivel
 	if (reset) {
@@ -275,18 +275,33 @@ bool Scene::Update(float dt)
 	}
 	
 
-
 	//RENDER IMATGES
-	//camera
-	app->render->camera.x = 300 - Player.x; //CANVIAR
+	
+	//camera i límits de camera
+	app->render->camera.x = 300 - Player.x;
+	app->render->camera.y = 350 - Player.y;
+
+	if (app->render->camera.x > 0) {
+		app->render->camera.x = 0;
+	}
+	if (app->render->camera.x < -17600) { //19200 - 1600
+		app->render->camera.x = -17600;
+	}
+
+	if (app->render->camera.y > 0) {
+		app->render->camera.y = 0;
+	}
+	if (app->render->camera.y < -124) { // 1024 - 900
+		app->render->camera.y = -124;
+	}
 
 	//parallax
-	if (Player.x < beforePlayer.x) {
+	if (app->render->camera.x > beforeCamera.x) {
 		parallax2--;
 		parallax1 -= 0.5;
 		parallax3 -= 1.5;
 	}
-	else if (Player.x > beforePlayer.x) {
+	else if (app->render->camera.x < beforeCamera.x) {
 		parallax2++;
 		parallax1 += 0.5;
 		parallax3 += 1.5;
