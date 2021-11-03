@@ -1,7 +1,16 @@
 #include "App.h"
-
 #include "Defs.h"
 #include "Log.h"
+#include <time.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <windows.h>
+
+#include <iostream>
+#include <chrono>
+#include <stack>
+using namespace std;
 
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
@@ -10,7 +19,7 @@
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
-#include <stdlib.h>
+
 
 enum MainState
 {
@@ -34,6 +43,10 @@ int main(int argc, char* args[])
 
 	while(state != EXIT)
 	{
+		double t = 0.0;
+		float dt = 1 / 60;
+		auto start = chrono::steady_clock::now();
+
 		switch(state)
 		{
 			// Allocate the engine --------------------------------------------
@@ -104,8 +117,20 @@ int main(int argc, char* args[])
 			state = EXIT;
 			break;
 		}
+		//TOC
+		auto end = chrono::steady_clock::now();
+		//Check en salida de la diferencia de temps
+		LOG("Elapsed time in milliseconds: %d", chrono::duration_cast<chrono::milliseconds>(end - start).count(), " ms");
+		auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+		LOG("dt: %f", dt);
+		//Entra si hay diferencia de tiempo
+		if (dt - telapsed > 0.0f)
+			//Para el programa el tiempo restante
+			Sleep(dt - telapsed);
+
 	}
 
+	
 	LOG("... Bye! :)\n");
 
 	// Dump memory leaks
