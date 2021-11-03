@@ -90,22 +90,24 @@ bool Map::Awake(pugi::xml_node& config)
 //	}
 }*/
 
-void Map::GetColisionCoords() {
+void Map::Getcolision_coords(int player_x) {
 	int i = 0;
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
 	mapLayerItem = mapLayerItem->next;
+	
+	for (int j = 0; j < 30; j++) {
+		colision_coords[j] = nullptr;
+	}
 
-	for (int x = 0; x < mapLayerItem->data->width; x++)
+	for (int x = (player_x / 32) - 1; x < (player_x / 32) + 3; x++) // 1 tile enrere i 3 endevant
 	{
 		for (int y = 0; y < mapLayerItem->data->height; y++)
 		{
 			int gid = mapLayerItem->data->Get(x, y);
 
-			if (gid > 0) {
-				// iPoint pos = MapToWorld(x, y);
-				
-				colisionCoords[i] = new iPoint (MapToWorld(x, y));
+			if (gid > 0) {	
+				colision_coords[i] = new iPoint (MapToWorld(x, y));
 				++i;
 			}
 

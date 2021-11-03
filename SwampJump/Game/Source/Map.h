@@ -125,7 +125,7 @@ public:
     // Called each loop iteration
     void Draw();
 
-	void GetColisionCoords();
+	void Getcolision_coords(int player_x);
 
     // Called before quitting
     bool CleanUp();
@@ -139,7 +139,7 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
-	iPoint* colisionCoords[1177];
+	iPoint* colision_coords[30];
 
 private:
 

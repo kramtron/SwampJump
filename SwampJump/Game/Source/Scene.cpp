@@ -39,7 +39,6 @@ bool Scene::Start()
 		active = false;
 
 	app->map->Load("Mapa1.tmx");
-	app->map->GetColisionCoords();
 	//app->map->Load("iso_walk.tmx");
 	
 	// Load music
@@ -74,6 +73,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	//beforeCoords player
 	before_camera.x = app->render->camera.x;
 	before_camera.y = app->render->camera.y;
@@ -198,17 +198,21 @@ bool Scene::Update(float dt)
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
 		//COLISIONS
-		for (int i = 0; i < 1177; ++i) {
-			if ((player.x + 64 >= app->map->colisionCoords[i]->x) && (player.x <= app->map->colisionCoords[i]->x + 32) &&
-				(player.y + 64 >= app->map->colisionCoords[i]->y) && (player.y <= app->map->colisionCoords[i]->y + 32)) {
+
+		//abans de res colision coords
+		app->map->Getcolision_coords(player.x);
+
+		for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
+			if ((player.x + 64 >= app->map->colision_coords[i]->x) && (player.x <= app->map->colision_coords[i]->x + 32) &&
+				(player.y + 64 >= app->map->colision_coords[i]->y) && (player.y <= app->map->colision_coords[i]->y + 32)) {
 
 				//El player està colisionant amb una o més tiles
 
 				//index més alt = més aprop de la tile
-				int indexDreta = player.x + 64 - app->map->colisionCoords[i]->x;
-				int indexEsquerra = -(player.x - (app->map->colisionCoords[i]->x + 32));
-				int indexBaix = player.y + 64 - app->map->colisionCoords[i]->y;
-				int indexDalt = -(player.y - (app->map->colisionCoords[i]->y + 32));
+				int indexDreta = player.x + 64 - app->map->colision_coords[i]->x;
+				int indexEsquerra = -(player.x - (app->map->colision_coords[i]->x + 32));
+				int indexBaix = player.y + 64 - app->map->colision_coords[i]->y;
+				int indexDalt = -(player.y - (app->map->colision_coords[i]->y + 32));
 
 				int index[4];
 				index[0] = indexDreta;
@@ -225,11 +229,11 @@ bool Scene::Update(float dt)
 
 				if (index[0] == indexDreta) {//colisió dreta
 					player.vx = 0;
-					player.x = app->map->colisionCoords[i]->x - 64;
+					player.x = app->map->colision_coords[i]->x - 64;
 				}
 				if (index[0] == indexEsquerra) {//colisió esquerra
 					player.vx = 0;
-					player.x = app->map->colisionCoords[i]->x + 32;
+					player.x = app->map->colision_coords[i]->x + 32;
 				}
 				if (index[0] == indexBaix) {//colisió baix
 					player.vy = 0;
@@ -241,13 +245,13 @@ bool Scene::Update(float dt)
 						doblesalt = true;
 					}
 					else {
-						player.y = app->map->colisionCoords[i]->y - 64;
+						player.y = app->map->colision_coords[i]->y - 64;
 					}
 					coyotejump = true;
 				}
 				if (index[0] == indexDalt) {//colisió dalt
 					player.vy = 0;
-					player.y = app->map->colisionCoords[i]->y + 33;
+					player.y = app->map->colision_coords[i]->y + 33;
 				}
 			}
 		}
@@ -463,7 +467,7 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 void Scene::DebugDraw()
 {
 	for (int i = 0; i < 1177; ++i) {
-		SDL_Rect rectCollider = {app->map->colisionCoords[i]->x,app->map->colisionCoords[i]->y,32,32 };
+		SDL_Rect rectCollider = {app->map->colision_coords[i]->x,app->map->colision_coords[i]->y,32,32 };
 		app->render->DrawRectangle(rectCollider, 255, 0, 0,80);
 	}
 
