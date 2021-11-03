@@ -183,7 +183,7 @@ bool Scene::Update(float dt)
 			player.vy = -4;
 			doblesalt = false;
 			playerAnim = WALK;
-			timer_salt = 60;
+			timer_salt = 40;
 		}
 
 		if (timer_salt > 0) {

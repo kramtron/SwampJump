@@ -73,9 +73,9 @@ bool Scene_Intro::Update(float dt)
 		}
 
 		//seleccionar opció
-		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && opcion != 0)
+		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) && opcion != 0)
 			opcion--;
-		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && opcion != 1)
+		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) && opcion != 1)
 			opcion++;
 
 	return ret;
