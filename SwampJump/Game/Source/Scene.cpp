@@ -60,7 +60,7 @@ bool Scene::Start()
 	PlayerRectJump = { 32, 0, 16, 16 };
 	PlayerRectWalk = { 48, 0, 16, 16 };
 
-	sentitMoviment = true;
+	sentit_moviment = true;
 
 	return true;
 }
@@ -75,13 +75,13 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	//beforeCoords player
-	beforeCamera.x = app->render->camera.x;
-	beforeCamera.y = app->render->camera.y;
+	before_camera.x = app->render->camera.x;
+	before_camera.y = app->render->camera.y;
 
 	//Te coloca en el inicio del nivel
 	if (reset) {
-		Player.x = 400;
-		Player.y = 426;
+		player.x = 400;
+		player.y = 426;
 		parallax1 = 0;
 		parallax2 = 0;
 		parallax3 = 0;
@@ -98,19 +98,19 @@ bool Scene::Update(float dt)
 		LOG("GODMODE ON");
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			Player.x += -5;
+			player.x += -5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			Player.x += 5;
+			player.x += 5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			Player.y += -5;
+			player.y += -5;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			Player.y += 5;
+			player.y += 5;
 		}
 
 		//CAMERA
@@ -134,10 +134,10 @@ bool Scene::Update(float dt)
 		LOG("GODMODE OFF");
 		//ANIMACIO TERRA
 		if (!saltant && !walking) {
-			if ((SceneTimer < 40) || (SceneTimer > 80 && SceneTimer < 120)) {
+			if ((scene_timer < 40) || (scene_timer > 80 && scene_timer < 120)) {
 				playerAnim = A1;
 			}
-			else if (SceneTimer >= 120) {
+			else if (scene_timer >= 120) {
 				playerAnim = IDLE;
 			}
 			else {
@@ -145,7 +145,7 @@ bool Scene::Update(float dt)
 			}
 		}
 		else if (walking && !saltant) {
-			if (SceneTimer % 40 == 0) {
+			if (scene_timer % 40 == 0) {
 				if (playerAnim != WALK) {
 					playerAnim = WALK;
 				}
@@ -156,19 +156,19 @@ bool Scene::Update(float dt)
 		}
 
 		//MOVIMENT
-		Player.x += Player.vx;
-		Player.y += Player.vy;
-		Player.vx = 0;
+		player.x += player.vx;
+		player.y += player.vy;
+		player.vx = 0;
 		//Player.vy = 0;
-		if (AcelerationTimer == 0) {
-			Player.vy += Player.ay;
-			AcelerationTimer = 10;
+		if (aceleration_timer == 0) {
+			player.vy += player.ay;
+			aceleration_timer = 10;
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //Aguantar el salt
-				AcelerationTimer = 25;
+				aceleration_timer = 25;
 			}
 		}
 		else {
-			AcelerationTimer--;
+			aceleration_timer--;
 		}
 
 		//coyote jump
@@ -180,18 +180,18 @@ bool Scene::Update(float dt)
 
 		//doble salt
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) { //saltar només quan toquis a terra
-			Player.vy = -4;
+			player.vy = -4;
 			doblesalt = false;
 			playerAnim = WALK;
-			timerSalt = 60;
+			timer_salt = 60;
 		}
 
-		if (timerSalt > 0) {
-			timerSalt--;
+		if (timer_salt > 0) {
+			timer_salt--;
 		}
-		else if (timerSalt == 0) {
+		else if (timer_salt == 0) {
 			playerAnim = JUMP;
-			timerSalt--;
+			timer_salt--;
 		}
 		
 
@@ -199,16 +199,16 @@ bool Scene::Update(float dt)
 		//												COLISIONS COLISIONS
 		//COLISIONS
 		for (int i = 0; i < 1177; ++i) {
-			if ((Player.x + 64 >= app->map->colisionCoords[i]->x) && (Player.x <= app->map->colisionCoords[i]->x + 32) &&
-				(Player.y + 64 >= app->map->colisionCoords[i]->y) && (Player.y <= app->map->colisionCoords[i]->y + 32)) {
+			if ((player.x + 64 >= app->map->colisionCoords[i]->x) && (player.x <= app->map->colisionCoords[i]->x + 32) &&
+				(player.y + 64 >= app->map->colisionCoords[i]->y) && (player.y <= app->map->colisionCoords[i]->y + 32)) {
 
 				//El player està colisionant amb una o més tiles
 
 				//index més alt = més aprop de la tile
-				int indexDreta = Player.x + 64 - app->map->colisionCoords[i]->x;
-				int indexEsquerra = -(Player.x - (app->map->colisionCoords[i]->x + 32));
-				int indexBaix = Player.y + 64 - app->map->colisionCoords[i]->y;
-				int indexDalt = -(Player.y - (app->map->colisionCoords[i]->y + 32));
+				int indexDreta = player.x + 64 - app->map->colisionCoords[i]->x;
+				int indexEsquerra = -(player.x - (app->map->colisionCoords[i]->x + 32));
+				int indexBaix = player.y + 64 - app->map->colisionCoords[i]->y;
+				int indexDalt = -(player.y - (app->map->colisionCoords[i]->y + 32));
 
 				int index[4];
 				index[0] = indexDreta;
@@ -224,30 +224,30 @@ bool Scene::Update(float dt)
 				}
 
 				if (index[0] == indexDreta) {//colisió dreta
-					Player.vx = 0;
-					Player.x = app->map->colisionCoords[i]->x - 64;
+					player.vx = 0;
+					player.x = app->map->colisionCoords[i]->x - 64;
 				}
 				if (index[0] == indexEsquerra) {//colisió esquerra
-					Player.vx = 0;
-					Player.x = app->map->colisionCoords[i]->x + 32;
+					player.vx = 0;
+					player.x = app->map->colisionCoords[i]->x + 32;
 				}
 				if (index[0] == indexBaix) {//colisió baix
-					Player.vy = 0;
+					player.vy = 0;
 					saltant = false;
 					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
-						Player.vy = -4;
+						player.vy = -4;
 						playerAnim = JUMP;
 						saltant = true;
 						doblesalt = true;
 					}
 					else {
-						Player.y = app->map->colisionCoords[i]->y - 64;
+						player.y = app->map->colisionCoords[i]->y - 64;
 					}
 					coyotejump = true;
 				}
 				if (index[0] == indexDalt) {//colisió dalt
-					Player.vy = 0;
-					Player.y = app->map->colisionCoords[i]->y + 33;
+					player.vy = 0;
+					player.y = app->map->colisionCoords[i]->y + 33;
 				}
 			}
 		}
@@ -256,13 +256,13 @@ bool Scene::Update(float dt)
 
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			Player.vx = -2;
-			sentitMoviment = false;
+			player.vx = -2;
+			sentit_moviment = false;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			Player.vx = 2;
-			sentitMoviment = true;
+			player.vx = 2;
+			sentit_moviment = true;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -278,8 +278,8 @@ bool Scene::Update(float dt)
 	//RENDER IMATGES
 	
 	//camera i límits de camera
-	app->render->camera.x = 300 - Player.x;
-	app->render->camera.y = 350 - Player.y;
+	app->render->camera.x = 300 - player.x;
+	app->render->camera.y = -50;			//350 - player.y
 
 	if (app->render->camera.x > 0) {
 		app->render->camera.x = 0;
@@ -287,21 +287,21 @@ bool Scene::Update(float dt)
 	if (app->render->camera.x < -17600) { //19200 - 1600
 		app->render->camera.x = -17600;
 	}
-
+	/*
 	if (app->render->camera.y > 0) {
 		app->render->camera.y = 0;
 	}
 	if (app->render->camera.y < -124) { // 1024 - 900
 		app->render->camera.y = -124;
-	}
+	}*/
 
 	//parallax
-	if (app->render->camera.x > beforeCamera.x) {
+	if (app->render->camera.x > before_camera.x) {
 		parallax2--;
 		parallax1 -= 0.5;
 		parallax3 -= 1.5;
 	}
-	else if (app->render->camera.x < beforeCamera.x) {
+	else if (app->render->camera.x < before_camera.x) {
 		parallax2++;
 		parallax1 += 0.5;
 		parallax3 += 1.5;
@@ -343,7 +343,7 @@ bool Scene::Update(float dt)
 	app->map->Draw();
 
 	//Draw Granota
-	if (sentitMoviment){
+	if (sentit_moviment){
 		PlayerRect.y = 0;
 		PlayerRectA1.y = 0;
 		PlayerRectA2.y = 16;
@@ -360,29 +360,29 @@ bool Scene::Update(float dt)
 
 	switch (playerAnim) {
 	case IDLE:
-		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRect, 1, 4);
+		app->render->DrawTexture(granota, player.x, player.y, &PlayerRect, 1, 4);
 		break;
 	case A1:
-		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectA1, 1, 4);
+		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectA1, 1, 4);
 		break;
 	case A2:
-		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectA2, 1, 4);
+		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectA2, 1, 4);
 		break;
 	case JUMP:
-		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectJump, 1, 4);
+		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectJump, 1, 4);
 		break;
 	case WALK:
-		app->render->DrawTexture(granota, Player.x, Player.y, &PlayerRectWalk, 1, 4);
+		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectWalk, 1, 4);
 		break;
 	}
 	//
 
 	//SCENE TIMER
-	if (SceneTimer <= 0) {
-		SceneTimer = 199;
+	if (scene_timer <= 0) {
+		scene_timer = 199;
 	}
 	else {
-		SceneTimer--;
+		scene_timer--;
 	}
 	//
 
@@ -409,7 +409,7 @@ bool Scene::Update(float dt)
 		reset = true;
 	}
 
-	if (Player.y > 2500) {
+	if (player.y > 2500) {
 		reset = true;
 		app->scene_end->active = true;
 		active = false;
@@ -443,17 +443,17 @@ bool Scene::CleanUp()
 bool Scene::LoadState(pugi::xml_node& configRenderer)
 {
 
-	Player.x = configRenderer.child("player").attribute("x").as_int();
-	Player.y = configRenderer.child("player").attribute("y").as_int();
+	player.x = configRenderer.child("player").attribute("x").as_int();
+	player.y = configRenderer.child("player").attribute("y").as_int();
 
 	return true;
 }
 bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {
-	pugi::xml_node player = configRenderer.child("player");
+	pugi::xml_node player1 = configRenderer.child("player");
 
-	player.attribute("x").set_value(Player.x);
-	player.attribute("y").set_value(Player.y);
+	player1.attribute("x").set_value(player.x);
+	player1.attribute("y").set_value(player.y);
 
 	return true;
 }

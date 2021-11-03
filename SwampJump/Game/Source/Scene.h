@@ -42,26 +42,24 @@ public:
 
 	int timer = 0;
 
-	struct player
+	struct player_struct
 	{
 		int x = 300;
 		int y = 300;
 		int vx = 0;
 		int vy = 0;
 		int ay = 1;
-	};
-	player Player;
-	iPoint beforeCamera;
+	}player;
+	iPoint before_camera;
 	
-	
-	int AcelerationTimer = 0;
-	int SceneTimer = 0;
-	int timerSalt = 0;
+	int aceleration_timer = 0;
+	int scene_timer = 0;
+	int timer_salt = 0;
 	bool saltant = false;
 	bool doblesalt = false;
 	bool coyotejump = false;
 	bool walking = false;
-	bool sentitMoviment = true; //true cap a la dreta
+	bool sentit_moviment = true; //true cap a la dreta
 
 	bool LoadState(pugi::xml_node&);
 
