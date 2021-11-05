@@ -352,11 +352,11 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3, -app->render->camera.y - 70, NULL, 1, 3);
 	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3 + 1728, -app->render->camera.y - 70, NULL, 1, 3);
 	
-	//Draw map
-	app->map->Draw();
-
 	//Draw decorations
 	DrawDecorations();
+
+	//Draw map
+	app->map->Draw();
 
 	//Draw Granota
 	if (sentit_moviment){
@@ -485,6 +485,15 @@ void Scene::DebugDraw()
 }
 
 void Scene::DrawDecorations() {
-	app->render->DrawTexture(arbre1, 90*32, 20, NULL, 1, 2);
-
+	app->render->DrawTexture(arbre1, 2800, 64, NULL, 1, 3);
+	app->render->DrawTexture(arbre2, 14016, 400, NULL, 1, 3);
+	app->render->DrawTexture(tronc1, 12320, 850, NULL, 1, 3);
+	app->render->DrawTexture(cartell1, 512, 420, NULL, 1, 3);
+	app->render->DrawTexture(cartell5, 13420, 260, NULL, 1, 3);
+	app->render->DrawTexture(cartell8, 3648, 580, NULL, 1, 3);
+	app->render->DrawTexture(cartell8, 9856, 356, NULL, 1, 3);
+	app->render->DrawTexture(cartell8, 15350, 580, NULL, 1, 3);
+	app->render->DrawTexture(bush8, 900, 754, NULL, 1, 3);
+	app->render->DrawTexture(bush1, 4500, 790, NULL, 1, 3);
+	app->render->DrawTexture(bush3, 8260, 790, NULL, 1, 3);
 }
