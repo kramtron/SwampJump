@@ -34,6 +34,8 @@ public:
 
 	void DebugDraw();
 
+	void DrawDecorations();
+
 	bool debug = false;
 
 	bool godMode = false;
@@ -71,6 +73,17 @@ private:
 	SDL_Texture* imgFons3;
 	SDL_Texture* imgFons4;
 	SDL_Texture* granota;
+
+	SDL_Texture* arbre1;
+	SDL_Texture* arbre2;
+	SDL_Texture* tronc1;
+	SDL_Texture* cartell1;
+	SDL_Texture* cartell5;
+	SDL_Texture* cartell8;
+	SDL_Texture* bush1;
+	SDL_Texture* bush3;
+	SDL_Texture* bush8;
+
 	float parallax1 = 0;
 	int parallax2 = 0;
 	float parallax3 = 0;

@@ -49,6 +49,17 @@ bool Scene::Start()
 	imgFons3 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/3.png");
 	imgFons4 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/5.png");
 	granota = app->tex->Load("Assets/textures/frog.png");
+
+	//Sprites Decoració
+	arbre1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Willows/3.png");
+	arbre2 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Trees/3.png");
+	tronc1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Ridges/1.png");
+	cartell1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Pointers/1.png");
+	cartell5 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Pointers/5.png");
+	cartell8 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Pointers/8.png");
+	bush1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/1.png");
+	bush3 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/3.png");
+	bush8 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/8.png");
 	
 	app->render->camera.x = 0;
 	app->render->camera.y = -120;
@@ -340,11 +351,12 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(imgFons3, -app->render->camera.x - parallax2 + 1728, -app->render->camera.y, NULL, 1, 3);
 	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3, -app->render->camera.y - 70, NULL, 1, 3);
 	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3 + 1728, -app->render->camera.y - 70, NULL, 1, 3);
-	//app->render->DrawTexture(imgFons2, -app->render->camera.x + 1600 - parallax, -app->render->camera.y, NULL, 1, 3);
 	
-
 	//Draw map
 	app->map->Draw();
+
+	//Draw decorations
+	DrawDecorations();
 
 	//Draw Granota
 	if (sentit_moviment){
@@ -470,6 +482,9 @@ void Scene::DebugDraw()
 		SDL_Rect rectCollider = {app->map->colision_coords[i]->x,app->map->colision_coords[i]->y,32,32 };
 		app->render->DrawRectangle(rectCollider, 255, 0, 0,80);
 	}
+}
 
+void Scene::DrawDecorations() {
+	app->render->DrawTexture(arbre1, 90*32, 20, NULL, 1, 2);
 
 }
