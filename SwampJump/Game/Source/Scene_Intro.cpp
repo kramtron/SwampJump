@@ -33,6 +33,11 @@ bool Scene_Intro::Awake()
 bool Scene_Intro::Start()
 {
 	active = false;
+	startPress = app->tex->Load("Assets/Menu/startPress.png");
+	startNotPress = app->tex->Load("Assets/Menu/startNotPress.png");
+	exitPress = app->tex->Load("Assets/Menu/exitPress.png");
+	exitNotPress = app->tex->Load("Assets/Menu/exitNotPress.png");
+
 	return true;
 }
 
@@ -47,14 +52,17 @@ bool Scene_Intro::Update(float dt)
 {
 	bool ret = true;
 
-	RectMenu1 = { 700,400,200,50 };
- 	RectMenu2 = { 700,600,200,50 };
+	
 	
 		//acceptar opció
 		if (opcion == 0)
 		{
-			app->render->DrawRectangle(RectMenu1, 250, 0, 0);
-			app->render->DrawRectangle(RectMenu2, 250, 250, 250);
+
+
+
+			app->render->DrawTexture(startPress, 225, -120, NULL, 1);
+			app->render->DrawTexture(exitNotPress, 348, 120, NULL, 1);
+
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 			{
 				active = false;
@@ -64,8 +72,8 @@ bool Scene_Intro::Update(float dt)
 
 		else if (opcion == 1)
 		{
-			app->render->DrawRectangle(RectMenu1, 250, 250, 250);
-			app->render->DrawRectangle(RectMenu2, 250, 0, 0);
+			app->render->DrawTexture(startNotPress, 225, -120, NULL, 1);
+			app->render->DrawTexture(exitPress, 348, 120, NULL, 1);
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
 				ret = false;
