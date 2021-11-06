@@ -125,6 +125,8 @@ public:
     // Called each loop iteration
     void Draw();
 
+    void DrawColisions();
+
 	void Getcolision_coords(int player_x);
 
     // Called before quitting

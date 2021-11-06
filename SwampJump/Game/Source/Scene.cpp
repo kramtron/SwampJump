@@ -474,13 +474,13 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 	return true;
 }
 
-
-
 void Scene::DebugDraw()
 {
+	app->map->DrawColisions();
+
 	for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
 		SDL_Rect rectCollider = {app->map->colision_coords[i]->x,app->map->colision_coords[i]->y,32,32 };
-		app->render->DrawRectangle(rectCollider, 255, 0, 0,80);
+		app->render->DrawRectangle(rectCollider, 0, 70, 250,80);
 	}
 }
 

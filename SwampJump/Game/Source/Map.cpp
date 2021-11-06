@@ -115,6 +115,30 @@ void Map::Getcolision_coords(int player_x) {
 	}
 }
 
+void Map::DrawColisions() {
+	if (mapLoaded == false) return;
+
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = mapData.layers.start;
+	mapLayerItem = mapLayerItem->next;
+
+	for (int x = 0; x < mapLayerItem->data->width; x++)
+	{
+		for (int y = 0; y < mapLayerItem->data->height; y++)
+		{
+			int gid = mapLayerItem->data->Get(x, y);
+
+			if (gid > 0) {
+				iPoint pos = MapToWorld(x, y);
+				SDL_Rect rectCollider = { pos.x, pos.y, 32, 32 };
+				app->render->DrawRectangle(rectCollider, 255, 0, 0, 80);
+			}
+
+		}
+	}
+	
+}
+
 void Map::Draw()
 {
 	if (mapLoaded == false) return;
