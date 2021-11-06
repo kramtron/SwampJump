@@ -247,7 +247,6 @@ bool Scene::Update(float dt)
 					player.x = app->map->colision_coords[i]->x + 32;
 				}
 				if (index[0] == indexBaix) {//colisió baix
-					player.vy = 0;
 					saltant = false;
 					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
 						player.vy = -4;
@@ -255,12 +254,13 @@ bool Scene::Update(float dt)
 						saltant = true;
 						doblesalt = true;
 					}
-					else {
+					else if (((indexBaix + 1) < indexDreta) && ((indexBaix + 1) < indexEsquerra)){
 						player.y = app->map->colision_coords[i]->y - 64;
+						player.vy = 0;
 					}
 					coyotejump = true;
 				}
-				if (index[0] == indexDalt) {//colisió dalt
+				if (index[0] == indexDalt && (((indexDalt + 1) < indexDreta) && ((indexDalt + 1) < indexEsquerra))) {//colisió dalt
 					player.vy = 0;
 					player.y = app->map->colision_coords[i]->y + 33;
 				}
