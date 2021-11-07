@@ -34,6 +34,7 @@ You spawn in a lush forest where you will have to run and collect food to gain p
 
 * *Left arrow* Left in menu
 * *Right arrow* Right in menu
+* *Space*
 
 
 # GitHub Link
