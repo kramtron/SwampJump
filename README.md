@@ -5,12 +5,12 @@
 ![](https://github.com/kramtron/SwampJump/blob/main/SwampJump/Output/Assets/Menu/gameIntro.png)
 # Description
 
-1.000 years after the fatal nuclear war the animals are starting to habitate the dense forest. Pass thrue the dense forest and recolect food for your family. Eat or be eated.
+1.000 years after the fatal nuclear war the animals are starting to habitate the dense forest. Pass through the dense forest and recolect food for your family. Eat or be eaten.
 
 
 # How to play the game
 
-You spawn in a lush forest and u have to run truh and collect food to gain points. Arrive to the final of the map to complete the level.
+You spawn in a lush forest where you will have to run and collect food to gain points. Arrive to the end of the map to complete the level.
 
 # Controls
 
