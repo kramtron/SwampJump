@@ -96,7 +96,7 @@ void Map::Getcolision_coords(int player_x) {
 	mapLayerItem = mapData.layers.start;
 	mapLayerItem = mapLayerItem->next;
 	
-	for (int j = 0; j < 30; j++) {
+	for (int j = 0; j < 50; j++) {
 		colision_coords[j] = nullptr;
 	}
 
