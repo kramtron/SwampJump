@@ -302,13 +302,6 @@ bool Scene::Update(float dt)
 	if (app->render->camera.x < -17600) { //19200 - 1600
 		app->render->camera.x = -17600;
 	}
-	/*
-	if (app->render->camera.y > 0) {
-		app->render->camera.y = 0;
-	}
-	if (app->render->camera.y < -124) { // 1024 - 900
-		app->render->camera.y = -124;
-	}*/
 
 	//parallax
 	if (app->render->camera.x > before_camera.x) {
@@ -425,7 +418,7 @@ bool Scene::Update(float dt)
 		reset = true;
 	}
 
-	if (player.y > 2500) {
+	if (player.y > 2500 || player.x > 19000) {
 		reset = true;
 		app->scene_end->active = true;
 		active = false;
