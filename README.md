@@ -2,7 +2,7 @@
 
 ## Welcome to our spectacular and innovative platform game
 
-
+![](https://github.com/kramtron/SwampJump/blob/main/SwampJump/Output/Assets/Menu/gameIntro.png)
 # Description
 
 1.000 years after the fatal nuclear war the animals are starting to habitate the dense forest. Pass thrue the dense forest and recolect food for your family. Eat or be eated.
@@ -30,10 +30,10 @@ You spawn in a lush forest and u have to run truh and collect food to gain point
 * *SPACE* Jump
 * *2 times SPACE* Double jump
 
-### Extra
+### Menu
 
-*
-*
+* *Left arrow* Left in menu
+* *Right arrow* Right in menu
 
 
 # GitHub Link
