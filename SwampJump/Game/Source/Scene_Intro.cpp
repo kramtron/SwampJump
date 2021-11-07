@@ -33,10 +33,9 @@ bool Scene_Intro::Awake()
 bool Scene_Intro::Start()
 {
 	active = false;
-	startPress = app->tex->Load("Assets/Menu/startPress.png");
-	startNotPress = app->tex->Load("Assets/Menu/startNotPress.png");
-	exitPress = app->tex->Load("Assets/Menu/exitPress.png");
-	exitNotPress = app->tex->Load("Assets/Menu/exitNotPress.png");
+	startPress = app->tex->Load("Assets/Menu/gameMenuStart.png");
+	exitPress = app->tex->Load("Assets/Menu/gameMenuExit.png");
+
 
 	return true;
 }
@@ -58,10 +57,10 @@ bool Scene_Intro::Update(float dt)
 		if (opcion == 0)
 		{
 
+			app->render->camera.y = 0;
 
-
-			app->render->DrawTexture(startPress, 225, -120, NULL, 1);
-			app->render->DrawTexture(exitNotPress, 348, 120, NULL, 1);
+			app->render->DrawTexture(startPress, 0,0, NULL, 1);
+			
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
 			{
@@ -72,8 +71,9 @@ bool Scene_Intro::Update(float dt)
 
 		else if (opcion == 1)
 		{
-			app->render->DrawTexture(startNotPress, 225, -120, NULL, 1);
-			app->render->DrawTexture(exitPress, 348, 120, NULL, 1);
+			app->render->camera.y = 0;
+
+			app->render->DrawTexture(exitPress, 0,0, NULL, 1);
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 			{
 				ret = false;
@@ -81,9 +81,9 @@ bool Scene_Intro::Update(float dt)
 		}
 
 		//seleccionar opció
-		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) && opcion != 0)
+		if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && opcion != 0)
 			opcion--;
-		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) && opcion != 1)
+		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && opcion != 1)
 			opcion++;
 
 	return ret;

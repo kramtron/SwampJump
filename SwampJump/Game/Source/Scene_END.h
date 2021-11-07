@@ -37,9 +37,8 @@ public:
 	int opcion = 0;
 private:
 
-	SDL_Rect RectMenu1;
-	SDL_Rect RectMenu2;
-	SDL_Rect RectMenu3;
+	SDL_Texture* gameOverStart;
+	SDL_Texture* gameOverExit;
 
 };
 

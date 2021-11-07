@@ -34,10 +34,9 @@ bool Scene_END::Awake()
 // Called before the first frame
 bool Scene_END::Start()
 {
-
-	RectMenu1 = { 700,400,200,50 };
-	RectMenu2 = { 700,600,200,50 };
-	RectMenu3 = { 700,500,200,50 };
+	gameOverStart = app->tex->Load("Assets/Menu/gameOverPlay.png");
+	gameOverExit = app->tex->Load("Assets/Menu/gameOverExit.png");
+	
 	active = false;
 
 	return true;
@@ -61,9 +60,10 @@ bool Scene_END::Update(float dt)
 	//acceptar opció
 	if (opcion == 0)
 	{
-		app->render->DrawRectangle(RectMenu1, 250, 0, 0);
-		app->render->DrawRectangle(RectMenu2, 250, 250, 250);
-		app->render->DrawRectangle(RectMenu3, 125, 125, 125);
+		app->render->camera.y = 0;
+		app->render->camera.x = 0;
+		app->render->DrawTexture(gameOverStart, 0, 0, NULL, 1);
+
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			active = false;
@@ -73,9 +73,9 @@ bool Scene_END::Update(float dt)
 
 	else if (opcion == 1)
 	{
-		app->render->DrawRectangle(RectMenu1, 250, 250, 250);
-		app->render->DrawRectangle(RectMenu2, 250, 0, 0);
-		app->render->DrawRectangle(RectMenu3, 125, 125, 125);
+		app->render->camera.y = 0;
+		app->render->camera.x = 0;
+		app->render->DrawTexture(gameOverExit, 0, 0, NULL, 1);
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
@@ -84,9 +84,10 @@ bool Scene_END::Update(float dt)
 	}
 
 	//seleccionar opció
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN && opcion != 0)
+	if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && opcion != 0)
 		opcion--;
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN && opcion != 1)
+
+	if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && opcion != 1)
 		opcion++;
 
 	return ret;

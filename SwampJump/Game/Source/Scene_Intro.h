@@ -38,9 +38,7 @@ public:
 private:
 
 	SDL_Texture* startPress;
-	SDL_Texture* startNotPress;
 	SDL_Texture* exitPress;
-	SDL_Texture* exitNotPress;
 
 	SDL_Rect RectMenu1;
 	SDL_Rect RectMenu2;

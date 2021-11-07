@@ -456,6 +456,7 @@ bool Scene::CleanUp()
 	return true;
 }
 
+//Carga la posicion del personaje NO SE USA EN ESTE CODIGO
 bool Scene::LoadState(pugi::xml_node& configRenderer)
 {
 
@@ -464,6 +465,8 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 
 	return true;
 }
+
+//Guarda la posicion del personaje NO SE USA EN ESTE CODIGO
 bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {
 	pugi::xml_node player1 = configRenderer.child("player");
@@ -474,14 +477,17 @@ bool Scene::SaveState(pugi::xml_node& configRenderer) const
 	return true;
 }
 
+//Dibuja los colliders
 void Scene::DebugDraw()
 {
 	app->map->DrawColisions();
 
+	//Dibuja los colliders cargado en ese momento
 	for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
 		SDL_Rect rectCollider = {app->map->colision_coords[i]->x,app->map->colision_coords[i]->y,32,32 };
 		app->render->DrawRectangle(rectCollider, 0, 70, 250,80);
 	}
+	//Dibuja el collider de la rana
 	SDL_Rect rectPlayer = { player.x,player.y,64,64 };
 	app->render->DrawRectangle(rectPlayer, 255, 255, 0, 80);
 }

@@ -36,6 +36,8 @@ public:
 
 	int timerLogo = 0;
 
+	SDL_Texture* gameIntro;
+
 private:
 };
 

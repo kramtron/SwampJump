@@ -32,6 +32,7 @@ bool Scene_Logo::Awake()
 // Called before the first frame
 bool Scene_Logo::Start()
 {
+	gameIntro = app->tex->Load("Assets/Menu/gameIntro.png");
 
 	return true;
 }
@@ -50,8 +51,11 @@ bool Scene_Logo::Update(float dt)
 	//si esta activa la scene
 	if (active)
 	{
+		app->render->camera.y = 0;
+		app->render->DrawTexture(gameIntro, 0, 0, NULL, 1);
+
 		//acceptar opció
-		if (timerLogo == 2000)
+		if (timerLogo >= 2000)
 		{
 			active = false;
 			app->scene_intro->active = true;
