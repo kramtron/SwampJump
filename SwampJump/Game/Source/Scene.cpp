@@ -482,6 +482,8 @@ void Scene::DebugDraw()
 		SDL_Rect rectCollider = {app->map->colision_coords[i]->x,app->map->colision_coords[i]->y,32,32 };
 		app->render->DrawRectangle(rectCollider, 0, 70, 250,80);
 	}
+	SDL_Rect rectPlayer = { player.x,player.y,64,64 };
+	app->render->DrawRectangle(rectPlayer, 255, 255, 0, 80);
 }
 
 void Scene::DrawDecorations() {
