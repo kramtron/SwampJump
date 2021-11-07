@@ -44,7 +44,7 @@ int main(int argc, char* args[])
 	while(state != EXIT)
 	{
 		double t = 0.0;
-		float dt = 1 / 60;
+		float dt = 1.0f/60.0f; //frames
 		auto start = chrono::steady_clock::now();
 
 		switch(state)
@@ -122,7 +122,7 @@ int main(int argc, char* args[])
 		//Check en salida de la diferencia de temps
 		LOG("Elapsed time in milliseconds: %d", chrono::duration_cast<chrono::milliseconds>(end - start).count(), " ms");
 		auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
-		LOG("dt: %f", dt);
+ 		LOG("dt: %f", dt);
 		//Entra si hay diferencia de tiempo
 		if (dt - telapsed > 0.0f)
 			//Para el programa el tiempo restante
