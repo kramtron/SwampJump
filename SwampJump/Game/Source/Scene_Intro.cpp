@@ -62,7 +62,7 @@ bool Scene_Intro::Update(float dt)
 			app->render->DrawTexture(startPress, 0,0, NULL, 1);
 			
 
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				active = false;
 				app->scene->active = true;
@@ -74,7 +74,7 @@ bool Scene_Intro::Update(float dt)
 			app->render->camera.y = 0;
 
 			app->render->DrawTexture(exitPress, 0,0, NULL, 1);
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				ret = false;
 			}
