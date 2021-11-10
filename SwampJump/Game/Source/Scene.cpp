@@ -143,6 +143,26 @@ bool Scene::Update(float dt)
 	}
 	else if (!godMode) {
 		LOG("GODMODE OFF");
+
+		//PLAYER MOVE
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+ 			player.vx = -2;
+			sentit_moviment = false;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			player.vx = 2;
+			sentit_moviment = true;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			walking = true;
+		}
+		else {
+			walking = false;
+		}
+		//
+
 		//ANIMACIO TERRA
 		if (!saltant && !walking) {
 			if ((scene_timer < 40) || (scene_timer > 80 && scene_timer < 120)) {
@@ -166,10 +186,6 @@ bool Scene::Update(float dt)
 			}
 		}
 
-		//MOVIMENT
-		player.x += player.vx;
-		player.y += player.vy;
-		player.vx = 0;
 		//Player.vy = 0;
 		if (aceleration_timer == 0) {
 			player.vy += player.ay;
@@ -181,6 +197,7 @@ bool Scene::Update(float dt)
 		else {
 			aceleration_timer--;
 		}
+		//player.vy += player.ay;
 
 		//coyote jump
 		if (coyotejump) {
@@ -190,7 +207,8 @@ bool Scene::Update(float dt)
 		}
 
 		//doble salt
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) { //saltar només quan toquis a terra
+		
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) {
 			player.vy = -4;
 			doblesalt = false;
 			playerAnim = WALK;
@@ -214,79 +232,49 @@ bool Scene::Update(float dt)
 		app->map->Getcolision_coords(player.x);
 
 		for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
-			if ((player.x + 64 >= app->map->colision_coords[i]->x) && (player.x <= app->map->colision_coords[i]->x + 32) &&
-				(player.y + 64 >= app->map->colision_coords[i]->y) && (player.y <= app->map->colision_coords[i]->y + 32)) {
+			if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
+				(player.y + 64 + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
 
 				//El player està colisionant amb una o més tiles
-
-				//index més alt = més aprop de la tile
-				int indexDreta = player.x + 64 - app->map->colision_coords[i]->x;
-				int indexEsquerra = -(player.x - (app->map->colision_coords[i]->x + 32));
-				int indexBaix = player.y + 64 - app->map->colision_coords[i]->y;
-				int indexDalt = -(player.y - (app->map->colision_coords[i]->y + 32));
-
-				int index[4];
-				index[0] = indexDreta;
-				index[1] = indexEsquerra;
-				index[2] = indexBaix;
-				index[3] = indexDalt;
-
-				//Quin index és més petit?
-				for (int j = 0; j < 3; j++) {
-					if (index[0] > index[j + 1]) {
-						index[0] = index[j + 1];
-					}
-				}
-
-				if (index[0] == indexDreta) {//colisió dreta
+				if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
+					(player.y + 64 > app->map->colision_coords[i]->y) && (player.y < app->map->colision_coords[i]->y + 32)) {
+					//Xoca pel costat
 					player.vx = 0;
-					player.x = app->map->colision_coords[i]->x - 64;
 				}
-				if (index[0] == indexEsquerra) {//colisió esquerra
-					player.vx = 0;
-					player.x = app->map->colision_coords[i]->x + 32;
-				}
-				if (index[0] == indexBaix) {//colisió baix
-					saltant = false;
-					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
-						player.vy = -4;
-						playerAnim = JUMP;
-						saltant = true;
-						doblesalt = true;
+
+				if ((player.x + 64 > app->map->colision_coords[i]->x) && (player.x < app->map->colision_coords[i]->x + 32) &&
+					(player.y + 64 + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
+					//xoc vertical
+					if (player.vy >= 0) { //xoca amb el terra
+						saltant = false;
+						if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
+							player.vy = -4;
+							playerAnim = JUMP;
+							saltant = true;
+							doblesalt = true;
+						}
+						else {
+							player.vy = 0;
+						}
+						coyotejump = true;
 					}
-					else if (((indexBaix + 1) < indexDreta) && ((indexBaix + 1) < indexEsquerra)){
-						player.y = app->map->colision_coords[i]->y - 64;
+					else if (player.vy < 0){ //xoca amb el sostre
 						player.vy = 0;
 					}
-					coyotejump = true;
 				}
-				if (index[0] == indexDalt && (((indexDalt + 1) < indexDreta) && ((indexDalt + 1) < indexEsquerra))) {//colisió dalt
-					player.vy = 0;
-					player.y = app->map->colision_coords[i]->y + 33;
+				else {
+					player.vx = 0;
 				}
 			}
 		}
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
 
-		//PLAYER MOVE
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			player.vx = -2;
-			sentit_moviment = false;
-		}
+		//MOVIMENT
+		player.x += player.vx;
+		player.y += player.vy;
+		player.vx = 0;
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			player.vx = 2;
-			sentit_moviment = true;
-		}
-
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			walking = true;
-		}
-		else {
-			walking = false;
-		}
-		//
 	}
 	
 
