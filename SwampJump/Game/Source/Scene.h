@@ -43,8 +43,6 @@ public:
 
 	bool reset = false;
 
-	int timer = 0;
-
 	struct player_struct
 	{
 		int x = 300;
@@ -56,13 +54,9 @@ public:
 	iPoint before_camera;
 	
 	int aceleration_timer = 0;
-	int scene_timer = 0;
-	int timer_salt = 0;
 	bool saltant = false;
+	bool salt_abans = false;
 	bool doblesalt = false;
-	bool coyotejump = false;
-	bool walking = false;
-	bool sentit_moviment = true; //true cap a la dreta
 
 	bool LoadState(pugi::xml_node&);
 

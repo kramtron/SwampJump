@@ -110,9 +110,6 @@ bool Scene::Start()
 	currentFrogAnimation = &idleRAnim;
 	// ANIMACIONS
 
-
-	sentit_moviment = true;
-
 	return true;
 }
 
@@ -188,23 +185,13 @@ bool Scene::Update(float dt)
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
  			player.vx = -2;
-			sentit_moviment = false;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			player.vx = 2;
-			sentit_moviment = true;
-		}
-
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			walking = true;
-		}
-		else {
-			walking = false;
 		}
 		//
 
-		//Player.vy = 0;
 		if (aceleration_timer == 0) {
 			player.vy += player.ay;
 			aceleration_timer = 10;
@@ -215,30 +202,17 @@ bool Scene::Update(float dt)
 		else {
 			aceleration_timer--;
 		}
-		//player.vy += player.ay;
 
-		//coyote jump
-		if (coyotejump) {
-			coyotejump = false;
+		//doble salt ARREGLAR
+		if (!salt_abans && saltant)
 			doblesalt = true;
-			saltant = true;
-		}
 
-		//doble salt
-		
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) {
+  		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt && saltant) {
 			player.vy = -4;
 			doblesalt = false;
-			timer_salt = 40;
 		}
-
-		if (timer_salt > 0) {
-			timer_salt--;
-		}
-		else if (timer_salt == 0) {
-			timer_salt--;
-		}
-		
+		salt_abans = saltant;
+		saltant = true;
 
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
@@ -263,15 +237,12 @@ bool Scene::Update(float dt)
 					//xoc vertical
 					if (player.vy >= 0) { //xoca amb el terra
 						saltant = false;
-						if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
+						if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //saltar només quan toquis a terra
 							player.vy = -4;
-							saltant = true;
-							doblesalt = true;
 						}
 						else {
 							player.vy = 0;
 						}
-						coyotejump = true;
 					}
 					else if (player.vy < 0){ //xoca amb el sostre
 						player.vy = 0;
@@ -355,25 +326,9 @@ bool Scene::Update(float dt)
 	app->map->Draw();
 
 	//Draw Granota
-	if (sentit_moviment){
-		
-	}
-	else {
-		
-	}
 	currentFrogAnimation->Update();
 	app->render->DrawTexture(granota, player.x, player.y, &currentFrogAnimation->GetCurrentFrame(), 1, 4);
 	//
-
-	//SCENE TIMER
-	if (scene_timer <= 0) {
-		scene_timer = 199;
-	}
-	else {
-		scene_timer--;
-	}
-	//
-
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
