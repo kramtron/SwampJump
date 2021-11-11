@@ -65,11 +65,51 @@ bool Scene::Start()
 	app->render->camera.x = 0;
 	app->render->camera.y = -120;
 
-	PlayerRect = { 16, 0, 16, 16 };
-	PlayerRectA1 = { 0, 0, 16, 16 };
-	PlayerRectA2 = { 0, 16, 16, 16 };
-	PlayerRectJump = { 32, 0, 16, 16 };
-	PlayerRectWalk = { 48, 0, 16, 16 };
+
+	// ANIMACIONS
+	idleRAnim.Empty();	//Idle Right
+	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	idleRAnim.PushBack({ 0, 0, 16, 16 });	//Croar1
+	idleRAnim.PushBack({ 0, 16, 16, 16 });	//Croar2
+	idleRAnim.loop = true;
+	idleRAnim.speed = 0.015;
+
+	idleLAnim.Empty();	//Idle Left
+	idleLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	idleLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	idleLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	idleLAnim.PushBack({ 0, 32, 16, 16 });	//Croar1 left
+	idleLAnim.PushBack({ 0, 48, 16, 16 });	//Croar2 left
+	idleLAnim.pingpong = true;
+	idleLAnim.speed = 0.015;
+
+	jumpRAnim.Empty();	//Jump Right
+	jumpRAnim.PushBack({ 32, 0, 16, 16 });	//Jump
+	jumpRAnim.loop = true;
+	jumpRAnim.speed = 0;
+
+	jumpLAnim.Empty();	//Jump Left
+	jumpLAnim.PushBack({ 32, 32, 16, 16 });	//Jump left
+	jumpLAnim.loop = true;
+	jumpLAnim.speed = 0;
+
+	walkRAnim.Empty();	//Walk Right
+	walkRAnim.PushBack({ 48, 0, 16, 16 });	//Walk
+	walkRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	walkRAnim.loop = true;
+	walkRAnim.speed = 0.02;
+
+	walkLAnim.Empty();	//Walk Left
+	walkLAnim.PushBack({ 48, 32, 16, 16 });	//Walk left
+	walkLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	walkLAnim.loop = true;
+	walkLAnim.speed = 0.02;
+	
+	currentFrogAnimation = &walkLAnim;
+	// ANIMACIONS
+
 
 	sentit_moviment = true;
 
@@ -164,29 +204,6 @@ bool Scene::Update(float dt)
 		}
 		//
 
-		//ANIMACIO TERRA
-		if (!saltant && !walking) {
-			if ((scene_timer < 40) || (scene_timer > 80 && scene_timer < 120)) {
-				playerAnim = A1;
-			}
-			else if (scene_timer >= 120) {
-				playerAnim = IDLE;
-			}
-			else {
-				playerAnim = A2;
-			}
-		}
-		else if (walking && !saltant) {
-			if (scene_timer % 40 == 0) {
-				if (playerAnim != WALK) {
-					playerAnim = WALK;
-				}
-				else {
-					playerAnim = IDLE;
-				}
-			}
-		}
-
 		//Player.vy = 0;
 		if (aceleration_timer == 0) {
 			player.vy += player.ay;
@@ -212,7 +229,6 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) {
 			player.vy = -4;
 			doblesalt = false;
-			playerAnim = WALK;
 			timer_salt = 40;
 		}
 
@@ -220,7 +236,6 @@ bool Scene::Update(float dt)
 			timer_salt--;
 		}
 		else if (timer_salt == 0) {
-			playerAnim = JUMP;
 			timer_salt--;
 		}
 		
@@ -250,7 +265,6 @@ bool Scene::Update(float dt)
 						saltant = false;
 						if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
 							player.vy = -4;
-							playerAnim = JUMP;
 							saltant = true;
 							doblesalt = true;
 						}
@@ -342,37 +356,13 @@ bool Scene::Update(float dt)
 
 	//Draw Granota
 	if (sentit_moviment){
-		PlayerRect.y = 0;
-		PlayerRectA1.y = 0;
-		PlayerRectA2.y = 16;
-		PlayerRectJump.y = 0;
-		PlayerRectWalk.y = 0;
+		
 	}
 	else {
-		PlayerRect.y = 32;
-		PlayerRectA1.y = 32;
-		PlayerRectA2.y = 48;
-		PlayerRectJump.y = 32;
-		PlayerRectWalk.y = 32;
+		
 	}
-
-	switch (playerAnim) {
-	case IDLE:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRect, 1, 4);
-		break;
-	case A1:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectA1, 1, 4);
-		break;
-	case A2:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectA2, 1, 4);
-		break;
-	case JUMP:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectJump, 1, 4);
-		break;
-	case WALK:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectWalk, 1, 4);
-		break;
-	}
+	currentFrogAnimation->Update();
+	app->render->DrawTexture(granota, player.x, player.y, &currentFrogAnimation->GetCurrentFrame(), 1, 4);
 	//
 
 	//SCENE TIMER
