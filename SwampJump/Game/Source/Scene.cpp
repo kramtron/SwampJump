@@ -107,7 +107,7 @@ bool Scene::Start()
 	walkLAnim.loop = true;
 	walkLAnim.speed = 0.02;
 	
-	currentFrogAnimation = &walkLAnim;
+	currentFrogAnimation = &idleRAnim;
 	// ANIMACIONS
 
 
