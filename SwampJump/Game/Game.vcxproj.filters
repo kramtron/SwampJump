@@ -57,6 +57,7 @@
     <ClInclude Include="Source\Scene_Intro.h" />
     <ClInclude Include="Source\Scene_Logo.h" />
     <ClInclude Include="Source\Scene_END.h" />
+    <ClInclude Include="Source\Animation.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

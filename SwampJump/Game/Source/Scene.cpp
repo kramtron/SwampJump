@@ -9,6 +9,7 @@
 #include "Scene_Logo.h"
 #include "Scene_END.h"
 #include "Map.h"
+#include "Animation.h"
 
 #include "Defs.h"
 #include "Log.h"
