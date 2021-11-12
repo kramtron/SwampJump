@@ -58,6 +58,7 @@ public:
 	bool coyotejump = false;
 	bool tocant_terra_abans = false;
 	bool tocant_terra = false;
+	bool sentit = true; //dreta true, esquerra false
 
 	bool LoadState(pugi::xml_node&);
 

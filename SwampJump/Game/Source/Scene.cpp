@@ -86,14 +86,16 @@ bool Scene::Start()
 	idleLAnim.speed = 0.015f;
 
 	jumpRAnim.Empty();	//Jump Right
+	jumpRAnim.PushBack({ 48, 0, 16, 16 });	//walk
 	jumpRAnim.PushBack({ 32, 0, 16, 16 });	//Jump
-	jumpRAnim.loop = true;
-	jumpRAnim.speed = 0.0f;
+	jumpRAnim.loop = false;
+	jumpRAnim.speed = 0.03f;
 
 	jumpLAnim.Empty();	//Jump Left
+	jumpLAnim.PushBack({ 48, 32, 16, 16 });	//walk left
 	jumpLAnim.PushBack({ 32, 32, 16, 16 });	//Jump left
-	jumpLAnim.loop = true;
-	jumpLAnim.speed = 0.0f;
+	jumpLAnim.loop = false;
+	jumpLAnim.speed = 0.03f;
 
 	walkRAnim.Empty();	//Walk Right
 	walkRAnim.PushBack({ 48, 0, 16, 16 });	//Walk
@@ -185,10 +187,12 @@ bool Scene::Update(float dt)
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
  			player.vx = -2;
+			sentit = false;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 			player.vx = 2;
+			sentit = true;
 		}
 		//
 		
@@ -216,12 +220,12 @@ bool Scene::Update(float dt)
 			}
 		}
 		else {			//NO toco terra
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-				if (doblesalt || coyotejump) {
-					player.vy = -4;
-					doblesalt = false;
-					coyotejump = false;
-				}
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && (doblesalt || coyotejump)) {
+				player.vy = -4;
+				doblesalt = false;
+				coyotejump = false;
+				jumpRAnim.Reset();
+				jumpLAnim.Reset();
 			}
 		}
 		if (tocant_terra_abans && tocant_terra)
@@ -269,6 +273,49 @@ bool Scene::Update(float dt)
 
 	}
 	
+	//GESTOR ANIMACIONS
+	if (tocant_terra && (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
+		if (sentit) { //walking right
+			if (currentFrogAnimation != &walkRAnim) {
+				walkRAnim.Reset();
+				currentFrogAnimation = &walkRAnim;
+			}
+		}
+		else { //walking left
+			if (currentFrogAnimation != &walkLAnim) {
+				walkLAnim.Reset();
+				currentFrogAnimation = &walkLAnim;
+			}
+		}
+	}
+	else if (tocant_terra) {
+		if (sentit) { //idle right
+			if (currentFrogAnimation != &idleRAnim) {
+				idleRAnim.Reset();
+				currentFrogAnimation = &idleRAnim;
+			}
+		}
+		else { //idle left
+			if (currentFrogAnimation != &idleLAnim) {
+				idleLAnim.Reset();
+				currentFrogAnimation = &idleLAnim;
+			}
+		}
+	}
+	else {//saltant
+		if (sentit) {
+			if (currentFrogAnimation != &jumpRAnim) {
+				//only resets in double jump
+				currentFrogAnimation = &jumpRAnim;
+			}
+		}
+		else {
+			if (currentFrogAnimation != &jumpLAnim) {
+				//only resets in double jump
+				currentFrogAnimation = &jumpLAnim;
+			}
+		}
+	}
 
 	//RENDER IMATGES
 	
