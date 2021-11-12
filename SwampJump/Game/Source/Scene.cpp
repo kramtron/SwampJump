@@ -129,8 +129,8 @@ bool Scene::Update(float dt)
 
 	//Te coloca en el inicio del nivel
 	if (reset) {
-		player.x = 400;
-		player.y = 426;
+		player.x = 300;
+		player.y = 300;
 		parallax1 = 0;
 		parallax2 = 0;
 		parallax3 = 0;
@@ -191,6 +191,9 @@ bool Scene::Update(float dt)
 			player.vx = 2;
 		}
 		//
+		if (player.vy == 0) {
+			player.vy = 1;
+		}
 
 		if (aceleration_timer == 0) {
 			player.vy += player.ay;
@@ -203,21 +206,34 @@ bool Scene::Update(float dt)
 			aceleration_timer--;
 		}
 
-		//doble salt ARREGLAR
-		if (!salt_abans && saltant)
-			doblesalt = true;
-
-  		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt && saltant) {
-			player.vy = -4;
+		//Salt
+		if (tocant_terra) { //Si estic al terra
 			doblesalt = false;
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+				player.vy = -4;
+				doblesalt = true;
+			}
 		}
-		salt_abans = saltant;
-		saltant = true;
+		else {			//NO toco terra
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+				if (doblesalt || coyotejump) {
+					player.vy = -4;
+					doblesalt = false;
+					coyotejump = false;
+				}
+			}
+		}
+		if (tocant_terra_abans && tocant_terra)
+			coyotejump = true;
+
+		tocant_terra_abans = tocant_terra;
+		
+
 
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
 		//COLISIONS
-
+		tocant_terra = false;
 		//abans de res colision coords
 		app->map->Getcolision_coords(player.x);
 
@@ -236,20 +252,9 @@ bool Scene::Update(float dt)
 					(player.y + 64 + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
 					//xoc vertical
 					if (player.vy >= 0) { //xoca amb el terra
-						saltant = false;
-						if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //saltar només quan toquis a terra
-							player.vy = -4;
-						}
-						else {
-							player.vy = 0;
-						}
+						tocant_terra = true;
 					}
-					else if (player.vy < 0){ //xoca amb el sostre
-						player.vy = 0;
-					}
-				}
-				else {
-					player.vx = 0;
+					player.vy = 0;
 				}
 			}
 		}

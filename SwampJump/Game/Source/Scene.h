@@ -54,9 +54,10 @@ public:
 	iPoint before_camera;
 	
 	int aceleration_timer = 0;
-	bool saltant = false;
-	bool salt_abans = false;
 	bool doblesalt = false;
+	bool coyotejump = false;
+	bool tocant_terra_abans = false;
+	bool tocant_terra = false;
 
 	bool LoadState(pugi::xml_node&);
 
