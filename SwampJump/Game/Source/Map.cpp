@@ -90,7 +90,7 @@ bool Map::Awake(pugi::xml_node& config)
 //	}
 }*/
 
-void Map::Getcolision_coords(int player_x) {
+void Map::Getcolision_coords(int player_x, int player_y) {
 	int i = 0;
 	ListItem<MapLayer*>* mapLayerItem;
 	mapLayerItem = mapData.layers.start;
@@ -102,7 +102,7 @@ void Map::Getcolision_coords(int player_x) {
 
 	for (int x = (player_x / 32) - 1; x < (player_x / 32) + 3; x++) // 1 tile enrere i 3 endevant
 	{
-		for (int y = 0; y < mapLayerItem->data->height; y++)
+		for (int y = (player_y / 32) - 2; y < (player_y / 32) + 10; y++)
 		{
 			int gid = mapLayerItem->data->Get(x, y);
 

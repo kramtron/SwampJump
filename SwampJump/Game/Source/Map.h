@@ -127,7 +127,7 @@ public:
 
     void DrawColisions();
 
-	void Getcolision_coords(int player_x);
+	void Getcolision_coords(int player_x, int player_y);
 
     // Called before quitting
     bool CleanUp();

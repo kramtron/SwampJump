@@ -2,6 +2,7 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Animation.h"
 
 struct SDL_Texture;
 
@@ -42,8 +43,6 @@ public:
 
 	bool reset = false;
 
-	int timer = 0;
-
 	struct player_struct
 	{
 		int x = 300;
@@ -55,46 +54,43 @@ public:
 	iPoint before_camera;
 	
 	int aceleration_timer = 0;
-	int scene_timer = 0;
-	int timer_salt = 0;
-	bool saltant = false;
 	bool doblesalt = false;
 	bool coyotejump = false;
-	bool walking = false;
-	bool sentit_moviment = true; //true cap a la dreta
+	bool tocant_terra_abans = false;
+	bool tocant_terra = false;
 
 	bool LoadState(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
 
 private:
-	SDL_Texture* imgFons1;
-	SDL_Texture* imgFons2;
-	SDL_Texture* imgFons3;
-	SDL_Texture* imgFons4;
-	SDL_Texture* granota;
+	SDL_Texture* imgFons1 = nullptr;
+	SDL_Texture* imgFons2 = nullptr;
+	SDL_Texture* imgFons3 = nullptr;
+	SDL_Texture* imgFons4 = nullptr;
+	SDL_Texture* granota = nullptr;
 
-	SDL_Texture* arbre1;
-	SDL_Texture* arbre2;
-	SDL_Texture* tronc1;
-	SDL_Texture* cartell1;
-	SDL_Texture* cartell5;
-	SDL_Texture* cartell8;
-	SDL_Texture* bush1;
-	SDL_Texture* bush3;
-	SDL_Texture* bush8;
+	SDL_Texture* arbre1 = nullptr;
+	SDL_Texture* arbre2 = nullptr;
+	SDL_Texture* tronc1 = nullptr;
+	SDL_Texture* cartell1 = nullptr;
+	SDL_Texture* cartell5 = nullptr;
+	SDL_Texture* cartell8 = nullptr;
+	SDL_Texture* bush1 = nullptr;
+	SDL_Texture* bush3 = nullptr;
+	SDL_Texture* bush8 = nullptr;
 
 	float parallax1 = 0;
 	int parallax2 = 0;
 	float parallax3 = 0;
-	//SDL_Rect rect1;
-	SDL_Rect PlayerRect;
-	SDL_Rect PlayerRectA1;
-	SDL_Rect PlayerRectA2;
-	SDL_Rect PlayerRectJump;
-	SDL_Rect PlayerRectWalk;
-	enum PAnim {IDLE, A1, A2, JUMP, WALK};
-	PAnim playerAnim = IDLE;
+	
+	Animation* currentFrogAnimation = nullptr;
+	Animation idleRAnim;
+	Animation idleLAnim;
+	Animation jumpRAnim;
+	Animation jumpLAnim;
+	Animation walkRAnim;
+	Animation walkLAnim;
 };
 
 #endif // __SCENE_H__

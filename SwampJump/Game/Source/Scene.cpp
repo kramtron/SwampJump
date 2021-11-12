@@ -9,6 +9,7 @@
 #include "Scene_Logo.h"
 #include "Scene_END.h"
 #include "Map.h"
+#include "Animation.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -64,13 +65,50 @@ bool Scene::Start()
 	app->render->camera.x = 0;
 	app->render->camera.y = -120;
 
-	PlayerRect = { 16, 0, 16, 16 };
-	PlayerRectA1 = { 0, 0, 16, 16 };
-	PlayerRectA2 = { 0, 16, 16, 16 };
-	PlayerRectJump = { 32, 0, 16, 16 };
-	PlayerRectWalk = { 48, 0, 16, 16 };
 
-	sentit_moviment = true;
+	// ANIMACIONS
+	idleRAnim.Empty();	//Idle Right
+	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	idleRAnim.PushBack({ 0, 0, 16, 16 });	//Croar1
+	idleRAnim.PushBack({ 0, 16, 16, 16 });	//Croar2
+	idleRAnim.loop = true;
+	idleRAnim.speed = 0.015;
+
+	idleLAnim.Empty();	//Idle Left
+	idleLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	idleLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	idleLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	idleLAnim.PushBack({ 0, 32, 16, 16 });	//Croar1 left
+	idleLAnim.PushBack({ 0, 48, 16, 16 });	//Croar2 left
+	idleLAnim.pingpong = true;
+	idleLAnim.speed = 0.015;
+
+	jumpRAnim.Empty();	//Jump Right
+	jumpRAnim.PushBack({ 32, 0, 16, 16 });	//Jump
+	jumpRAnim.loop = true;
+	jumpRAnim.speed = 0;
+
+	jumpLAnim.Empty();	//Jump Left
+	jumpLAnim.PushBack({ 32, 32, 16, 16 });	//Jump left
+	jumpLAnim.loop = true;
+	jumpLAnim.speed = 0;
+
+	walkRAnim.Empty();	//Walk Right
+	walkRAnim.PushBack({ 48, 0, 16, 16 });	//Walk
+	walkRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
+	walkRAnim.loop = true;
+	walkRAnim.speed = 0.02;
+
+	walkLAnim.Empty();	//Walk Left
+	walkLAnim.PushBack({ 48, 32, 16, 16 });	//Walk left
+	walkLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
+	walkLAnim.loop = true;
+	walkLAnim.speed = 0.02;
+	
+	currentFrogAnimation = &idleRAnim;
+	// ANIMACIONS
 
 	return true;
 }
@@ -91,8 +129,8 @@ bool Scene::Update(float dt)
 
 	//Te coloca en el inicio del nivel
 	if (reset) {
-		player.x = 400;
-		player.y = 426;
+		player.x = 300;
+		player.y = 300;
 		parallax1 = 0;
 		parallax2 = 0;
 		parallax3 = 0;
@@ -143,34 +181,17 @@ bool Scene::Update(float dt)
 	}
 	else if (!godMode) {
 		LOG("GODMODE OFF");
-		//ANIMACIO TERRA
-		if (!saltant && !walking) {
-			if ((scene_timer < 40) || (scene_timer > 80 && scene_timer < 120)) {
-				playerAnim = A1;
-			}
-			else if (scene_timer >= 120) {
-				playerAnim = IDLE;
-			}
-			else {
-				playerAnim = A2;
-			}
-		}
-		else if (walking && !saltant) {
-			if (scene_timer % 40 == 0) {
-				if (playerAnim != WALK) {
-					playerAnim = WALK;
-				}
-				else {
-					playerAnim = IDLE;
-				}
-			}
+
+		//PLAYER MOVE
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+ 			player.vx = -2;
 		}
 
-		//MOVIMENT
-		player.x += player.vx;
-		player.y += player.vy;
-		player.vx = 0;
-		//Player.vy = 0;
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			player.vx = 2;
+		}
+		//
+		
 		if (aceleration_timer == 0) {
 			player.vy += player.ay;
 			aceleration_timer = 10;
@@ -182,111 +203,70 @@ bool Scene::Update(float dt)
 			aceleration_timer--;
 		}
 
-		//coyote jump
-		if (coyotejump) {
-			coyotejump = false;
-			doblesalt = true;
-			saltant = true;
+		if (player.vy == 0) {
+			player.vy = 1;
 		}
 
-		//doble salt
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && doblesalt) { //saltar només quan toquis a terra
-			player.vy = -4;
+		//Salt
+		if (tocant_terra) { //Si estic al terra
 			doblesalt = false;
-			playerAnim = WALK;
-			timer_salt = 40;
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+				player.vy = -4;
+				doblesalt = true;
+			}
 		}
+		else {			//NO toco terra
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+				if (doblesalt || coyotejump) {
+					player.vy = -4;
+					doblesalt = false;
+					coyotejump = false;
+				}
+			}
+		}
+		if (tocant_terra_abans && tocant_terra)
+			coyotejump = true;
 
-		if (timer_salt > 0) {
-			timer_salt--;
-		}
-		else if (timer_salt == 0) {
-			playerAnim = JUMP;
-			timer_salt--;
-		}
+		tocant_terra_abans = tocant_terra;
 		
+
 
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
 		//COLISIONS
-
+		tocant_terra = false;
 		//abans de res colision coords
-		app->map->Getcolision_coords(player.x);
+		app->map->Getcolision_coords(player.x, player.y);
 
 		for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
-			if ((player.x + 64 >= app->map->colision_coords[i]->x) && (player.x <= app->map->colision_coords[i]->x + 32) &&
-				(player.y + 64 >= app->map->colision_coords[i]->y) && (player.y <= app->map->colision_coords[i]->y + 32)) {
+			if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
+				(player.y + 64 + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
 
 				//El player està colisionant amb una o més tiles
-
-				//index més alt = més aprop de la tile
-				int indexDreta = player.x + 64 - app->map->colision_coords[i]->x;
-				int indexEsquerra = -(player.x - (app->map->colision_coords[i]->x + 32));
-				int indexBaix = player.y + 64 - app->map->colision_coords[i]->y;
-				int indexDalt = -(player.y - (app->map->colision_coords[i]->y + 32));
-
-				int index[4];
-				index[0] = indexDreta;
-				index[1] = indexEsquerra;
-				index[2] = indexBaix;
-				index[3] = indexDalt;
-
-				//Quin index és més petit?
-				for (int j = 0; j < 3; j++) {
-					if (index[0] > index[j + 1]) {
-						index[0] = index[j + 1];
-					}
-				}
-
-				if (index[0] == indexDreta) {//colisió dreta
+				if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
+					(player.y + 64 > app->map->colision_coords[i]->y) && (player.y < app->map->colision_coords[i]->y + 32)) {
+					//Xoca pel costat
 					player.vx = 0;
-					player.x = app->map->colision_coords[i]->x - 64;
 				}
-				if (index[0] == indexEsquerra) {//colisió esquerra
-					player.vx = 0;
-					player.x = app->map->colision_coords[i]->x + 32;
-				}
-				if (index[0] == indexBaix) {//colisió baix
-					saltant = false;
-					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) { //saltar només quan toquis a terra
-						player.vy = -4;
-						playerAnim = JUMP;
-						saltant = true;
-						doblesalt = true;
+
+				if ((player.x + 64 > app->map->colision_coords[i]->x) && (player.x < app->map->colision_coords[i]->x + 32) &&
+					(player.y + 64 + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
+					//xoc vertical
+					if (player.vy >= 0) { //xoca amb el terra
+						tocant_terra = true;
 					}
-					else if (((indexBaix + 1) < indexDreta) && ((indexBaix + 1) < indexEsquerra)){
-						player.y = app->map->colision_coords[i]->y - 64;
-						player.vy = 0;
-					}
-					coyotejump = true;
-				}
-				if (index[0] == indexDalt && (((indexDalt + 1) < indexDreta) && ((indexDalt + 1) < indexEsquerra))) {//colisió dalt
 					player.vy = 0;
-					player.y = app->map->colision_coords[i]->y + 33;
 				}
 			}
 		}
 		//												COLISIONS COLISIONS
 		//												COLISIONS COLISIONS
 
-		//PLAYER MOVE
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			player.vx = -2;
-			sentit_moviment = false;
-		}
+		//MOVIMENT
+		player.x += player.vx;
+		player.y += player.vy;
+		player.vx = 0;
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			player.vx = 2;
-			sentit_moviment = true;
-		}
-
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			walking = true;
-		}
-		else {
-			walking = false;
-		}
-		//
 	}
 	
 
@@ -352,49 +332,9 @@ bool Scene::Update(float dt)
 	app->map->Draw();
 
 	//Draw Granota
-	if (sentit_moviment){
-		PlayerRect.y = 0;
-		PlayerRectA1.y = 0;
-		PlayerRectA2.y = 16;
-		PlayerRectJump.y = 0;
-		PlayerRectWalk.y = 0;
-	}
-	else {
-		PlayerRect.y = 32;
-		PlayerRectA1.y = 32;
-		PlayerRectA2.y = 48;
-		PlayerRectJump.y = 32;
-		PlayerRectWalk.y = 32;
-	}
-
-	switch (playerAnim) {
-	case IDLE:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRect, 1, 4);
-		break;
-	case A1:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectA1, 1, 4);
-		break;
-	case A2:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectA2, 1, 4);
-		break;
-	case JUMP:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectJump, 1, 4);
-		break;
-	case WALK:
-		app->render->DrawTexture(granota, player.x, player.y, &PlayerRectWalk, 1, 4);
-		break;
-	}
+	currentFrogAnimation->Update();
+	app->render->DrawTexture(granota, player.x, player.y, &currentFrogAnimation->GetCurrentFrame(), 1, 4);
 	//
-
-	//SCENE TIMER
-	if (scene_timer <= 0) {
-		scene_timer = 199;
-	}
-	else {
-		scene_timer--;
-	}
-	//
-
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
