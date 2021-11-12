@@ -191,10 +191,7 @@ bool Scene::Update(float dt)
 			player.vx = 2;
 		}
 		//
-		if (player.vy == 0) {
-			player.vy = 1;
-		}
-
+		
 		if (aceleration_timer == 0) {
 			player.vy += player.ay;
 			aceleration_timer = 10;
@@ -204,6 +201,10 @@ bool Scene::Update(float dt)
 		}
 		else {
 			aceleration_timer--;
+		}
+
+		if (player.vy == 0) {
+			player.vy = 1;
 		}
 
 		//Salt
