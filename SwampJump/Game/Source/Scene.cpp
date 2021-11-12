@@ -236,7 +236,7 @@ bool Scene::Update(float dt)
 		//COLISIONS
 		tocant_terra = false;
 		//abans de res colision coords
-		app->map->Getcolision_coords(player.x);
+		app->map->Getcolision_coords(player.x, player.y);
 
 		for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
 			if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
