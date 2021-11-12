@@ -74,7 +74,7 @@ bool Scene::Start()
 	idleRAnim.PushBack({ 0, 0, 16, 16 });	//Croar1
 	idleRAnim.PushBack({ 0, 16, 16, 16 });	//Croar2
 	idleRAnim.loop = true;
-	idleRAnim.speed = 0.015;
+	idleRAnim.speed = 0.015f;
 
 	idleLAnim.Empty();	//Idle Left
 	idleLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
@@ -83,29 +83,29 @@ bool Scene::Start()
 	idleLAnim.PushBack({ 0, 32, 16, 16 });	//Croar1 left
 	idleLAnim.PushBack({ 0, 48, 16, 16 });	//Croar2 left
 	idleLAnim.pingpong = true;
-	idleLAnim.speed = 0.015;
+	idleLAnim.speed = 0.015f;
 
 	jumpRAnim.Empty();	//Jump Right
 	jumpRAnim.PushBack({ 32, 0, 16, 16 });	//Jump
 	jumpRAnim.loop = true;
-	jumpRAnim.speed = 0;
+	jumpRAnim.speed = 0.0f;
 
 	jumpLAnim.Empty();	//Jump Left
 	jumpLAnim.PushBack({ 32, 32, 16, 16 });	//Jump left
 	jumpLAnim.loop = true;
-	jumpLAnim.speed = 0;
+	jumpLAnim.speed = 0.0f;
 
 	walkRAnim.Empty();	//Walk Right
 	walkRAnim.PushBack({ 48, 0, 16, 16 });	//Walk
 	walkRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
 	walkRAnim.loop = true;
-	walkRAnim.speed = 0.02;
+	walkRAnim.speed = 0.02f;
 
 	walkLAnim.Empty();	//Walk Left
 	walkLAnim.PushBack({ 48, 32, 16, 16 });	//Walk left
 	walkLAnim.PushBack({ 16, 32, 16, 16 });	//Idle left
 	walkLAnim.loop = true;
-	walkLAnim.speed = 0.02;
+	walkLAnim.speed = 0.02f;
 	
 	currentFrogAnimation = &idleRAnim;
 	// ANIMACIONS
@@ -324,9 +324,9 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(imgFons3, -app->render->camera.x - parallax2 + 1728, -app->render->camera.y, NULL, 1, 3);
 	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3, -app->render->camera.y - 70, NULL, 1, 3);
 	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3 + 1728, -app->render->camera.y - 70, NULL, 1, 3);
-	
+
 	//Draw decorations
-	DrawDecorations();
+	DrawDecorations(); //2 no es dibuixen
 
 	//Draw map
 	app->map->Draw();
