@@ -33,8 +33,7 @@ bool ModuleEnemy::Awake()
 // Called before the first frame
 bool ModuleEnemy::Start()
 {
-	gameIntro = app->tex->Load("Assets/Menu/gameIntro.png");
-
+	
 	return true;
 }
 
@@ -49,21 +48,8 @@ bool ModuleEnemy::Update(float dt)
 {
 	bool ret = true;
 
-	//si esta activa la scene
-	if (active)
-	{
-		app->render->camera.y = 0;
-		app->render->DrawTexture(gameIntro, 0, 0, NULL, 1);
-
-		//acceptar opció
-		if (timerLogo >= 2000)
-		{
-			active = false;
-			app->scene_intro->active = true;
-		}
-		timerLogo++;
-	}
-
+	
+	
 	return ret;
 }
 
@@ -71,7 +57,6 @@ bool ModuleEnemy::Update(float dt)
 bool ModuleEnemy::PostUpdate()
 {
 	bool ret = true;
-
 	return ret;
 }
 
@@ -87,4 +72,31 @@ bool ModuleEnemy::CleanUp()
 void ModuleEnemy::DebugDraw()
 {
 
+}
+
+bool ModuleEnemy::LoadState(pugi::xml_node& configMeleEnemicSpawn) {
+
+	//Asigna las cordenadas de los spawns de enemigos
+	meleEnemicSpawn1.x = configMeleEnemicSpawn.child("spawnPosition1").attribute("x").as_int();
+	meleEnemicSpawn1.y = configMeleEnemicSpawn.child("spawnPosition1").attribute("y").as_int();
+	meleEnemicSpawn2.x = configMeleEnemicSpawn.child("spawnPosition2").attribute("x").as_int();
+	meleEnemicSpawn2.y = configMeleEnemicSpawn.child("spawnPosition2").attribute("y").as_int();
+	meleEnemicSpawn3.x = configMeleEnemicSpawn.child("spawnPosition3").attribute("x").as_int();
+	meleEnemicSpawn3.y = configMeleEnemicSpawn.child("spawnPosition3").attribute("y").as_int();
+	meleEnemicSpawn4.x = configMeleEnemicSpawn.child("spawnPosition4").attribute("x").as_int();
+	meleEnemicSpawn4.y = configMeleEnemicSpawn.child("spawnPosition4").attribute("y").as_int();
+	meleEnemicSpawn5.x = configMeleEnemicSpawn.child("spawnPosition5").attribute("x").as_int();
+	meleEnemicSpawn5.y = configMeleEnemicSpawn.child("spawnPosition5").attribute("y").as_int();
+	meleEnemicSpawn6.x = configMeleEnemicSpawn.child("spawnPosition6").attribute("x").as_int();
+	meleEnemicSpawn6.y = configMeleEnemicSpawn.child("spawnPosition6").attribute("y").as_int();
+	meleEnemicSpawn7.x = configMeleEnemicSpawn.child("spawnPosition7").attribute("x").as_int();
+	meleEnemicSpawn7.y = configMeleEnemicSpawn.child("spawnPosition7").attribute("y").as_int();
+
+	return true;
+}
+
+bool ModuleEnemy::SaveState(pugi::xml_node& configEnemicSpawn) const {
+
+
+	return true;
 }

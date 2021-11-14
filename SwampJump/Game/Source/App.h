@@ -119,6 +119,7 @@ private:
 	pugi::xml_document configSaveGame;
 	pugi::xml_node configSaveLoad;
 	pugi::xml_node configRenderer;
+	pugi::xml_node configMeleEnemicSpawn;
 
 
 	uint frames;

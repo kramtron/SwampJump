@@ -1,10 +1,18 @@
-<?xml version="1.0"?>
 <game_state>
 	<input />
 	<window />
 	<textures />
 	<audio />
 	<scene />
+	<meleEnemicSpawn>
+		<spawnPosition1 x="3246" y="544"/>
+		<spawnPosition2 x="5726" y="384"/>
+		<spawnPosition3 x="6700" y="576"/>
+		<spawnPosition4 x="8308" y="160"/>
+		<spawnPosition5 x="9222" y="160"/>
+		<spawnPosition6 x="12102" y="864"/>
+		<spawnPosition7 x="12564" y="864"/>
+	</meleEnemicSpawn>
 	<renderer>
 		<player x="556" y="67082" />
 		<camera x="0" y="-50" />

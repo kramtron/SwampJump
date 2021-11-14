@@ -34,9 +34,27 @@ public:
 
 	void DebugDraw();
 
-	int timerLogo = 0;
+	
+	bool LoadState(pugi::xml_node&);
 
-	SDL_Texture* gameIntro;
+	bool SaveState(pugi::xml_node&) const;
+
+	struct MeleEnemicSpawn {
+
+		int x = 0,
+			y = 0;
+
+	};
+	MeleEnemicSpawn meleEnemicSpawn1;
+	MeleEnemicSpawn meleEnemicSpawn2;
+	MeleEnemicSpawn meleEnemicSpawn3;
+	MeleEnemicSpawn meleEnemicSpawn4;
+	MeleEnemicSpawn meleEnemicSpawn5;
+	MeleEnemicSpawn meleEnemicSpawn6;
+	MeleEnemicSpawn meleEnemicSpawn7;
+	bool loadMeleEnemicSpawn = true;
+
+	SDL_Rect test;
 
 private:
 };

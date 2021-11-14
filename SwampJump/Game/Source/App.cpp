@@ -170,19 +170,18 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 
 
 
-
 pugi::xml_node App::LoadGame_Data(pugi::xml_document& configSaveGame)const {
-	pugi::xml_node ret;
+	pugi::xml_node ret2;
 
-	pugi::xml_parse_result result = configSaveGame.load_file(SAVE_STATE_FILENAME);
+	pugi::xml_parse_result result2 = configSaveGame.load_file(SAVE_STATE_FILENAME);
 
-	if (result == NULL) {
-		LOG("could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description());
+	if (result2 == NULL) {
+		LOG("could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result2.description());
 	}
 	else {
-		ret = configSaveGame.child("game_state");
+		ret2 = configSaveGame.child("game_state");
 	}
-	return ret;
+	return ret2;
 }
 // ---------------------------------------------
 void App::PrepareUpdate()
@@ -195,6 +194,8 @@ void App::FinishUpdate()
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
+	if (app->moduleEnemy->loadMeleEnemicSpawn==true)LoadGame();
+
 }
 
 // Call modules before each loop iteration
@@ -331,13 +332,29 @@ bool App::LoadGame()
 	configSaveLoad = LoadGame_Data(configSaveGame);
 
 	if (configSaveLoad.empty() == false) {
+
 		ret = true;
-		configRenderer = configSaveLoad.child("renderer");
-		app->scene->LoadState(configRenderer);
-		//app->render->LoadState(configRenderer);
+
+		//Carga la posicion del personaje y de la camara
+		if (loadGameRequested) {
+
+			configRenderer = configSaveLoad.child("renderer");
+			app->scene->LoadState(configRenderer);
+			loadGameRequested = false;
+
+		}
+
+		//Carga la posicion de los diferentes spawn de los enemigos mele
+		if (app->moduleEnemy->loadMeleEnemicSpawn) {
+
+			configMeleEnemicSpawn = configSaveLoad.child("meleEnemicSpawn");
+			app->moduleEnemy->LoadState(configMeleEnemicSpawn);
+			app->moduleEnemy->loadMeleEnemicSpawn == false;
+
+		}
+
 	}
 
-	loadGameRequested = false;
 
 	return ret;
 }

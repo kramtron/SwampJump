@@ -10,6 +10,8 @@
 #include "Scene_END.h"
 #include "Map.h"
 #include "Animation.h"
+#include "ModuleEnemy.h"
+
 
 #include "Defs.h"
 #include "Log.h"
@@ -411,6 +413,21 @@ bool Scene::Update(float dt)
 		active = false;
 	}
 
+
+	SDL_Rect meleEnemicSpawn1{ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };
+	SDL_Rect meleEnemicSpawn2{ app->moduleEnemy->meleEnemicSpawn2.x,app->moduleEnemy->meleEnemicSpawn2.y,50,50 };
+	SDL_Rect meleEnemicSpawn3{ app->moduleEnemy->meleEnemicSpawn3.x,app->moduleEnemy->meleEnemicSpawn3.y,50,50 };
+	SDL_Rect meleEnemicSpawn4{ app->moduleEnemy->meleEnemicSpawn4.x,app->moduleEnemy->meleEnemicSpawn4.y,50,50 };
+	SDL_Rect meleEnemicSpawn5{ app->moduleEnemy->meleEnemicSpawn5.x,app->moduleEnemy->meleEnemicSpawn5.y,50,50 };
+	SDL_Rect meleEnemicSpawn6{ app->moduleEnemy->meleEnemicSpawn6.x,app->moduleEnemy->meleEnemicSpawn6.y,50,50 };
+	SDL_Rect meleEnemicSpawn7{ app->moduleEnemy->meleEnemicSpawn7.x,app->moduleEnemy->meleEnemicSpawn7.y,50,50 };
+	app->render->DrawRectangle(meleEnemicSpawn1, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn2, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn3, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn4, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn5, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
 	return true;
 }
 
