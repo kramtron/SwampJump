@@ -35,7 +35,8 @@ public:
 	void DebugDraw();
 
 	
-	bool LoadState(pugi::xml_node&);
+	bool LoadMeleEnemicSpawn(pugi::xml_node&);
+	bool LoadFlyEnemicSpawn(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
 
@@ -45,6 +46,7 @@ public:
 			y = 0;
 
 	};
+
 	MeleEnemicSpawn meleEnemicSpawn1;
 	MeleEnemicSpawn meleEnemicSpawn2;
 	MeleEnemicSpawn meleEnemicSpawn3;
@@ -52,7 +54,20 @@ public:
 	MeleEnemicSpawn meleEnemicSpawn5;
 	MeleEnemicSpawn meleEnemicSpawn6;
 	MeleEnemicSpawn meleEnemicSpawn7;
+
+	struct FlyEnemicSpawn {
+
+		int x = 0,
+			y = 0;
+
+	};
+	FlyEnemicSpawn flyEnemicSpawn1;
+	FlyEnemicSpawn flyEnemicSpawn2;
+	FlyEnemicSpawn flyEnemicSpawn3;
+	FlyEnemicSpawn flyEnemicSpawn4;
+	
 	bool loadMeleEnemicSpawn = true;
+	bool loadFlyEnemicSpawn = true;
 
 	SDL_Rect test;
 

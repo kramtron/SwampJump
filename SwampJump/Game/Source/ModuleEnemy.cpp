@@ -74,9 +74,9 @@ void ModuleEnemy::DebugDraw()
 
 }
 
-bool ModuleEnemy::LoadState(pugi::xml_node& configMeleEnemicSpawn) {
+bool ModuleEnemy::LoadMeleEnemicSpawn(pugi::xml_node& configMeleEnemicSpawn) {
 
-	//Asigna las cordenadas de los spawns de enemigos
+	//Asigna las cordenadas de los spawns de enemigos Mele
 	meleEnemicSpawn1.x = configMeleEnemicSpawn.child("spawnPosition1").attribute("x").as_int();
 	meleEnemicSpawn1.y = configMeleEnemicSpawn.child("spawnPosition1").attribute("y").as_int();
 	meleEnemicSpawn2.x = configMeleEnemicSpawn.child("spawnPosition2").attribute("x").as_int();
@@ -94,7 +94,20 @@ bool ModuleEnemy::LoadState(pugi::xml_node& configMeleEnemicSpawn) {
 
 	return true;
 }
+bool ModuleEnemy::LoadFlyEnemicSpawn(pugi::xml_node& configFlyEnemicSpawn) {
 
+	//Asigna las cordenadas de los spawns de enemigos Voladores
+	flyEnemicSpawn1.x = configFlyEnemicSpawn.child("spawnPosition1").attribute("x").as_int();
+	flyEnemicSpawn1.y = configFlyEnemicSpawn.child("spawnPosition1").attribute("y").as_int();
+	flyEnemicSpawn2.x = configFlyEnemicSpawn.child("spawnPosition2").attribute("x").as_int();
+	flyEnemicSpawn2.y = configFlyEnemicSpawn.child("spawnPosition2").attribute("y").as_int();
+	flyEnemicSpawn3.x = configFlyEnemicSpawn.child("spawnPosition3").attribute("x").as_int();
+	flyEnemicSpawn3.y = configFlyEnemicSpawn.child("spawnPosition3").attribute("y").as_int();
+	flyEnemicSpawn4.x = configFlyEnemicSpawn.child("spawnPosition4").attribute("x").as_int();
+	flyEnemicSpawn4.y = configFlyEnemicSpawn.child("spawnPosition4").attribute("y").as_int();
+
+	return true;
+}
 bool ModuleEnemy::SaveState(pugi::xml_node& configEnemicSpawn) const {
 
 

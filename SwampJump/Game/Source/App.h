@@ -120,6 +120,7 @@ private:
 	pugi::xml_node configSaveLoad;
 	pugi::xml_node configRenderer;
 	pugi::xml_node configMeleEnemicSpawn;
+	pugi::xml_node configFlyEnemicSpawn;
 
 
 	uint frames;
