@@ -17,6 +17,7 @@ class Textures;
 class Audio;
 class Scene_Logo;
 class Scene_Intro;
+class ModuleEnemy;
 class Scene;
 class Scene_END;
 class Map;
@@ -93,6 +94,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene_Logo* scene_logo;
+	ModuleEnemy* moduleEnemy;
 	Scene_Intro* scene_intro;
 	Scene* scene;
 	Scene_END* scene_end;
