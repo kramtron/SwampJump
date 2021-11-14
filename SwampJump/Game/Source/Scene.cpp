@@ -425,6 +425,7 @@ bool Scene::PostUpdate()
 	if (debug)
 		DebugDraw();
 
+	LOG("Player x: %d y: %d", player.x, player.y);
 	return ret;
 }
 
@@ -476,12 +477,12 @@ void Scene::DrawDecorations() {
 	app->render->DrawTexture(arbre1, 2800, 64, NULL, 1, 3);
 	app->render->DrawTexture(arbre2, 14016, 400, NULL, 1, 3);
 	app->render->DrawTexture(tronc1, 12320, 850, NULL, 1, 3);
-	app->render->DrawTexture(cartell1, 512, 420, NULL, 1, 3);
+	app->render->DrawTexture(cartell1, 1800, 485, NULL, 1, 3);
 	app->render->DrawTexture(cartell5, 13420, 260, NULL, 1, 3);
 	app->render->DrawTexture(cartell8, 3648, 580, NULL, 1, 3);
 	app->render->DrawTexture(cartell8, 9856, 356, NULL, 1, 3);
 	app->render->DrawTexture(cartell8, 15350, 580, NULL, 1, 3);
-	app->render->DrawTexture(bush8, 900, 754, NULL, 1, 3);
+	app->render->DrawTexture(bush8, 1900, 754, NULL, 1, 3);
 	app->render->DrawTexture(bush1, 4500, 790, NULL, 1, 3);
 	app->render->DrawTexture(bush3, 8260, 790, NULL, 1, 3);
 }
