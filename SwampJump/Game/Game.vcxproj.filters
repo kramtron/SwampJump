@@ -19,6 +19,7 @@
     <ClCompile Include="Source\Scene_Intro.cpp" />
     <ClCompile Include="Source\Scene_Logo.cpp" />
     <ClCompile Include="Source\Scene_END.cpp" />
+    <ClCompile Include="Source\ModuleEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="Source\Scene_Logo.h" />
     <ClInclude Include="Source\Scene_END.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\ModuleEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
