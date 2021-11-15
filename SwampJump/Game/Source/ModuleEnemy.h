@@ -7,6 +7,9 @@
 struct SDL_Texture;
 class MeleEnemic {
 public:
+	MeleEnemic();
+	virtual ~MeleEnemic();
+public:
 	int x = 0, y = 0;
 
 };
@@ -48,7 +51,7 @@ public:
 
 
 	
-	p2List<MeleEnemic*>meleEnemicList;
+	p2List<MeleEnemic*>meleEnemic1List;
 
 	MeleEnemic* meleEnemicCreator(int x, int y);
 

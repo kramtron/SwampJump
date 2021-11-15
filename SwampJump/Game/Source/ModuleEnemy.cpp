@@ -22,6 +22,12 @@ ModuleEnemy::ModuleEnemy() : Module()
 ModuleEnemy::~ModuleEnemy()
 {}
 
+MeleEnemic::MeleEnemic() {
+
+}
+MeleEnemic::~MeleEnemic() {
+
+}
 // Called before render is available
 bool ModuleEnemy::Awake()
 {
@@ -49,8 +55,7 @@ bool ModuleEnemy::Update(float dt)
 {
 
 	bool ret = true;
-	meleEnemicList.add(meleEnemicCreator(meleEnemicSpawn1.x,meleEnemicSpawn1.y));
-	meleEnemicList.getLast()->data->x += 1;
+	
 	
 	return ret;
 }

@@ -430,12 +430,16 @@ bool Scene::Update(float dt)
 	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
 
+	app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn1.x, app->moduleEnemy->meleEnemicSpawn1.y));
+	SDL_Rect enemic{ app->moduleEnemy->meleEnemic1List.getLast()->data->x,app->moduleEnemy->meleEnemic1List.getLast()->data->y,50,50 };
 
-	app->moduleEnemy->meleEnemicList.getLast()->data->x += 1;
-	SDL_Rect enemic{ app->moduleEnemy->meleEnemicList.getLast()->data->x,app->moduleEnemy->meleEnemicList.getLast()->data->y,50,50 };
-
+	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
+	while (storage1 != NULL) {
+		storage1->data->x++;
+		storage1 = storage1->next;
+	}
 	app->render->DrawRectangle(enemic, 255, 255, 0);
-	LOG("Enemic x: %d y: %d", app->moduleEnemy->meleEnemicList.getLast()->data->x, app->moduleEnemy->meleEnemicList.getLast()->data->y);
+	LOG("Enemic x: %d y: %d", app->moduleEnemy->meleEnemic1List.getLast()->data->x, app->moduleEnemy->meleEnemic1List.getLast()->data->y);
 	return true;
 }
 
