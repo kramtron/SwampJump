@@ -33,7 +33,7 @@
 		<spawnPosition7 x="12564" y="864" />
 	</applePoint>
 	<renderer>
-		<player x="556" y="67082" />
+		<player x="300" y="416" />
 		<camera x="0" y="-50" />
 	</renderer>
 </game_state>

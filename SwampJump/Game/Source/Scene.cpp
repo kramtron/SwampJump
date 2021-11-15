@@ -430,16 +430,30 @@ bool Scene::Update(float dt)
 	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
 
-	app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn1.x, app->moduleEnemy->meleEnemicSpawn1.y));
-	SDL_Rect enemic{ app->moduleEnemy->meleEnemic1List.getLast()->data->x,app->moduleEnemy->meleEnemic1List.getLast()->data->y,50,50 };
+	SDL_Rect sensorSpawn1 = {app->moduleEnemy->meleEnemicSpawn1.x-800,app->moduleEnemy->meleEnemicSpawn1.y-500, 1500,1000};
+	spawnTimer++;
+	LOG("SpawnTimer: %d", spawnTimer);
+
+	if (player.x > sensorSpawn1.x && player.x < sensorSpawn1.w+sensorSpawn1.x) {
+		if (spawnTimer >= 3000) {
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn1.x, app->moduleEnemy->meleEnemicSpawn1.y));
+			spawnTimer = 0;
+		}
+	}
+
 
 	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
 	while (storage1 != NULL) {
 		storage1->data->x++;
+		SDL_Rect enemic={ storage1->data->x,storage1->data->y,50,50 };
+		SDL_Rect enemicSensor = { storage1->data->x-250,storage1->data->y-130,500,300 };
+		LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
+		app->render->DrawRectangle(enemic, 255, 255, 0);
+		app->render->DrawRectangle(enemicSensor, 255, 200, 50);
 		storage1 = storage1->next;
+
 	}
-	app->render->DrawRectangle(enemic, 255, 255, 0);
-	LOG("Enemic x: %d y: %d", app->moduleEnemy->meleEnemic1List.getLast()->data->x, app->moduleEnemy->meleEnemic1List.getLast()->data->y);
+
 	return true;
 }
 
@@ -499,7 +513,10 @@ void Scene::DebugDraw()
 	}
 	//Dibuja el collider de la rana
 	SDL_Rect rectPlayer = { player.x,player.y,64,64 };
+	SDL_Rect sensorSpawn1 = { app->moduleEnemy->meleEnemicSpawn1.x - 800,app->moduleEnemy->meleEnemicSpawn1.y - 500, 1500,1000 };
 	app->render->DrawRectangle(rectPlayer, 255, 255, 0, 80);
+	app->render->DrawRectangle(sensorSpawn1, 255, 255, 0, 40);
+
 }
 
 void Scene::DrawDecorations() {

@@ -59,6 +59,7 @@ public:
 	bool tocant_terra_abans = false;
 	bool tocant_terra = false;
 	bool sentit = true; //dreta true, esquerra false
+	int spawnTimer = 3000;
 
 	bool LoadState(pugi::xml_node&);
 
