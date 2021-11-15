@@ -40,6 +40,10 @@ public:
 
 	bool SaveState(pugi::xml_node&) const;
 
+	struct meleEnemic {
+		int x = 0, y = 0;
+	};
+
 	struct MeleEnemicSpawn {
 
 		int x = 0,
