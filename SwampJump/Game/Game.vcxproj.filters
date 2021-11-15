@@ -60,6 +60,7 @@
     <ClInclude Include="Source\Scene_END.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\ModuleEnemy.h" />
+    <ClInclude Include="GodList.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

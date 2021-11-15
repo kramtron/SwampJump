@@ -41,6 +41,7 @@ bool Scene::Start()
 	if(app->scene_logo->active == true)
 		active = false;
 
+
 	app->map->Load("Mapa1.tmx");
 	//app->map->Load("iso_walk.tmx");
 	
@@ -428,6 +429,13 @@ bool Scene::Update(float dt)
 	app->render->DrawRectangle(meleEnemicSpawn5, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
+
+
+	app->moduleEnemy->meleEnemicList.getLast()->data->x += 1;
+	SDL_Rect enemic{ app->moduleEnemy->meleEnemicList.getLast()->data->x,app->moduleEnemy->meleEnemicList.getLast()->data->y,50,50 };
+
+	app->render->DrawRectangle(enemic, 255, 255, 0);
+	LOG("Enemic x: %d y: %d", app->moduleEnemy->meleEnemicList.getLast()->data->x, app->moduleEnemy->meleEnemicList.getLast()->data->y);
 	return true;
 }
 

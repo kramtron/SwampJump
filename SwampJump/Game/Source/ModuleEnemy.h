@@ -2,9 +2,14 @@
 #define __MODULEENEMY_H__
 
 #include "Module.h"
+#include "p2List.h"
 
 struct SDL_Texture;
+class MeleEnemic {
+public:
+	int x = 0, y = 0;
 
+};
 class ModuleEnemy : public Module
 {
 public:
@@ -40,9 +45,12 @@ public:
 
 	bool SaveState(pugi::xml_node&) const;
 
-	struct meleEnemic {
-		int x = 0, y = 0;
-	};
+
+
+	
+	p2List<MeleEnemic*>meleEnemicList;
+
+	MeleEnemic* meleEnemicCreator(int x, int y);
 
 	struct MeleEnemicSpawn {
 
@@ -50,6 +58,7 @@ public:
 			y = 0;
 
 	};
+
 
 	MeleEnemicSpawn meleEnemicSpawn1;
 	MeleEnemicSpawn meleEnemicSpawn2;
@@ -74,6 +83,7 @@ public:
 	bool loadFlyEnemicSpawn = true;
 
 	SDL_Rect test;
+
 
 private:
 };

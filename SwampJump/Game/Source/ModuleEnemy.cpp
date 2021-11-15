@@ -8,6 +8,7 @@
 #include "Scene_Logo.h"
 #include "ModuleEnemy.h"
 #include "Map.h"
+#include "p2List.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -46,9 +47,10 @@ bool ModuleEnemy::PreUpdate()
 // Called each loop iteration
 bool ModuleEnemy::Update(float dt)
 {
-	bool ret = true;
 
-	
+	bool ret = true;
+	meleEnemicList.add(meleEnemicCreator(meleEnemicSpawn1.x,meleEnemicSpawn1.y));
+	//meleEnemicList.getFirst()->data->x += 1;
 	
 	return ret;
 }
@@ -112,4 +114,15 @@ bool ModuleEnemy::SaveState(pugi::xml_node& configEnemicSpawn) const {
 
 
 	return true;
+}
+
+
+MeleEnemic* ModuleEnemy::meleEnemicCreator(int x, int y) {
+	
+	MeleEnemic* newEnemy = new MeleEnemic();
+
+	newEnemy->x = x;
+	newEnemy->y = y;
+
+	return newEnemy;
 }
