@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "Animation.h"
 #include "ModuleEnemy.h"
+#include "ModuleScore.h"
 
 
 #include "Defs.h"

@@ -8,6 +8,7 @@
 #include "Scene_Intro.h"
 #include "Scene_Logo.h"
 #include "ModuleEnemy.h"
+#include "ModuleScore.h"
 #include "Scene_END.h"
 #include "Map.h"
 
@@ -29,6 +30,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	scene_logo = new Scene_Logo();
 	moduleEnemy = new ModuleEnemy();
+	modulescore = new ModuleScore();
 	scene_intro = new Scene_Intro();
 	scene = new Scene();
 	scene_end = new Scene_END();
@@ -43,6 +45,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene_logo);
 	AddModule(scene_intro);
 	AddModule(moduleEnemy);
+	AddModule(modulescore);
 	AddModule(scene);
 	AddModule(scene_end);
 	AddModule(map);

@@ -20,6 +20,7 @@
     <ClCompile Include="Source\Scene_Logo.cpp" />
     <ClCompile Include="Source\Scene_END.cpp" />
     <ClCompile Include="Source\ModuleEnemy.cpp" />
+    <ClCompile Include="Source\ModuleScore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -60,6 +61,7 @@
     <ClInclude Include="Source\Scene_END.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\ModuleEnemy.h" />
+    <ClInclude Include="Source\ModuleScore.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
