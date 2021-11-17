@@ -443,6 +443,7 @@ bool Scene::Update(float dt)
 	}
 
 
+	//Lista enemigos 
 	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
 	while (storage1 != NULL) {
 		storage1->data->x++;
@@ -452,6 +453,7 @@ bool Scene::Update(float dt)
 		app->render->DrawRectangle(enemic, 255, 255, 0);
 		app->render->DrawRectangle(enemicSensor, 255, 200, 50);
 
+		//Elimina los enemigos cuando el personaje entra dentro del sensor enemicSensor
 		if (player.x > enemicSensor.x && player.x < enemicSensor.w + enemicSensor.x&&player.y<enemicSensor.h+enemicSensor.y&&player.y>enemicSensor.y) {
 			MeleEnemic* b = storage1->data;
 			storage1 = storage1->next;
