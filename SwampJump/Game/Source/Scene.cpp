@@ -423,13 +423,7 @@ bool Scene::Update(float dt)
 	SDL_Rect meleEnemicSpawn5{ app->moduleEnemy->meleEnemicSpawn5.x,app->moduleEnemy->meleEnemicSpawn5.y,50,50 };
 	SDL_Rect meleEnemicSpawn6{ app->moduleEnemy->meleEnemicSpawn6.x,app->moduleEnemy->meleEnemicSpawn6.y,50,50 };
 	SDL_Rect meleEnemicSpawn7{ app->moduleEnemy->meleEnemicSpawn7.x,app->moduleEnemy->meleEnemicSpawn7.y,50,50 };
-	app->render->DrawRectangle(meleEnemicSpawn1, 255, 255, 255);
-	app->render->DrawRectangle(meleEnemicSpawn2, 255, 255, 255);
-	app->render->DrawRectangle(meleEnemicSpawn3, 255, 255, 255);
-	app->render->DrawRectangle(meleEnemicSpawn4, 255, 255, 255);
-	app->render->DrawRectangle(meleEnemicSpawn5, 255, 255, 255);
-	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
-	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
+
 
 	SDL_Rect sensorSpawn1 = {app->moduleEnemy->meleEnemicSpawn1.x-800,app->moduleEnemy->meleEnemicSpawn1.y-500, 1500,1000};
 	spawnTimer++;
@@ -442,7 +436,68 @@ bool Scene::Update(float dt)
 		}
 	}
 
+	//Disparo player
+	
+	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		boolDisparo = true;
+		if(sentit){
+			disparo.x = player.x + 68;
+			disparo.y = player.y + 5;
+		}
+		else {
+			disparo.x = player.x;
+			disparo.y = player.y + 5;
+		}
+		
+	}
 
+	if (boolDisparo) {
+		if (sentit) {
+
+
+			disparo.y = player.y + 30;
+			if (disparo.x < player.x + 200 && disparoRetroceso) {
+				disparoRetroceso = true;
+			}
+			else {
+				disparoRetroceso = false;
+			}
+			if (disparoRetroceso) {
+				disparo.x += 4;
+
+			}
+			else if (!disparoRetroceso) {
+				disparo.x -= 4;
+			}
+			if (disparo.x < player.x + 60) {
+				boolDisparo = false;
+				disparoRetroceso = true;
+			}
+		}
+		else {
+			disparo.y = player.y + 30;
+			if (disparo.x < player.x - 200 && disparoRetroceso) {
+				disparoRetroceso = true;
+			}
+			else {
+				disparoRetroceso = false;
+			}
+			if (disparoRetroceso) {
+				disparo.x -= 4;
+
+			}
+			else if (!disparoRetroceso) {
+				disparo.x += 4;
+			}
+			if (disparo.x < player.x+5) {
+				boolDisparo = false;
+				disparoRetroceso = true;
+			}
+		}
+		SDL_Rect disparoRectangle = { disparo.x,disparo.y,10,10 };
+		app->render->DrawRectangle(disparoRectangle, 255, 0, 0);
+
+	}
 	//Lista enemigos 
 	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
 	while (storage1 != NULL) {
@@ -451,10 +506,10 @@ bool Scene::Update(float dt)
 		SDL_Rect enemicSensor = { storage1->data->x-250,storage1->data->y-130,500,300 };
 		LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
 		app->render->DrawRectangle(enemic, 255, 255, 0);
-		app->render->DrawRectangle(enemicSensor, 255, 200, 50);
 
 		//Elimina los enemigos cuando el personaje entra dentro del sensor enemicSensor
-		if (player.x > enemicSensor.x && player.x < enemicSensor.w + enemicSensor.x&&player.y<enemicSensor.h+enemicSensor.y&&player.y>enemicSensor.y) {
+		if (disparo.x > enemic.x && disparo.x < enemic.w + enemic.x&&disparo.y<enemic.h+enemic.y&&disparo.y>enemic.y) {
+			disparoRetroceso = false;
 			MeleEnemic* b = storage1->data;
 			storage1 = storage1->next;
 			app->moduleEnemy->meleEnemic1List.del(app->moduleEnemy->meleEnemic1List.findNode(b));
@@ -530,6 +585,28 @@ void Scene::DebugDraw()
 	app->render->DrawRectangle(rectPlayer, 255, 255, 0, 80);
 	app->render->DrawRectangle(sensorSpawn1, 255, 255, 0, 40);
 
+	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
+	while (storage1 != NULL) {
+
+		SDL_Rect enemicSensor = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+		app->render->DrawRectangle(enemicSensor, 255, 200, 50,40);
+		storage1 = storage1->next;
+	}
+	SDL_Rect meleEnemicSpawn1{ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };
+	SDL_Rect meleEnemicSpawn2{ app->moduleEnemy->meleEnemicSpawn2.x,app->moduleEnemy->meleEnemicSpawn2.y,50,50 };
+	SDL_Rect meleEnemicSpawn3{ app->moduleEnemy->meleEnemicSpawn3.x,app->moduleEnemy->meleEnemicSpawn3.y,50,50 };
+	SDL_Rect meleEnemicSpawn4{ app->moduleEnemy->meleEnemicSpawn4.x,app->moduleEnemy->meleEnemicSpawn4.y,50,50 };
+	SDL_Rect meleEnemicSpawn5{ app->moduleEnemy->meleEnemicSpawn5.x,app->moduleEnemy->meleEnemicSpawn5.y,50,50 };
+	SDL_Rect meleEnemicSpawn6{ app->moduleEnemy->meleEnemicSpawn6.x,app->moduleEnemy->meleEnemicSpawn6.y,50,50 };
+	SDL_Rect meleEnemicSpawn7{ app->moduleEnemy->meleEnemicSpawn7.x,app->moduleEnemy->meleEnemicSpawn7.y,50,50 };
+
+	app->render->DrawRectangle(meleEnemicSpawn1, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn2, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn3, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn4, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn5, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
+	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
 }
 
 void Scene::DrawDecorations() {

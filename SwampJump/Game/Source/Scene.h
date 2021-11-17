@@ -51,6 +51,12 @@ public:
 		int vy = 0;
 		int ay = 1;
 	}player;
+	struct Disparo {
+		int x = 0, y = 0;
+
+	}disparo;
+	bool boolDisparo = false;
+	bool disparoRetroceso=true;
 	iPoint before_camera;
 	
 	int aceleration_timer = 0;
