@@ -36,7 +36,7 @@ public:
 	void DebugDraw();
 
 
-	bool SaveState(pugi::xml_node&) const;
+	//bool SaveState(pugi::xml_node&) const;
 
 
 private:

@@ -451,7 +451,17 @@ bool Scene::Update(float dt)
 		LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
 		app->render->DrawRectangle(enemic, 255, 255, 0);
 		app->render->DrawRectangle(enemicSensor, 255, 200, 50);
-		storage1 = storage1->next;
+
+		if (player.x > enemicSensor.x && player.x < enemicSensor.w + enemicSensor.x&&player.y<enemicSensor.h+enemicSensor.y&&player.y>enemicSensor.y) {
+			MeleEnemic* b = storage1->data;
+			storage1 = storage1->next;
+			app->moduleEnemy->meleEnemic1List.del(app->moduleEnemy->meleEnemic1List.findNode(b));
+			delete b;
+		}
+		if (storage1 != NULL) {
+			storage1 = storage1->next;
+
+		}
 
 	}
 
