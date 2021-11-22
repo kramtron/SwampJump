@@ -445,7 +445,7 @@ bool Scene::Update(float dt)
 			disparo.y = player.y + 5;
 		}
 		else {
-			disparo.x = player.x;
+			disparo.x = player.x-5;
 			disparo.y = player.y + 5;
 		}
 		
@@ -473,10 +473,11 @@ bool Scene::Update(float dt)
 				boolDisparo = false;
 				disparoRetroceso = true;
 			}
+			
 		}
 		else {
 			disparo.y = player.y + 30;
-			if (disparo.x < player.x - 200 && disparoRetroceso) {
+			if (disparo.x > player.x - 150  && disparoRetroceso) {
 				disparoRetroceso = true;
 			}
 			else {
@@ -489,7 +490,7 @@ bool Scene::Update(float dt)
 			else if (!disparoRetroceso) {
 				disparo.x += 4;
 			}
-			if (disparo.x < player.x+5) {
+			if (disparo.x > player.x+10) {
 				boolDisparo = false;
 				disparoRetroceso = true;
 			}
