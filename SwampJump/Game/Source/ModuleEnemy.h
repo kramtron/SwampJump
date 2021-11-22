@@ -12,6 +12,9 @@ public:
 public:
 	int x = 0, y = 0;
 
+	int spawnPlace;//Del 1 - 7 segun los diferentes puntos de spawn
+	int enemicType;//0 para enemigos mele  1 para enemigos voladores
+	
 };
 class ModuleEnemy : public Module
 {
@@ -53,7 +56,8 @@ public:
 	
 	p2List<MeleEnemic*>meleEnemic1List;
 
-	MeleEnemic* meleEnemicCreator(int x, int y);
+	MeleEnemic* meleEnemicCreator(int x, int y,int spawnPlace);
+	MeleEnemic* flyEnemicCreator(int x, int y,int spawnPlace);
 
 	struct MeleEnemicSpawn {
 

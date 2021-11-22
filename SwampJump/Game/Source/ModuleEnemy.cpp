@@ -122,12 +122,29 @@ bool ModuleEnemy::SaveState(pugi::xml_node& configEnemicSpawn) const {
 }
 
 
-MeleEnemic* ModuleEnemy::meleEnemicCreator(int x, int y) {
+MeleEnemic* ModuleEnemy::meleEnemicCreator(int x, int y,int spawnPlace) {
 	
 	MeleEnemic* newEnemy = new MeleEnemic();
 
 	newEnemy->x = x;
 	newEnemy->y = y;
+
+	newEnemy->spawnPlace = spawnPlace;
+	
+	newEnemy->enemicType = 0;
+
+	return newEnemy;
+}
+MeleEnemic* ModuleEnemy::flyEnemicCreator(int x, int y,int spawnPlace) {
+
+	MeleEnemic* newEnemy = new MeleEnemic();
+
+	newEnemy->x = x;
+	newEnemy->y = y;
+
+	newEnemy->spawnPlace = spawnPlace;
+
+	newEnemy->enemicType = 1;
 
 	return newEnemy;
 }

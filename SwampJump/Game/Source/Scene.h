@@ -71,6 +71,14 @@ public:
 
 	bool SaveState(pugi::xml_node&) const;
 
+	//Enemic Move
+	bool movimentMeleEnemic = false;//False esquerra True dreta
+	bool movimentFlyEnemic = false;//False esquerra True dreta
+	bool enemicMeleSensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
+	bool enemicFlySensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
+	int spawnFlyEnemicTimer = 500;
+
+
 private:
 	SDL_Texture* imgFons1 = nullptr;
 	SDL_Texture* imgFons2 = nullptr;

@@ -431,7 +431,7 @@ bool Scene::Update(float dt)
 
 	if (player.x > sensorSpawn1.x && player.x < sensorSpawn1.w+sensorSpawn1.x) {
 		if (spawnTimer >= 3000) {
-			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn1.x, app->moduleEnemy->meleEnemicSpawn1.y));
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn1.x, app->moduleEnemy->meleEnemicSpawn1.y,1));
 			spawnTimer = 0;
 		}
 	}
@@ -501,13 +501,87 @@ bool Scene::Update(float dt)
 	}
 	//Lista enemigos 
 	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
+	spawnFlyEnemicTimer++;
+	
 	while (storage1 != NULL) {
-		storage1->data->x++;
-		SDL_Rect enemic={ storage1->data->x,storage1->data->y,50,50 };
-		SDL_Rect enemicSensor = { storage1->data->x-250,storage1->data->y-130,500,300 };
+
+		if (player.x > sensorSpawn1.x && player.x < sensorSpawn1.w + sensorSpawn1.x) {
+			if (spawnFlyEnemicTimer >= 500) {
+				if (storage1->data->enemicType == 0) {
+					app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y-80, 1));
+					spawnFlyEnemicTimer = 0;
+				}
+				
+			}
+		}
+		//Enemic Move
+		if (storage1->data->enemicType == 0) {
+
+			if (!enemicMeleSensor) {
+				//Path predeterminado
+				if (!movimentMeleEnemic) {
+					storage1->data->x--;
+				}
+				else if (movimentMeleEnemic) {
+					storage1->data->x++;
+				}
+				if (storage1->data->x < 2850) {
+					movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x > 3354) {
+					movimentMeleEnemic = false;
+				}
+			}
+			if (enemicMeleSensor) {
+				//Path de seguimiento
+
+				storage1->data->x++;
+			}
+			SDL_Rect enemicMeleSensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+
+			if (player.x > enemicMeleSensorRec.x && player.x < enemicMeleSensorRec.w + enemicMeleSensorRec.x && player.y<enemicMeleSensorRec.h + enemicMeleSensorRec.y && player.y>enemicMeleSensorRec.y) {
+				enemicMeleSensor = true;
+			}
+			else {
+				enemicMeleSensor = false;
+			}
+		}
+		if (storage1->data->enemicType == 1) {
+			if (!enemicFlySensor) {
+				//Path predeterminado
+				if (!movimentFlyEnemic) {
+					storage1->data->x--;
+				}
+				else if (movimentFlyEnemic) {
+					storage1->data->x++;
+				}
+				if (storage1->data->x < 2850) {
+					movimentFlyEnemic = true;
+				}
+				else if (storage1->data->x > 3354) {
+					movimentFlyEnemic = false;
+				}
+			}
+			if (enemicFlySensor) {
+				//Path de seguimiento
+
+				storage1->data->x++;
+			}
+			SDL_Rect enemicFlySensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+
+			if (player.x > enemicFlySensorRec.x && player.x < enemicFlySensorRec.w + enemicFlySensorRec.x && player.y<enemicFlySensorRec.h + enemicFlySensorRec.y && player.y>enemicFlySensorRec.y) {
+				enemicFlySensor = true;
+			}
+			else {
+				enemicFlySensor = false;
+			}
+		}
+	
+		SDL_Rect enemic = { storage1->data->x,storage1->data->y,50,50 };
 		LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
 		app->render->DrawRectangle(enemic, 255, 255, 0);
-
+		
+		
 		//Elimina los enemigos cuando el personaje entra dentro del sensor enemicSensor
 		if (disparo.x > enemic.x && disparo.x < enemic.w + enemic.x&&disparo.y<enemic.h+enemic.y&&disparo.y>enemic.y) {
 			disparoRetroceso = false;
