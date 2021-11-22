@@ -10,11 +10,15 @@ public:
 	MeleEnemic();
 	virtual ~MeleEnemic();
 public:
-	int x = 0, y = 0;
+	float x = 0, y = 0;
 
 	int spawnPlace;//Del 1 - 7 segun los diferentes puntos de spawn
 	int enemicType;//0 para enemigos mele  1 para enemigos voladores
 	
+	bool enemicFlySensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
+	bool movimentMeleEnemic = false;//False esquerra True dreta
+	bool movimentFlyEnemic = false;//False esquerra True dreta
+	bool enemicMeleSensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
 };
 class ModuleEnemy : public Module
 {
@@ -52,6 +56,10 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 
+	//Enemic Move
+	
+
+	float angle = 45;
 
 	
 	p2List<MeleEnemic*>meleEnemic1List;
@@ -90,7 +98,7 @@ public:
 	bool loadFlyEnemicSpawn = true;
 
 	SDL_Rect test;
-
+	SDL_Rect enemic;
 
 private:
 };

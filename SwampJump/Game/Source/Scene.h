@@ -66,18 +66,20 @@ public:
 	bool tocant_terra = false;
 	bool sentit = true; //dreta true, esquerra false
 	int spawnTimer = 3000;
+	int spawnFlyEnemicTimer = 1500;
 
 	bool LoadState(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
 
-	//Enemic Move
-	bool movimentMeleEnemic = false;//False esquerra True dreta
-	bool movimentFlyEnemic = false;//False esquerra True dreta
-	bool enemicMeleSensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
-	bool enemicFlySensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
-	int spawnFlyEnemicTimer = 500;
-
+	SDL_Rect sensorSpawn1;
+	SDL_Rect meleEnemicSpawn1;
+	SDL_Rect meleEnemicSpawn2;
+	SDL_Rect meleEnemicSpawn3;
+	SDL_Rect meleEnemicSpawn4;
+	SDL_Rect meleEnemicSpawn5;
+	SDL_Rect meleEnemicSpawn6;
+	SDL_Rect meleEnemicSpawn7;
 
 private:
 	SDL_Texture* imgFons1 = nullptr;
