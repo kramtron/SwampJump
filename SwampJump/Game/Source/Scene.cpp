@@ -432,53 +432,71 @@ bool Scene::Update(float dt)
 	SDL_Rect sensorSpawn5 = { app->moduleEnemy->meleEnemicSpawn5.x - 800,app->moduleEnemy->meleEnemicSpawn5.y - 500, 1500,1000 };
 	SDL_Rect sensorSpawn6 = { app->moduleEnemy->meleEnemicSpawn6.x - 130,app->moduleEnemy->meleEnemicSpawn6.y - 100, 300,200 };
 	SDL_Rect sensorSpawn7 = { app->moduleEnemy->meleEnemicSpawn7.x - 130,app->moduleEnemy->meleEnemicSpawn7.y - 100, 300,200 };
-	spawnTimer++;
-	LOG("SpawnTimer: %d", spawnTimer);
-	spawnFlyEnemicTimer++;
+	spawnTimer1++;
+	spawnTimer2++;
+	spawnTimer3++;
+	spawnTimer4++;
+	spawnTimer5++;
+	spawnTimer6++;
+	spawnTimer7++;
+	LOG("SpawnTimer: %d", spawnTimer1);
+	LOG("SpawnTimer: %d", spawnTimer2);
+	LOG("SpawnTimer: %d", spawnTimer3);
+	LOG("SpawnTimer: %d", spawnTimer4);
+	LOG("SpawnTimer: %d", spawnTimer5);
+	LOG("SpawnTimer: %d", spawnTimer6);
+	LOG("SpawnTimer: %d", spawnTimer7);
+	spawn1FlyEnemicTimer++;
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
-		spawnTimer = 3000;
+		spawnTimer1 = 3000;
+		spawnTimer2 = 3000;
+		spawnTimer3 = 3000;
+		spawnTimer4 = 3000;
+		spawnTimer5 = 3000;
+		spawnTimer6 = 3000;
+		spawnTimer7 = 3000;
 	}
 	//Son los 7 sensores que se usan para colocar enemigos mele en la lista
 	if (player.x > sensorSpawn1.x && player.x < sensorSpawn1.w + sensorSpawn1.x && player.y<sensorSpawn1.h + sensorSpawn1.y && player.y>sensorSpawn1.y) {
-		if (spawnTimer >= 3000) {
+		if (spawnTimer1 >= 3000) {
 			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn1.x, app->moduleEnemy->meleEnemicSpawn1.y,1));
-			spawnTimer = 0;
+			spawnTimer1 = 0;
 		}
 	}
 	if (player.x > sensorSpawn2.x && player.x < sensorSpawn2.w + sensorSpawn2.x && player.y<sensorSpawn2.h + sensorSpawn2.y && player.y>sensorSpawn2.y) {
-		if (spawnTimer >= 3000) {
-			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn2.x, app->moduleEnemy->meleEnemicSpawn2.y, 1));
-			spawnTimer = 0;
+		if (spawnTimer2 >= 3000) {
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn2.x, app->moduleEnemy->meleEnemicSpawn2.y, 2));
+			spawnTimer2 = 0;
 		}
 	}
 	if (player.x > sensorSpawn3.x && player.x < sensorSpawn3.w + sensorSpawn3.x && player.y<sensorSpawn3.h + sensorSpawn3.y && player.y>sensorSpawn3.y) {
-		if (spawnTimer >= 3000) {
-			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn3.x, app->moduleEnemy->meleEnemicSpawn3.y, 1));
-			spawnTimer = 0;
+		if (spawnTimer3 >= 3000) {
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn3.x, app->moduleEnemy->meleEnemicSpawn3.y, 3));
+			spawnTimer3 = 0;
 		}
 	}
 	if (player.x > sensorSpawn4.x && player.x < sensorSpawn4.w + sensorSpawn4.x && player.y<sensorSpawn4.h + sensorSpawn4.y && player.y>sensorSpawn4.y) {
-		if (spawnTimer >= 3000) {
-			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn4.x, app->moduleEnemy->meleEnemicSpawn4.y, 1));
-			spawnTimer = 0;
+		if (spawnTimer4 >= 3000) {
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn4.x, app->moduleEnemy->meleEnemicSpawn4.y, 4));
+			spawnTimer4 = 0;
 		}
 	}
 	if (player.x > sensorSpawn5.x && player.x < sensorSpawn5.w + sensorSpawn5.x && player.y<sensorSpawn5.h + sensorSpawn5.y && player.y>sensorSpawn5.y) {
-		if (spawnTimer >= 3000) {
-			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn5.x, app->moduleEnemy->meleEnemicSpawn5.y, 1));
-			spawnTimer = 0;
+		if (spawnTimer5 >= 3000) {
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn5.x, app->moduleEnemy->meleEnemicSpawn5.y, 5));
+			spawnTimer5 = 0;
 		}
 	}
 	if (player.x > sensorSpawn6.x && player.x < sensorSpawn6.w + sensorSpawn6.x && player.y<sensorSpawn6.h + sensorSpawn6.y && player.y>sensorSpawn6.y) {
-		if (spawnTimer >= 3000) {
-			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn6.x, app->moduleEnemy->meleEnemicSpawn6.y, 1));
-			spawnTimer = 0;
+		if (spawnTimer6 >= 3000) {
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn6.x, app->moduleEnemy->meleEnemicSpawn6.y, 6));
+			spawnTimer6 = 0;
 		}
 	}
 	if (player.x > sensorSpawn7.x && player.x < sensorSpawn7.w + sensorSpawn7.x && player.y<sensorSpawn7.h + sensorSpawn7.y && player.y>sensorSpawn7.y) {
-		if (spawnTimer >= 3000) {
-			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn7.x, app->moduleEnemy->meleEnemicSpawn7.y, 1));
-			spawnTimer = 0;
+		if (spawnTimer7 >= 3000) {
+			app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->meleEnemicCreator(app->moduleEnemy->meleEnemicSpawn7.x, app->moduleEnemy->meleEnemicSpawn7.y, 7));
+			spawnTimer7 = 0;
 		}
 	}
 
@@ -548,41 +566,73 @@ bool Scene::Update(float dt)
 
 	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
 	while (storage1 != NULL) {
-		if (app->scene->player.x > sensorSpawn1.x && app->scene->player.x < sensorSpawn1.w + sensorSpawn1.x) {
-			if (spawnFlyEnemicTimer >= 1500) {
-				if (storage1->data->enemicType == 0) {
-					app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 80, 1));
-					spawnFlyEnemicTimer = 0;
+		if (storage1->data->spawnPlace == 1) {
+
+			if (app->scene->player.x > sensorSpawn1.x && app->scene->player.x < sensorSpawn1.w + sensorSpawn1.x) {
+				if (spawn1FlyEnemicTimer >= 1500) {
+					if (storage1->data->enemicType == 0) {
+						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 80, 1));
+						spawn1FlyEnemicTimer = 0;
+					}
+
 				}
+			}
+			if (storage1->data->enemicType == 0) {
 
+				if (storage1->data->x < 2850) {
+					storage1->data->movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x > 3354) {
+					storage1->data->movimentMeleEnemic = false;
+				}
+			}
+			if (storage1->data->enemicType == 1) {
+
+				if (storage1->data->x < 2850) {
+					storage1->data->movimentFlyEnemic = true;
+				}
+				else if (storage1->data->x > 3354) {
+					storage1->data->movimentFlyEnemic = false;
+				}
 			}
 		}
-		if (storage1->data->enemicType == 0) {
+		if (storage1->data->spawnPlace == 2) {
 
-			if (storage1->data->x < 2850) {
-				storage1->data->movimentMeleEnemic = true;
+			if (app->scene->player.x > sensorSpawn2.x && app->scene->player.x < sensorSpawn2.w + sensorSpawn2.x) {
+				if (spawn2FlyEnemicTimer >= 1500) {
+					if (storage1->data->enemicType == 0) {
+						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 80, 2));
+						spawn2FlyEnemicTimer = 0;
+					}
+
+				}
 			}
-			else if (storage1->data->x > 3354) {
-				storage1->data->movimentMeleEnemic = false;
+			if (storage1->data->enemicType == 0) {
+
+				if (storage1->data->x < 5439) {
+					storage1->data->movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x > 5773) {
+					storage1->data->movimentMeleEnemic = false;
+				}
+			}
+			if (storage1->data->enemicType == 1) {
+
+				if (storage1->data->x < 5439) {
+					storage1->data->movimentFlyEnemic = true;
+				}
+				else if (storage1->data->x > 5773) {
+					storage1->data->movimentFlyEnemic = false;
+				}
 			}
 		}
 
-		if (storage1->data->enemicType == 1) {
-
-			if (storage1->data->x < 2850) {
-				storage1->data->movimentFlyEnemic = true;
-			}
-			else if (storage1->data->x > 3354) {
-				storage1->data->movimentFlyEnemic = false;
-			}
-		}
-		SDL_Rect enemic = { storage1->data->x,storage1->data->y,50,50 };
-		LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
-		app->render->DrawRectangle(enemic, 255, 255, 0);
-		storage1 = storage1->next;
+			SDL_Rect enemic = { storage1->data->x,storage1->data->y,50,50 };
+			LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
+			app->render->DrawRectangle(enemic, 255, 255, 0);
+			storage1 = storage1->next;
+		
 	}
-	
-
 
 	return true;
 }

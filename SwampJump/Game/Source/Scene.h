@@ -65,8 +65,21 @@ public:
 	bool tocant_terra_abans = false;
 	bool tocant_terra = false;
 	bool sentit = true; //dreta true, esquerra false
-	int spawnTimer = 3000;
-	int spawnFlyEnemicTimer = 1500;
+	int spawnTimer1 = 3000;
+	int spawnTimer2 = 3000;
+	int spawnTimer3 = 3000;
+	int spawnTimer4 = 3000;
+	int spawnTimer5 = 3000;
+	int spawnTimer6 = 3000;
+	int spawnTimer7 = 3000;
+
+	int spawn1FlyEnemicTimer = 1500;
+	int spawn2FlyEnemicTimer = 1500;
+	int spawn3FlyEnemicTimer = 1500;
+	int spawn4FlyEnemicTimer = 1500;
+	int spawn5FlyEnemicTimer = 1500;
+	int spawn6FlyEnemicTimer = 1500;
+	int spawn7FlyEnemicTimer = 1500;
 
 	bool LoadState(pugi::xml_node&);
 
