@@ -6,6 +6,67 @@
 
 struct SDL_Texture;
 
+class HitPoints
+{
+public:
+
+	int x = 0;
+	int y = 0;
+	int w = 20;
+	int h = 20;
+	int heal = 0;
+	bool enable = false;
+
+	HitPoints()
+	{
+
+	}
+
+private:
+
+};
+
+
+class Score
+{
+public:
+
+	int x = 0;
+	int y = 0;
+	int w = 80;
+	int h = 80;
+	int value = 0;
+	bool enable = false;
+
+	Score()
+	{
+
+	}
+
+private:
+
+};
+
+class PowerUp
+{
+public:
+
+	int x = 0;
+	int y = 0;
+	int w = 35;
+	int h = 35;
+	int type = 0;
+	bool enable = false;
+
+	PowerUp()
+	{
+
+	}
+
+private:
+
+};
+
 class ModuleScore : public Module
 {
 public:
