@@ -143,7 +143,7 @@ bool ModuleEnemy::Update(float dt)
 		
 		//Elimina los enemigos cuando el personaje entra dentro del sensor enemicSensor
 		if (app->scene->boolDisparo) {
-			if (app->scene->disparo.x > enemic.x && app->scene->disparo.x < enemic.w + enemic.x && app->scene->disparo.y<enemic.h + enemic.y && app->scene->disparo.y>enemic.y) {
+			if (app->scene->disparoPlayer.x > enemic.x && app->scene->disparoPlayer.x < enemic.w + enemic.x && app->scene->disparoPlayer.y<enemic.h + enemic.y && app->scene->disparoPlayer.y>enemic.y) {
 				app->scene->disparoRetroceso = false;
 				MeleEnemic* b = storage1->data;
 				storage1 = storage1->next;
