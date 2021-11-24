@@ -75,3 +75,20 @@ void ModuleScore::DebugDraw()
 {
 
 }
+
+HitPoints* ModuleScore::PointsCreator() {
+
+	HitPoints* newPointItem;
+
+	return newPointItem;
+}
+Score* ModuleScore::ScoreCreator() {
+	Score* newScoreItem;
+	
+	return newScoreItem;
+}
+PowerUp* ModuleScore::PowerUpCreator() {
+	PowerUp* newPowerUpItem;
+
+	return newPowerUpItem;
+}

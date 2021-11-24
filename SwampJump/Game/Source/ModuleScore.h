@@ -96,9 +96,13 @@ public:
 
 	void DebugDraw();
 
-
+	HitPoints* PointsCreator();
+	Score* ScoreCreator();
+	PowerUp* PowerUpCreator();
 	//bool SaveState(pugi::xml_node&) const;
-
+	p2List<HitPoints*>* hitPointsList;
+	p2List<Score*>* ScoreList;
+	p2List<PowerUp*>* PwerUpList;
 
 private:
 };
