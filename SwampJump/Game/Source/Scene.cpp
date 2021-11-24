@@ -502,14 +502,16 @@ bool Scene::Update(float dt)
 
 	//Disparo player
 	
-	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN && !boolDisparo) {
 		boolDisparo = true;
 		if(sentit){
-			disparo.x = player.x + 68;
+			//disparo.x = player.x + 68;
+			disparo.x = 68;
 			disparo.y = player.y + 5;
 		}
 		else {
-			disparo.x = player.x-5;
+			//disparo.x = player.x-5;
+			disparo.x = -5;
 			disparo.y = player.y + 5;
 		}
 		
@@ -517,10 +519,9 @@ bool Scene::Update(float dt)
 
 	if (boolDisparo) {
 		if (sentit) {
-
-
 			disparo.y = player.y + 30;
-			if (disparo.x < player.x + 200 && disparoRetroceso) {
+			//if (disparo.x < player.x + 200 && disparoRetroceso) {
+			if (disparo.x < 200 && disparoRetroceso) {
 				disparoRetroceso = true;
 			}
 			else {
@@ -533,7 +534,8 @@ bool Scene::Update(float dt)
 			else if (!disparoRetroceso) {
 				disparo.x -= 4;
 			}
-			if (disparo.x < player.x + 60) {
+			//if (disparo.x < player.x + 60) {
+			if (disparo.x <  60) {
 				boolDisparo = false;
 				disparoRetroceso = true;
 			}
@@ -541,7 +543,8 @@ bool Scene::Update(float dt)
 		}
 		else {
 			disparo.y = player.y + 30;
-			if (disparo.x > player.x - 150  && disparoRetroceso) {
+			//if (disparo.x > player.x - 150  && disparoRetroceso) {
+			if (disparo.x > -150  && disparoRetroceso) {
 				disparoRetroceso = true;
 			}
 			else {
@@ -549,17 +552,19 @@ bool Scene::Update(float dt)
 			}
 			if (disparoRetroceso) {
 				disparo.x -= 4;
-
 			}
 			else if (!disparoRetroceso) {
 				disparo.x += 4;
 			}
-			if (disparo.x > player.x+10) {
+			//if (disparo.x > player.x+10) {
+			if (disparo.x > 10) {
 				boolDisparo = false;
 				disparoRetroceso = true;
 			}
 		}
-		SDL_Rect disparoRectangle = { disparo.x,disparo.y,10,10 };
+		disparoPlayer.x = player.x + disparo.x;
+		disparoPlayer.y = disparo.y;
+		SDL_Rect disparoRectangle = { disparoPlayer.x, disparo.y, 10, 10 };
 		app->render->DrawRectangle(disparoRectangle, 255, 0, 0);
 
 	}

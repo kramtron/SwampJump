@@ -51,10 +51,8 @@ public:
 		int vy = 0;
 		int ay = 1;
 	}player;
-	struct Disparo {
-		int x = 0, y = 0;
-
-	}disparo;
+	iPoint disparo;
+	iPoint disparoPlayer;
 	bool boolDisparo = false;
 	bool disparoRetroceso=true;
 	iPoint before_camera;
