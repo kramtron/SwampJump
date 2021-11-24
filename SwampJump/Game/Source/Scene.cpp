@@ -381,11 +381,6 @@ bool Scene::Update(float dt)
 
 	//Draw map
 	app->map->Draw();
-
-	//Draw Granota
-	currentFrogAnimation->Update();
-	app->render->DrawTexture(granota, player.x, player.y, &currentFrogAnimation->GetCurrentFrame(), 1, 4);
-	//
 	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
@@ -564,10 +559,36 @@ bool Scene::Update(float dt)
 		}
 		disparoPlayer.x = player.x + disparo.x;
 		disparoPlayer.y = disparo.y;
-		SDL_Rect disparoRectangle = { disparoPlayer.x, disparo.y, 10, 10 };
-		app->render->DrawRectangle(disparoRectangle, 255, 0, 0);
+		float shotPercent = (disparo.x/ 200.0f)*32;
+		
+		//Draw Tongue
+		SDL_Rect tongueRightRectangle = { 64-shotPercent, 23, shotPercent, 7 };
+		SDL_Rect tongueLeftRectangle = { 32, 16, shotPercent, 7 };
+		SDL_Rect tongueLineRectangle = { 32, 23, 20, 7 };
+		if (disparo.x > 100) {
+			app->render->DrawTexture(granota, player.x + 64, disparo.y - 10, &tongueLineRectangle, 1.0f, 3.0f); //tongue printing extra
+		}
+		if (disparo.x < -100) {
+			app->render->DrawTexture(granota, player.x - 20, disparo.y - 10, &tongueLineRectangle, 1.0f, 3.0f); //tongue printing extra
+		}
+		if (sentit) {
+			app->render->DrawTexture(granota, disparoPlayer.x - shotPercent - 32, disparo.y - 10, &tongueRightRectangle, 1.0f, 3.0f); //tongue printing
+		}
+		else{//NO VA
+			app->render->DrawTexture(granota, disparoPlayer.x, disparo.y - 10, &tongueLeftRectangle, 1.0f, 3.0f); //tongue printing
+		}
+		
+
+		//Draw Collider Tongue
+		/*SDL_Rect disparoRectangle = { disparoPlayer.x, disparo.y, 10, 10 };
+		app->render->DrawRectangle(disparoRectangle, 255, 0, 0);*/
 
 	}
+
+	//Draw Granota
+	currentFrogAnimation->Update();
+	app->render->DrawTexture(granota, player.x, player.y, &currentFrogAnimation->GetCurrentFrame(), 1, 4);
+	//
 
 	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
 	while (storage1 != NULL) {
