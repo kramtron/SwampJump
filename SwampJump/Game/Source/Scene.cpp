@@ -72,12 +72,12 @@ bool Scene::Start()
 
 	// ANIMACIONS
 	staticRAnim.Empty();
-	staticRAnim.PushBack({ 16, 0, 16, 16 });
+	staticRAnim.PushBack({ 16, 48, 16, 16 });
 	staticRAnim.loop = false;
 	staticRAnim.speed = 1;
 
 	staticLAnim.Empty();
-	staticLAnim.PushBack({ 16, 32, 16, 16 });
+	staticLAnim.PushBack({ 32, 48, 16, 16 });
 	staticLAnim.loop = false;
 	staticLAnim.speed = 1;
 
@@ -581,13 +581,13 @@ bool Scene::Update(float dt)
 			//app->render->DrawTexture(granota, disparoPlayer.x - shotPercent - 32, disparo.y - 10, &tongueRightRectangle, 1.0f, 3.0f); //tongue printing
 			SDL_Rect tongueRight = { 58, 23, 6, 7 };
 			SDL_Rect tongueBody = { 40, 18, (disparo.x / 3.0f) - 10, 3 };
-			app->render->DrawTexture(granota, player.x + 32, disparoPlayer.y - 4, &tongueBody, 1.0f, 3.0f);
+			app->render->DrawTexture(granota, player.x + 32, disparoPlayer.y - 5, &tongueBody, 1.0f, 3.0f);
 			app->render->DrawTexture(granota, disparoPlayer.x, disparoPlayer.y - 10, &tongueRight, 1.0f, 3.0f);
 		}
 		else{	//left tongue
 			SDL_Rect tongueLeft = { 32, 16, 6, 7 };
 			SDL_Rect tongueBody = { 40, 18, (-disparo.x / 3.0f), 3 };
-			app->render->DrawTexture(granota, disparoPlayer.x, disparoPlayer.y - 4, &tongueBody, 1.0f, 3.0f);
+			app->render->DrawTexture(granota, disparoPlayer.x, disparoPlayer.y - 5, &tongueBody, 1.0f, 3.0f);
 			app->render->DrawTexture(granota, disparoPlayer.x, disparo.y - 10, &tongueLeft, 1.0f, 3.0f); //tongue printing
 		}
 		
