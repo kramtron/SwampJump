@@ -71,6 +71,16 @@ bool Scene::Start()
 
 
 	// ANIMACIONS
+	staticRAnim.Empty();
+	staticRAnim.PushBack({ 16, 0, 16, 16 });
+	staticRAnim.loop = false;
+	staticRAnim.speed = 1;
+
+	staticLAnim.Empty();
+	staticLAnim.PushBack({ 16, 32, 16, 16 });
+	staticLAnim.loop = false;
+	staticLAnim.speed = 1;
+
 	idleRAnim.Empty();	//Idle Right
 	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
 	idleRAnim.PushBack({ 16, 0, 16, 16 });	//Idle
@@ -557,25 +567,28 @@ bool Scene::Update(float dt)
 				disparoRetroceso = true;
 			}
 		}
+		if (sentit) {
+			currentFrogAnimation = &staticRAnim;
+		}
+		else {
+			currentFrogAnimation = &staticLAnim;
+		}
 		disparoPlayer.x = player.x + disparo.x;
 		disparoPlayer.y = disparo.y;
-		float shotPercent = (disparo.x/ 200.0f)*32;
 		
 		//Draw Tongue
-		SDL_Rect tongueRightRectangle = { 64-shotPercent, 23, shotPercent, 7 };
-		SDL_Rect tongueLeftRectangle = { 32, 16, shotPercent, 7 };
-		SDL_Rect tongueLineRectangle = { 32, 23, 20, 7 };
-		if (disparo.x > 100) {
-			app->render->DrawTexture(granota, player.x + 64, disparo.y - 10, &tongueLineRectangle, 1.0f, 3.0f); //tongue printing extra
-		}
-		if (disparo.x < -100) {
-			app->render->DrawTexture(granota, player.x - 20, disparo.y - 10, &tongueLineRectangle, 1.0f, 3.0f); //tongue printing extra
-		}
 		if (sentit) {
-			app->render->DrawTexture(granota, disparoPlayer.x - shotPercent - 32, disparo.y - 10, &tongueRightRectangle, 1.0f, 3.0f); //tongue printing
+			//app->render->DrawTexture(granota, disparoPlayer.x - shotPercent - 32, disparo.y - 10, &tongueRightRectangle, 1.0f, 3.0f); //tongue printing
+			SDL_Rect tongueRight = { 58, 23, 6, 7 };
+			SDL_Rect tongueBody = { 40, 18, (disparo.x / 3.0f) - 10, 3 };
+			app->render->DrawTexture(granota, player.x + 32, disparoPlayer.y - 4, &tongueBody, 1.0f, 3.0f);
+			app->render->DrawTexture(granota, disparoPlayer.x, disparoPlayer.y - 10, &tongueRight, 1.0f, 3.0f);
 		}
-		else{//NO VA
-			app->render->DrawTexture(granota, disparoPlayer.x, disparo.y - 10, &tongueLeftRectangle, 1.0f, 3.0f); //tongue printing
+		else{	//left tongue
+			SDL_Rect tongueLeft = { 32, 16, 6, 7 };
+			SDL_Rect tongueBody = { 40, 18, (-disparo.x / 3.0f), 3 };
+			app->render->DrawTexture(granota, disparoPlayer.x, disparoPlayer.y - 4, &tongueBody, 1.0f, 3.0f);
+			app->render->DrawTexture(granota, disparoPlayer.x, disparo.y - 10, &tongueLeft, 1.0f, 3.0f); //tongue printing
 		}
 		
 

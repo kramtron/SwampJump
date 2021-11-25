@@ -120,6 +120,8 @@ private:
 	Animation jumpLAnim;
 	Animation walkRAnim;
 	Animation walkLAnim;
+	Animation staticRAnim;
+	Animation staticLAnim;
 };
 
 #endif // __SCENE_H__
