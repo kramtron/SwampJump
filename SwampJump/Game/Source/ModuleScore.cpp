@@ -78,17 +78,22 @@ void ModuleScore::DebugDraw()
 
 HitPoints* ModuleScore::PointsCreator() {
 
-	HitPoints* newPointItem;
+	HitPoints* newPointItem=new HitPoints();
+	
 
 	return newPointItem;
 }
 Score* ModuleScore::ScoreCreator() {
-	Score* newScoreItem;
+	Score* newScoreItem=new Score();
+
 	
+
 	return newScoreItem;
 }
 PowerUp* ModuleScore::PowerUpCreator() {
-	PowerUp* newPowerUpItem;
+	PowerUp* newPowerUpItem=new PowerUp();
+
+	
 
 	return newPowerUpItem;
 }

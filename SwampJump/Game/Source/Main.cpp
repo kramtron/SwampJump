@@ -44,7 +44,7 @@ int main(int argc, char* args[])
 	while(state != EXIT)
 	{
 		double t = 0.0;
-		float dt = 1.0f/60.0f; //frames
+		float dt = 16.0f; //frames
 		auto start = chrono::steady_clock::now();
 
 		switch(state)
@@ -126,7 +126,7 @@ int main(int argc, char* args[])
 		//Entra si hay diferencia de tiempo
 		if (dt - telapsed > 0.0f)
 			//Para el programa el tiempo restante
-			Sleep(dt - telapsed);
+			Sleep((dt - telapsed)/1000);
 
 	}
 
