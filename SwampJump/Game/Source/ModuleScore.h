@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "p2List.h"
+#include "Scene.h"
 
 struct SDL_Texture;
 
@@ -57,11 +58,13 @@ public:
 	PickUp* HpCreate(int x, int y, int value);
 	PickUp* CoinCreate(int x, int y, int value);
 	//bool SaveState(pugi::xml_node&) const;
-	p2List<PickUp*>* pickUpList;
+	p2List<PickUp*> pickUpList;
 	
 private:
-	void DrawPickUps();
+	//void DrawPickUps();
+	void DebugDrawPickUps();
 	void CollidePickUps();
+	void DeletePickUp(p2List_item<PickUp*>* item);
 	SDL_Texture* pickUpTexture = nullptr;
 };
 
