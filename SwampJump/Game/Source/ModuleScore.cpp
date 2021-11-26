@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene_Intro.h"
 #include "Scene_Logo.h"
+#include "Scene.h"
 #include "ModuleEnemy.h"
 #include "ModuleScore.h"
 #include "Map.h"
@@ -35,6 +36,7 @@ bool ModuleScore::Awake()
 // Called before the first frame
 bool ModuleScore::Start()
 {
+	pickUpTexture = app->tex->Load("Assets/textures/pickups.png");
 
 	return true;
 }
@@ -48,7 +50,6 @@ bool ModuleScore::PreUpdate()
 // Called each loop iteration
 bool ModuleScore::Update(float dt)
 {
-
 	bool ret = true;
 
 
@@ -76,24 +77,38 @@ void ModuleScore::DebugDraw()
 
 }
 
-HitPoints* ModuleScore::PointsCreator() {
-
-	HitPoints* newPointItem=new HitPoints();
-	
-
-	return newPointItem;
+PickUp* ModuleScore::HpCreate(int x, int y, int value) {
+	PickUp* p = new PickUp({x, y, 75, 75}, PickUp::PickUpType::HP, value);
+	pickUpList->add(p);
+	return p;
 }
-Score* ModuleScore::ScoreCreator() {
-	Score* newScoreItem=new Score();
 
-	
-
-	return newScoreItem;
+PickUp* ModuleScore::CoinCreate(int x, int y, int value) {
+	PickUp* p = new PickUp({ x, y, 100, 100 }, PickUp::PickUpType::COIN, value);
+	pickUpList->add(p);
+	return p;
 }
-PowerUp* ModuleScore::PowerUpCreator() {
-	PowerUp* newPowerUpItem=new PowerUp();
 
-	
+void ModuleScore::DrawPickUps(){
+	p2List_item<PickUp*>* current_pickUp = pickUpList->getFirst();
+	while (current_pickUp != NULL) {
+		switch (current_pickUp->data->pickUpType) {
+		case PickUp::PickUpType::HP:
+			SDL_Rect hpRect = { 0, 0, 0, 0 };
+			app->render->DrawTexture(pickUpTexture,current_pickUp->data->rect.x, current_pickUp->data->rect.y, &hpRect);
+			break;
+		case PickUp::PickUpType::COIN:
+			SDL_Rect coinRect = { 0, 0, 0, 0 };
+			app->render->DrawTexture(pickUpTexture, current_pickUp->data->rect.x, current_pickUp->data->rect.y, &coinRect);
+			break;
+		}
+		current_pickUp->next;
+	}
+}
 
-	return newPowerUpItem;
+void ModuleScore::CollidePickUps() {
+	p2List_item<PickUp*>* current_pickUp = pickUpList->getFirst();
+	while (current_pickUp != NULL) {
+
+	}
 }

@@ -6,65 +6,23 @@
 
 struct SDL_Texture;
 
-class HitPoints
+class PickUp
 {
 public:
-
-	int x = 0;
-	int y = 0;
-	int w = 20;
-	int h = 20;
-	int heal = 0;
+	SDL_Rect rect = { 0, 0, 100, 100 };
 	bool enable = false;
-
-	HitPoints()
-	{
-
-	}
-
-private:
-
-};
-
-
-class Score
-{
-public:
-
-	int x = 0;
-	int y = 0;
-	int w = 80;
-	int h = 80;
+	enum class PickUpType {HP, COIN, POWERUP}pickUpType = PickUpType::HP;
 	int value = 0;
-	bool enable = false;
 
-	Score()
+	PickUp(SDL_Rect rect, PickUpType pickUpType, int value)
 	{
-
+		this->rect = rect;
+		this->pickUpType = pickUpType;
+		this->value = value;
 	}
-
-private:
-
-};
-
-class PowerUp
-{
-public:
-
-	int x = 0;
-	int y = 0;
-	int w = 35;
-	int h = 35;
-	int type = 0;
-	bool enable = false;
-
-	PowerUp()
-	{
-
+	
+	~PickUp(){
 	}
-
-private:
-
 };
 
 class ModuleScore : public Module
@@ -96,15 +54,15 @@ public:
 
 	void DebugDraw();
 
-	HitPoints* PointsCreator();
-	Score* ScoreCreator();
-	PowerUp* PowerUpCreator();
+	PickUp* HpCreate(int x, int y, int value);
+	PickUp* CoinCreate(int x, int y, int value);
 	//bool SaveState(pugi::xml_node&) const;
-	p2List<HitPoints*>* hitPointsList;
-	p2List<Score*>* ScoreList;
-	p2List<PowerUp*>* PwerUpList;
-
+	p2List<PickUp*>* pickUpList;
+	
 private:
+	void DrawPickUps();
+	void CollidePickUps();
+	SDL_Texture* pickUpTexture = nullptr;
 };
 
 
