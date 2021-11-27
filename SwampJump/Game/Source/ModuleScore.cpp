@@ -36,9 +36,9 @@ bool ModuleScore::Awake()
 bool ModuleScore::Start()
 {
 	pickUpTexture = app->tex->Load("Assets/textures/pickups.png");
-	HpCreate(100, 400, 0);
-	HpCreate(200, 400, 0);
-	CoinCreate(300, 400, 0);
+	//HpCreate(100, 400, 0);
+	//HpCreate(200, 400, 0);
+	//CoinCreate(300, 400, 0);
 	return true;
 }
 
