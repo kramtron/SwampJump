@@ -36,9 +36,6 @@ bool ModuleScore::Awake()
 bool ModuleScore::Start()
 {
 	pickUpTexture = app->tex->Load("Assets/textures/pickups.png");
-	//HpCreate(100, 400, 0);
-	//HpCreate(200, 400, 0);
-	//CoinCreate(300, 400, 0);
 	return true;
 }
 
@@ -52,7 +49,7 @@ bool ModuleScore::PreUpdate()
 bool ModuleScore::Update(float dt)
 {
 	bool ret = true;
-	//CollidePickUps();
+	CollidePickUps();
 
 	return ret;
 }
@@ -61,6 +58,8 @@ bool ModuleScore::Update(float dt)
 bool ModuleScore::PostUpdate()
 {
 	DebugDrawPickUps();
+	//DrawPickUps();
+
 	bool ret = true;
 	return ret;
 }
@@ -80,33 +79,31 @@ void ModuleScore::DebugDraw()
 }
 
 PickUp* ModuleScore::HpCreate(int x, int y, int value = 0) {
-	PickUp* p = new PickUp({x, y, 75, 75}, PickUp::PickUpType::HP, value);
+	PickUp* p = new PickUp({ x, y, 75, 75 }, {0, 0, 100, 100}, PickUp::PickUpType::HP, value); //colliderRect, imageRect
 	pickUpList.add(p);
 	return p;
 }
 
 PickUp* ModuleScore::CoinCreate(int x, int y, int value = 0) {
-	PickUp* p = new PickUp({ x, y, 100, 100 }, PickUp::PickUpType::COIN, value);
+	PickUp* p = new PickUp({ x, y, 100, 100 }, {0, 0, 100 ,100}, PickUp::PickUpType::COIN, value); //colliderRect, imageRect
 	pickUpList.add(p);
 	return p;
 }
-/*
+
 void ModuleScore::DrawPickUps(){
 	p2List_item<PickUp*>* current_pickUp = pickUpList.getFirst();
 	while (current_pickUp != NULL) {
 		switch (current_pickUp->data->pickUpType) {
 		case PickUp::PickUpType::HP:
-			SDL_Rect hpRect = { 0, 0, 10, 10 };
-			app->render->DrawTexture(pickUpTexture,current_pickUp->data->rect.x, current_pickUp->data->rect.y, &hpRect);
+			app->render->DrawTexture(pickUpTexture,current_pickUp->data->rect.x, current_pickUp->data->rect.y, &current_pickUp->data->imageRect);
 			break;
 		case PickUp::PickUpType::COIN:
-			SDL_Rect coinRect = { 0, 0, 0, 0 };
-			app->render->DrawTexture(pickUpTexture, current_pickUp->data->rect.x, current_pickUp->data->rect.y, &coinRect);
+			app->render->DrawTexture(pickUpTexture, current_pickUp->data->rect.x, current_pickUp->data->rect.y, &current_pickUp->data->imageRect);
 			break;
 		}
-		current_pickUp->next;
+		current_pickUp = current_pickUp->next;
 	}
-}*/
+}
 
 void ModuleScore::DebugDrawPickUps() {
 	p2List_item<PickUp*>* current_pickUp = pickUpList.getFirst();
@@ -119,7 +116,7 @@ void ModuleScore::DebugDrawPickUps() {
 			app->render->DrawRectangle(current_pickUp->data->rect, 0, 100, 100, 100);
 			break;
 		}
-		current_pickUp->next;
+		current_pickUp = current_pickUp->next;
 	}
 }
 
@@ -143,7 +140,7 @@ void ModuleScore::CollidePickUps() {
 
 			pickUpList.del(current_pickUp);
 		}
-		current_pickUp->next;
+		current_pickUp = current_pickUp->next;
 	}
 }
 

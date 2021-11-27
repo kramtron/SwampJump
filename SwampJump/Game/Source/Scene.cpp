@@ -126,6 +126,10 @@ bool Scene::Start()
 	currentFrogAnimation = &idleRAnim;
 	// ANIMACIONS
 
+	app->modulescore->HpCreate(100, 400, 0);
+	app->modulescore->HpCreate(200, 400, 0);
+	app->modulescore->CoinCreate(300, 400, 0);
+
 	return true;
 }
 

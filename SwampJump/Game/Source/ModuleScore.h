@@ -11,13 +11,15 @@ class PickUp
 {
 public:
 	SDL_Rect rect = { 0, 0, 100, 100 };
+	SDL_Rect imageRect = { 0, 0, 100, 100 };
 	bool enable = false;
 	enum class PickUpType {HP, COIN, POWERUP}pickUpType = PickUpType::HP;
 	int value = 0;
 
-	PickUp(SDL_Rect rect, PickUpType pickUpType, int value)
+	PickUp(SDL_Rect rect, SDL_Rect imageRect, PickUpType pickUpType, int value)
 	{
 		this->rect = rect;
+		this->imageRect = imageRect;
 		this->pickUpType = pickUpType;
 		this->value = value;
 	}
@@ -61,7 +63,7 @@ public:
 	p2List<PickUp*> pickUpList;
 	
 private:
-	//void DrawPickUps();
+	void DrawPickUps();
 	void DebugDrawPickUps();
 	void CollidePickUps();
 	void DeletePickUp(p2List_item<PickUp*>* item);
