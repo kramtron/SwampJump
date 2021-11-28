@@ -12,7 +12,6 @@ class PickUp
 public:
 	SDL_Rect rect = { 0, 0, 100, 100 };
 	SDL_Rect imageRect = { 0, 0, 100, 100 };
-	bool enable = false;
 	enum class PickUpType {HP, COIN, POWERUP}pickUpType = PickUpType::HP;
 	int value = 0;
 
@@ -56,6 +55,7 @@ public:
 	bool CleanUp();
 
 	void DebugDraw();
+	void DrawPickUps();
 
 	PickUp* HpCreate(int x, int y, int value);
 	PickUp* CoinCreate(int x, int y, int value);
@@ -63,10 +63,8 @@ public:
 	p2List<PickUp*> pickUpList;
 	
 private:
-	void DrawPickUps();
 	void DebugDrawPickUps();
 	void CollidePickUps();
-	void DeletePickUp(p2List_item<PickUp*>* item);
 	SDL_Texture* pickUpTexture = nullptr;
 };
 

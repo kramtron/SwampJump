@@ -57,10 +57,6 @@ bool ModuleScore::Update(float dt)
 // Called each loop iteration
 bool ModuleScore::PostUpdate()
 {
-	DrawPickUps();
-	//if (app->scene->debug) {
-		DebugDraw();
-	//}
 
 	bool ret = true;
 	return ret;
@@ -133,7 +129,7 @@ void ModuleScore::CollidePickUps() {
 			
 			switch (current_pickUp->data->pickUpType) {
 			case PickUp::PickUpType::HP:	//HP effect
-
+				
 				break;
 			case PickUp::PickUpType::COIN:	//COIN effect
 
@@ -144,8 +140,4 @@ void ModuleScore::CollidePickUps() {
 		}
 		current_pickUp = current_pickUp->next;
 	}
-}
-
-void ModuleScore::DeletePickUp(p2List_item<PickUp*>* item) {
-	pickUpList.del(item);
 }

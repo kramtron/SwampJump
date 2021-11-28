@@ -526,6 +526,9 @@ bool Scene::Update(float dt)
 		
 	}
 
+	//Draw PickUps
+	app->modulescore->DrawPickUps();
+
 	if (boolDisparo) {
 		if (sentit) {
 			disparo.y = player.y + 30;
@@ -776,6 +779,8 @@ void Scene::DebugDraw()
 	app->render->DrawRectangle(meleEnemicSpawn5, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
+
+	app->modulescore->DebugDraw();
 }
 
 void Scene::DrawDecorations() {
