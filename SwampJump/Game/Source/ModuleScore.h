@@ -12,7 +12,7 @@ class PickUp
 public:
 	SDL_Rect rect = { 0, 0, 100, 100 };
 	SDL_Rect imageRect = { 0, 0, 100, 100 };
-	enum class PickUpType {HP, COIN, POWERUP}pickUpType = PickUpType::HP;
+	enum class PickUpType {HP, COIN}pickUpType = PickUpType::HP;
 	int value = 0;
 
 	PickUp(SDL_Rect rect, SDL_Rect imageRect, PickUpType pickUpType, int value)
