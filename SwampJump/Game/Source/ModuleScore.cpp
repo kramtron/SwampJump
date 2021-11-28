@@ -57,8 +57,10 @@ bool ModuleScore::Update(float dt)
 // Called each loop iteration
 bool ModuleScore::PostUpdate()
 {
-	DebugDrawPickUps();
-	//DrawPickUps();
+	DrawPickUps();
+	//if (app->scene->debug) {
+		DebugDraw();
+	//}
 
 	bool ret = true;
 	return ret;
@@ -75,17 +77,17 @@ bool ModuleScore::CleanUp()
 
 void ModuleScore::DebugDraw()
 {
-
+	DebugDrawPickUps();
 }
 
 PickUp* ModuleScore::HpCreate(int x, int y, int value = 0) {
-	PickUp* p = new PickUp({ x, y, 75, 75 }, {0, 0, 100, 100}, PickUp::PickUpType::HP, value); //colliderRect, imageRect
+	PickUp* p = new PickUp({ x, y, 60, 75 }, {0, 0, 32, 32}, PickUp::PickUpType::HP, value); //colliderRect, imageRect
 	pickUpList.add(p);
 	return p;
 }
 
 PickUp* ModuleScore::CoinCreate(int x, int y, int value = 0) {
-	PickUp* p = new PickUp({ x, y, 100, 100 }, {0, 0, 100 ,100}, PickUp::PickUpType::COIN, value); //colliderRect, imageRect
+	PickUp* p = new PickUp({ x, y, 45, 48 }, {0, 32, 16 ,16}, PickUp::PickUpType::COIN, value); //colliderRect, imageRect
 	pickUpList.add(p);
 	return p;
 }
@@ -95,10 +97,10 @@ void ModuleScore::DrawPickUps(){
 	while (current_pickUp != NULL) {
 		switch (current_pickUp->data->pickUpType) {
 		case PickUp::PickUpType::HP:
-			app->render->DrawTexture(pickUpTexture,current_pickUp->data->rect.x, current_pickUp->data->rect.y, &current_pickUp->data->imageRect);
+			app->render->DrawTexture(pickUpTexture,current_pickUp->data->rect.x, current_pickUp->data->rect.y, &current_pickUp->data->imageRect, 1.0f, 3.0f);
 			break;
 		case PickUp::PickUpType::COIN:
-			app->render->DrawTexture(pickUpTexture, current_pickUp->data->rect.x, current_pickUp->data->rect.y, &current_pickUp->data->imageRect);
+			app->render->DrawTexture(pickUpTexture, current_pickUp->data->rect.x, current_pickUp->data->rect.y, &current_pickUp->data->imageRect, 1.0f, 3.0f);
 			break;
 		}
 		current_pickUp = current_pickUp->next;
