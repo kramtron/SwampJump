@@ -208,17 +208,17 @@ bool Scene::Update(float dt)
 
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
- 			player.vx = -2*dt;
+ 			player.vx = -player.v2x*dt;
 			sentit = false;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			player.vx = 2*dt;
+			player.vx = player.v2x*dt;
 			sentit = true;
 		}
 		//
 		
-		if (aceleration_timer == 0) {
+		if (aceleration_timer <= 0) {
 			player.vy += player.ay;
 			aceleration_timer = 10;
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //Aguantar el salt
@@ -226,7 +226,7 @@ bool Scene::Update(float dt)
 			}
 		}
 		else {
-			aceleration_timer--;
+			aceleration_timer -= 1 * dt;
 		}
 
 		if (player.vy == 0) {
@@ -354,14 +354,14 @@ bool Scene::Update(float dt)
 
 	//parallax
 	if (app->render->camera.x > before_camera.x) {
-		parallax2--;
-		parallax1 -= 0.5;
-		parallax3 -= 1.5;
+		parallax2 -= 1*dt;
+		parallax1 -= 0.5*dt;
+		parallax3 -= 1.5*dt;
 	}
 	else if (app->render->camera.x < before_camera.x) {
-		parallax2++;
-		parallax1 += 0.5;
-		parallax3 += 1.5;
+		parallax2 += 1*dt;
+		parallax1 += 0.5*dt;
+		parallax3 += 1.5*dt;
 	}
 
 	if (parallax2 > 1728) {
@@ -395,7 +395,7 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(imgFons4, -app->render->camera.x - parallax3 + 1728, -app->render->camera.y - 70, NULL, 1, 3);
 
 	//Draw decorations
-	DrawDecorations(); //2 no es dibuixen
+	DrawDecorations();
 
 	//Draw map
 	app->map->Draw();
@@ -536,7 +536,6 @@ bool Scene::Update(float dt)
 	if (boolDisparo) {
 		if (sentit) {
 			disparo.y = player.y + 30;
-			//if (disparo.x < player.x + 200 && disparoRetroceso) {
 			if (disparo.x < 200 && disparoRetroceso) {
 				disparoRetroceso = true;
 			}
@@ -544,13 +543,12 @@ bool Scene::Update(float dt)
 				disparoRetroceso = false;
 			}
 			if (disparoRetroceso) {
-				disparo.x += 4;
+				disparo.x += 4*dt;
 
 			}
 			else if (!disparoRetroceso) {
-				disparo.x -= 4;
+				disparo.x -= 4*dt;
 			}
-			//if (disparo.x < player.x + 60) {
 			if (disparo.x <  60) {
 				boolDisparo = false;
 				disparoRetroceso = true;
@@ -559,7 +557,6 @@ bool Scene::Update(float dt)
 		}
 		else {
 			disparo.y = player.y + 30;
-			//if (disparo.x > player.x - 150  && disparoRetroceso) {
 			if (disparo.x > -150  && disparoRetroceso) {
 				disparoRetroceso = true;
 			}
@@ -567,12 +564,11 @@ bool Scene::Update(float dt)
 				disparoRetroceso = false;
 			}
 			if (disparoRetroceso) {
-				disparo.x -= 4;
+				disparo.x -= 4*dt;
 			}
 			else if (!disparoRetroceso) {
-				disparo.x += 4;
+				disparo.x += 4*dt;
 			}
-			//if (disparo.x > player.x+10) {
 			if (disparo.x > 10) {
 				boolDisparo = false;
 				disparoRetroceso = true;

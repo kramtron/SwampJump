@@ -60,8 +60,8 @@ public:
 		float playerDamage;
 
 	}player;
-	iPoint disparo;
-	iPoint disparoPlayer;
+	fPoint disparo;
+	fPoint disparoPlayer;
 	bool boolDisparo = false;
 	bool disparoRetroceso=true;
 	iPoint before_camera;
