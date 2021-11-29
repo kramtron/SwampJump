@@ -369,6 +369,13 @@ bool App::LoadGame()
 			app->scene->loadPlayerData = false;
 
 		}
+		if (app->scene->loadScene1Data) {
+
+			configScene1Data = configSaveLoad.child("scene1");
+			app->scene->LoadScene1Data(configScene1Data);
+			app->scene->loadScene1Data = false;
+
+		}
 	}
 
 

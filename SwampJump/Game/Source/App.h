@@ -128,6 +128,7 @@ private:
 	pugi::xml_node confighpPickUp;
 	pugi::xml_node configPoints;
 	pugi::xml_node configPlayerData;
+	pugi::xml_node configScene1Data;
 
 
 	uint frames;

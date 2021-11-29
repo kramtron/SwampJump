@@ -55,6 +55,8 @@ bool Scene::Start()
 	imgFons4 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/5.png");
 	granota = app->tex->Load("Assets/textures/frog.png");
 
+	obelisk = app->tex->Load("Assets/textures/obelisk/obeliskAlone.png");
+
 	//Sprites Decoració
 	arbre1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Willows/3.png");
 	arbre2 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Trees/3.png");
@@ -65,6 +67,8 @@ bool Scene::Start()
 	bush1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/1.png");
 	bush3 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/3.png");
 	bush8 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/8.png");
+
+
 	
 	app->render->camera.x = 0;
 	app->render->camera.y = -120;
@@ -428,7 +432,45 @@ bool Scene::Update(float dt)
 		active = false;
 	}
 
+	//Draw Obelisk on diferents points
+	app->render->DrawTexture(obelisk, checkPont1.x, checkPont1.y);
+	app->render->DrawTexture(obelisk, checkPont2.x, checkPont2.y);
+	app->render->DrawTexture(obelisk, checkPont3.x, checkPont3.y);
+	app->render->DrawTexture(obelisk, checkPont4.x, checkPont4.y);
+	app->render->DrawTexture(obelisk, checkPont5.x, checkPont5.y);
 
+	SDL_Rect obelisk1Sensor = { checkPont1.x, checkPont1.y ,checkPont1.w, checkPont1.h };
+	SDL_Rect obelisk2Sensor = { checkPont2.x, checkPont2.y ,checkPont2.w, checkPont2.h };
+	SDL_Rect obelisk3Sensor = { checkPont3.x, checkPont3.y ,checkPont3.w, checkPont3.h };
+	SDL_Rect obelisk4Sensor = { checkPont4.x, checkPont4.y ,checkPont4.w, checkPont4.h };
+	SDL_Rect obelisk5Sensor = { checkPont5.x, checkPont5.y ,checkPont5.w, checkPont5.h };
+
+
+	if (player.x > obelisk1Sensor.x && player.x < obelisk1Sensor.w + obelisk1Sensor.x && player.y<obelisk1Sensor.h + obelisk1Sensor.y && player.y>obelisk1Sensor.y) {
+		
+		app->SaveGameRequest();//Guardar Datos
+		
+	}
+	if (player.x > obelisk2Sensor.x && player.x < obelisk2Sensor.w + obelisk2Sensor.x && player.y<obelisk2Sensor.h + obelisk2Sensor.y && player.y>obelisk2Sensor.y) {
+
+		app->SaveGameRequest();//Guardar Datos
+
+	}
+	if (player.x > obelisk3Sensor.x && player.x < obelisk3Sensor.w + obelisk3Sensor.x && player.y<obelisk3Sensor.h + obelisk3Sensor.y && player.y>obelisk3Sensor.y) {
+
+		app->SaveGameRequest();//Guardar Datos
+
+	}
+	if (player.x > obelisk4Sensor.x && player.x < obelisk4Sensor.w + obelisk4Sensor.x && player.y<obelisk4Sensor.h + obelisk4Sensor.y && player.y>obelisk4Sensor.y) {
+
+		app->SaveGameRequest();//Guardar Datos
+
+	}
+	if (player.x > obelisk5Sensor.x && player.x < obelisk5Sensor.w + obelisk5Sensor.x && player.y<obelisk5Sensor.h + obelisk5Sensor.y && player.y>obelisk5Sensor.y) {
+
+		app->SaveGameRequest();//Guardar Datos
+
+	}
 	SDL_Rect meleEnemicSpawn1={ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };
 	SDL_Rect meleEnemicSpawn2={ app->moduleEnemy->meleEnemicSpawn2.x,app->moduleEnemy->meleEnemicSpawn2.y,50,50 };
 	SDL_Rect meleEnemicSpawn3={ app->moduleEnemy->meleEnemicSpawn3.x,app->moduleEnemy->meleEnemicSpawn3.y,50,50 };
@@ -597,6 +639,7 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(granota, disparoPlayer.x, disparoPlayer.y - 5, &tongueBody, 1.0f, 3.0f);
 			app->render->DrawTexture(granota, disparoPlayer.x, disparo.y - 10, &tongueLeft, 1.0f, 3.0f); //tongue printing
 		}
+
 		
 
 		//Draw Collider Tongue
@@ -604,6 +647,7 @@ bool Scene::Update(float dt)
 		app->render->DrawRectangle(disparoRectangle, 255, 0, 0);*/
 
 	}
+	
 
 	//Draw Granota
 	currentFrogAnimation->Update();
@@ -728,6 +772,35 @@ bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
 
 	return true;
 }
+bool Scene::LoadScene1Data(pugi::xml_node& scene1Data) {
+
+	checkPont1.x = scene1Data.child("checkPoint1").attribute("x").as_float();
+	checkPont1.y = scene1Data.child("checkPoint1").attribute("y").as_float();
+	checkPont1.w = scene1Data.child("checkPoint1").attribute("width").as_float();
+	checkPont1.h = scene1Data.child("checkPoint1").attribute("height").as_float();
+
+	checkPont2.x = scene1Data.child("checkPoint2").attribute("x").as_float();
+	checkPont2.y = scene1Data.child("checkPoint2").attribute("y").as_float();
+	checkPont2.w = scene1Data.child("checkPoint2").attribute("width").as_float();
+	checkPont2.h = scene1Data.child("checkPoint2").attribute("height").as_float();
+
+	checkPont3.x = scene1Data.child("checkPoint3").attribute("x").as_float();
+	checkPont3.y = scene1Data.child("checkPoint3").attribute("y").as_float();
+	checkPont3.w = scene1Data.child("checkPoint3").attribute("width").as_float();
+	checkPont3.h = scene1Data.child("checkPoint3").attribute("height").as_float();
+
+	checkPont4.x = scene1Data.child("checkPoint4").attribute("x").as_float();
+	checkPont4.y = scene1Data.child("checkPoint4").attribute("y").as_float();
+	checkPont4.w = scene1Data.child("checkPoint4").attribute("width").as_float();
+	checkPont4.h = scene1Data.child("checkPoint4").attribute("height").as_float();
+
+	checkPont5.x = scene1Data.child("checkPoint5").attribute("x").as_float();
+	checkPont5.y = scene1Data.child("checkPoint5").attribute("y").as_float();
+	checkPont5.w = scene1Data.child("checkPoint5").attribute("width").as_float();
+	checkPont5.h = scene1Data.child("checkPoint5").attribute("height").as_float();
+
+	return true;
+}
 //Guarda la posicion del personaje NO SE USA EN ESTE CODIGO
 bool Scene::SaveState(pugi::xml_node& playerData) const
 {
@@ -793,6 +866,20 @@ void Scene::DebugDraw()
 	app->render->DrawRectangle(meleEnemicSpawn5, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn6, 255, 255, 255);
 	app->render->DrawRectangle(meleEnemicSpawn7, 255, 255, 255);
+
+	//Sensores de los obeliskos
+	SDL_Rect obelisk1Sensor = { checkPont1.x, checkPont1.y ,checkPont1.w, checkPont1.h };
+	SDL_Rect obelisk2Sensor = { checkPont2.x, checkPont2.y ,checkPont2.w, checkPont2.h };
+	SDL_Rect obelisk3Sensor = { checkPont3.x, checkPont3.y ,checkPont3.w, checkPont3.h };
+	SDL_Rect obelisk4Sensor = { checkPont4.x, checkPont4.y ,checkPont4.w, checkPont4.h };
+	SDL_Rect obelisk5Sensor = { checkPont5.x, checkPont5.y ,checkPont5.w, checkPont5.h };
+
+	app->render->DrawRectangle(obelisk1Sensor, 255, 255, 255, 40);
+	app->render->DrawRectangle(obelisk2Sensor, 255, 255, 255, 40);
+	app->render->DrawRectangle(obelisk3Sensor, 255, 255, 255, 40);
+	app->render->DrawRectangle(obelisk4Sensor, 255, 255, 255, 40);
+	app->render->DrawRectangle(obelisk5Sensor,255,255,255,40);
+
 
 	app->modulescore->DebugDraw();
 }

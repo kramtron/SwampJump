@@ -91,10 +91,20 @@ public:
 	bool LoadState(pugi::xml_node&);
 
 	bool LoadPlayerData(pugi::xml_node&);
-
-	
 	bool loadPlayerData = true;
 
+	bool LoadScene1Data(pugi::xml_node&);
+	bool loadScene1Data = true;
+
+	struct CheckPoint {
+		float x, y, w, h;
+	};
+
+	CheckPoint checkPont1;
+	CheckPoint checkPont2;
+	CheckPoint checkPont3;
+	CheckPoint checkPont4;
+	CheckPoint checkPont5;
 
 	bool SaveState(pugi::xml_node&) const;
 
@@ -113,6 +123,8 @@ private:
 	SDL_Texture* imgFons3 = nullptr;
 	SDL_Texture* imgFons4 = nullptr;
 	SDL_Texture* granota = nullptr;
+
+	SDL_Texture* obelisk = nullptr;
 
 	SDL_Texture* arbre1 = nullptr;
 	SDL_Texture* arbre2 = nullptr;
