@@ -57,7 +57,9 @@ public:
     // L02: DONE 1: Create methods to request Load / Save
 	void LoadGameRequest();//Es LoadGameRequest
 	void SaveGameRequest() const;
-
+	void SetDt(float t) {
+		dt = t;
+	}
 private:
 
 	// Load config file

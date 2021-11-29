@@ -208,12 +208,12 @@ bool Scene::Update(float dt)
 
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
- 			player.vx = -2;
+ 			player.vx = -2*dt;
 			sentit = false;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			player.vx = 2;
+			player.vx = 2*dt;
 			sentit = true;
 		}
 		//

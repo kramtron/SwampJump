@@ -40,13 +40,13 @@ int main(int argc, char* args[])
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;
+	long long telapsed = 0;
 
 	while(state != EXIT)
 	{
 		double t = 0.0;
 		float dt = 16.0f; //frames
 		auto start = chrono::steady_clock::now();
-
 		switch(state)
 		{
 			// Allocate the engine --------------------------------------------
@@ -92,6 +92,7 @@ int main(int argc, char* args[])
 
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
+			app->SetDt((float)telapsed/dt);
 			if(app->Update() == false)
 				state = CLEAN;
 			break;
@@ -121,13 +122,14 @@ int main(int argc, char* args[])
 		auto end = chrono::steady_clock::now();
 		//Check en salida de la diferencia de temps
 		LOG("Elapsed time in milliseconds: %d", chrono::duration_cast<chrono::milliseconds>(end - start).count(), " ms");
-		auto telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
+		telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
  		LOG("dt: %f", dt);
 		//Entra si hay diferencia de tiempo
-		if (dt - telapsed > 0.0f)
+		if (dt - telapsed > 0.0f) {
 			//Para el programa el tiempo restante
-			Sleep((dt - telapsed)/1000);
-
+			Sleep((dt - telapsed) / 1000);
+			telapsed = dt;
+		}
 	}
 
 	
