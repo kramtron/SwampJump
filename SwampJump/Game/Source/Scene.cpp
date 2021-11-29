@@ -731,12 +731,13 @@ bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
 	return true;
 }
 //Guarda la posicion del personaje NO SE USA EN ESTE CODIGO
-bool Scene::SaveState(pugi::xml_node& configRenderer) const
+bool Scene::SaveState(pugi::xml_node& playerData) const
 {
-	pugi::xml_node player1 = configRenderer.child("player");
+	pugi::xml_node player1 = playerData;
 
 	player1.attribute("x").set_value(player.x);
 	player1.attribute("y").set_value(player.y);
+	player1.attribute("actualPlayerHp").set_value(player.actualPlayerHp);
 
 	return true;
 }
