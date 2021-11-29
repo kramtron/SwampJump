@@ -11,14 +11,16 @@ public:
 	virtual ~MeleEnemic();
 public:
 	float x = 0, y = 0;
-
+	float vx, vy;
+	float w, h;
 	float hp;
-	float actualMeleHp;
-	float maxMeleHp;
+	float damage;
+
 
 	int spawnPlace;//Del 1 - 7 segun los diferentes puntos de spawn
 	int enemicType;//0 para enemigos mele  1 para enemigos voladores
 	
+	bool atack = false;
 	bool enemicFlySensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
 	bool movimentMeleEnemic = false;//False esquerra True dreta
 	bool movimentFlyEnemic = false;//False esquerra True dreta

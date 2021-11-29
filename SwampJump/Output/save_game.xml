@@ -14,7 +14,7 @@
 	</scene>
 	<points starterPoints="0" actualPoints="0" normalApplePoints="5" goldApplePoints="10" />
 	<hpPickUp width="32" heigth="32" hpUp="5" />
-	<enemicsData x="0" y="0" width="50" heigth="50" xMeleVelocity="2" yMeleVelocity="2" xFlyVelocity="2" yFlyVelocity="2" flyEnemicDamage="5" meleEenemicDamage="5" flyEnemicHp="5" flyEnemicMaxHp="5" meleEnemicHp="20" meleEnemicActualHp="20" bossEnemiMaxcHp="50" bossEnemicDamage="25" spawn1FlyEnemicTimer="1500" spawn2FlyEnemicTimer="1500" spawn3FlyEnemicTimer="1500" spawn4FlyEnemicTimer="1500" spawn5FlyEnemicTimer="1500" spawn6FlyEnemicTimer="1500" spawn7FlyEnemicTimer="1500" spawnTimer1="3000" spawnTimer2="3000" spawnTimer3="3000" spawnTimer4="3000" spawnTimer5="3000" spawnTimer6="3000" spawnTimer7="3000" />
+	<enemicsData x="0" y="0" width="50" heigth="50" xMeleVelocity="1" yMeleVelocity="1" xFlyVelocity="2" yFlyVelocity="2" flyEnemicDamage="5" meleEenemicDamage="5" flyEnemicHp="5" flyEnemicMaxHp="5" meleEnemicHp="20" meleEnemicActualHp="20" bossEnemiMaxcHp="50" bossEnemicDamage="25" spawn1FlyEnemicTimer="1500" spawn2FlyEnemicTimer="1500" spawn3FlyEnemicTimer="1500" spawn4FlyEnemicTimer="1500" spawn5FlyEnemicTimer="1500" spawn6FlyEnemicTimer="1500" spawn7FlyEnemicTimer="1500" spawnTimer1="3000" spawnTimer2="3000" spawnTimer3="3000" spawnTimer4="3000" spawnTimer5="3000" spawnTimer6="3000" spawnTimer7="3000" />
 	<meleEnemicSpawn>
 		<spawnPosition1 x="3246" y="544" />
 		<spawnPosition2 x="5726" y="384" />

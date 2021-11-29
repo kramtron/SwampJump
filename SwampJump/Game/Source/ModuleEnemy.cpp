@@ -64,24 +64,24 @@ bool ModuleEnemy::Update(float dt)
 
 	while (storage1 != NULL) {
 
-		
+		storage1->data->w = normalEnemicsWH.w;
+		storage1->data->h = normalEnemicsWH.h;
+
 		//Mele Enemic Move
 		if (storage1->data->enemicType == 0) {
-
+			storage1->data->hp = meleEnemicsHp;
+			storage1->data->damage = meleEnemicsDamage;
+			storage1->data->vx = meleEnemicsVelocity.x;
+			storage1->data->vy = meleEnemicsVelocity.y;
+		
 			if (!storage1->data->enemicMeleSensor) {
 				//Path predeterminado
 				if (!storage1->data->movimentMeleEnemic) {
-					storage1->data->x--;
+					storage1->data->x-=storage1->data->vx;
 				}
 				else if (storage1->data->movimentMeleEnemic) {
-					storage1->data->x++;
+					storage1->data->x+=storage1->data->vx;
 				}
-				/*if (storage1->data->x < 2850) {
-					storage1->data->movimentMeleEnemic = true;
-				}
-				else if (storage1->data->x > 3354) {
-					storage1->data->movimentMeleEnemic = false;
-				}*/
 			}
 			if (storage1->data->enemicMeleSensor) {
 				//Path de seguimiento
@@ -89,6 +89,8 @@ bool ModuleEnemy::Update(float dt)
 				//storage1->data->x++;
 			}
 			SDL_Rect enemicMeleSensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+			SDL_Rect atackMeleEnemicSensor = { storage1->data->x - 25,storage1->data->y - 25,storage1->data->w + 25,storage1->data->h + 25 };
+
 
 			if (app->scene->player.x > enemicMeleSensorRec.x && app->scene->player.x < enemicMeleSensorRec.w + enemicMeleSensorRec.x && 
 				app->scene->player.y<enemicMeleSensorRec.h + enemicMeleSensorRec.y && app->scene->player.y>enemicMeleSensorRec.y) 
@@ -100,9 +102,19 @@ bool ModuleEnemy::Update(float dt)
 			else {
 				storage1->data->enemicMeleSensor = false;
 			}
+			if (storage1->data->atack) {
+
+			}
 		}
 		//Fly enemic Move
 		if (storage1->data->enemicType == 1) {
+
+			storage1->data->hp = flyEnemicsHp;
+			storage1->data->damage = flyEnemicsDamage;
+			storage1->data->vx = flyEnemicsVelocity.x;
+			storage1->data->vy = flyEnemicsVelocity.y;
+			
+
 			if (!storage1->data->enemicFlySensor) {
 
 				storage1->data->y = 400 + sin(angle) * 60;
