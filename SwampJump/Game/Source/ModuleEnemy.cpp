@@ -204,20 +204,24 @@ bool ModuleEnemy::LoadMeleEnemicSpawn(pugi::xml_node& configMeleEnemicSpawn) {
 
 	return true;
 }
-bool ModuleEnemy::LoadFlyEnemicSpawn(pugi::xml_node& configFlyEnemicSpawn) {
 
-	//Asigna las cordenadas de los spawns de enemigos Voladores
-	flyEnemicSpawn1.x = configFlyEnemicSpawn.child("spawnPosition1").attribute("x").as_int();
-	flyEnemicSpawn1.y = configFlyEnemicSpawn.child("spawnPosition1").attribute("y").as_int();
-	flyEnemicSpawn2.x = configFlyEnemicSpawn.child("spawnPosition2").attribute("x").as_int();
-	flyEnemicSpawn2.y = configFlyEnemicSpawn.child("spawnPosition2").attribute("y").as_int();
-	flyEnemicSpawn3.x = configFlyEnemicSpawn.child("spawnPosition3").attribute("x").as_int();
-	flyEnemicSpawn3.y = configFlyEnemicSpawn.child("spawnPosition3").attribute("y").as_int();
-	flyEnemicSpawn4.x = configFlyEnemicSpawn.child("spawnPosition4").attribute("x").as_int();
-	flyEnemicSpawn4.y = configFlyEnemicSpawn.child("spawnPosition4").attribute("y").as_int();
-
+bool ModuleEnemy::LoadEnemicsData(pugi::xml_node& enemicsData) {
+	//Toda la carga de las caracteristicas generales de los enemigos
+	flyEnemicsHp = enemicsData.attribute("flyEnemicHp").as_float();
+	meleEnemicsHp = enemicsData.attribute("meleEnemicHp").as_float();
+	meleEnemicsDamage = enemicsData.attribute("meleEnemicsDamage").as_float();
+	flyEnemicsDamage = enemicsData.attribute("flyEnemicsDamage").as_float();
+	meleEnemicsVelocity.x = enemicsData.attribute("xMeleVelocity").as_float();
+	meleEnemicsVelocity.y = enemicsData.attribute("yMeleVelocity").as_float();
+	flyEnemicsVelocity.x = enemicsData.attribute("xFlyVelocity").as_float();
+	flyEnemicsVelocity.x = enemicsData.attribute("yFlyVelocity").as_float();
+	normalEnemicsWH.w = enemicsData.attribute("width").as_float();
+	normalEnemicsWH.h = enemicsData.attribute("width").as_float();
+	bossEnemicMaxHp = enemicsData.attribute("bossEnemicMaxHp").as_float();
+	bossEnemicDamage = enemicsData.attribute("bossEnemicDamage").as_float();
 	return true;
 }
+
 bool ModuleEnemy::SaveState(pugi::xml_node& configEnemicSpawn) const {
 
 

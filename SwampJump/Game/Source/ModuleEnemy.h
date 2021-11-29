@@ -12,6 +12,10 @@ public:
 public:
 	float x = 0, y = 0;
 
+	float hp;
+	float actualMeleHp;
+	float maxMeleHp;
+
 	int spawnPlace;//Del 1 - 7 segun los diferentes puntos de spawn
 	int enemicType;//0 para enemigos mele  1 para enemigos voladores
 	
@@ -51,7 +55,9 @@ public:
 
 	
 	bool LoadMeleEnemicSpawn(pugi::xml_node&);
-	bool LoadFlyEnemicSpawn(pugi::xml_node&);
+	bool LoadEnemicsData(pugi::xml_node&);
+
+	//MeleEnemic* LoadEnemicsData(pugi::xml_node&);
 
 	bool SaveState(pugi::xml_node&) const;
 
@@ -89,13 +95,26 @@ public:
 			y = 0;
 
 	};
-	FlyEnemicSpawn flyEnemicSpawn1;
-	FlyEnemicSpawn flyEnemicSpawn2;
-	FlyEnemicSpawn flyEnemicSpawn3;
-	FlyEnemicSpawn flyEnemicSpawn4;
 	
+	//Carga general de datos de enemigos
+	float flyEnemicsHp;
+	float meleEnemicsHp;
+	float meleEnemicsDamage;
+	float flyEnemicsDamage;
+	struct MeleEnemicVelocity {
+		float x, y;
+	}meleEnemicsVelocity;
+	struct FlyEnemicVelocity {
+		float x, y;
+	}flyEnemicsVelocity;
+	struct NormalEnemicsWH {
+		float w, h;
+	}normalEnemicsWH;
+	
+	float bossEnemicDamage;
+	float bossEnemicMaxHp;
 	bool loadMeleEnemicSpawn = true;
-	bool loadFlyEnemicSpawn = true;
+	bool loadEnemicData = true;
 
 	SDL_Rect test;
 	SDL_Rect enemic;

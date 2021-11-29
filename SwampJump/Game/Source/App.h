@@ -122,7 +122,10 @@ private:
 	pugi::xml_node configSaveLoad;
 	pugi::xml_node configRenderer;
 	pugi::xml_node configMeleEnemicSpawn;
-	pugi::xml_node configFlyEnemicSpawn;
+	pugi::xml_node configEnemicData;
+	pugi::xml_node confighpPickUp;
+	pugi::xml_node configPoints;
+	pugi::xml_node configPlayer;
 
 
 	uint frames;

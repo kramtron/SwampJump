@@ -673,7 +673,7 @@ bool Scene::Update(float dt)
 			}
 		}
 
-			SDL_Rect enemic = { storage1->data->x,storage1->data->y,50,50 };
+			SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
 			LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
 			app->render->DrawRectangle(enemic, 255, 255, 0);
 			storage1 = storage1->next;

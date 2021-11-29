@@ -50,6 +50,9 @@ public:
 		int vx = 0;
 		int vy = 0;
 		int ay = 1;
+
+		int w = 64;
+		int h = 64;
 	}player;
 	iPoint disparo;
 	iPoint disparoPlayer;

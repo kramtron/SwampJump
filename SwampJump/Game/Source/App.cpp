@@ -355,11 +355,11 @@ bool App::LoadGame()
 			app->moduleEnemy->loadMeleEnemicSpawn == false;
 
 		}
-		if (app->moduleEnemy->loadFlyEnemicSpawn) {
+		if (app->moduleEnemy->loadEnemicData) {
 
-			configFlyEnemicSpawn = configSaveLoad.child("flyEnemicSpawn");
-			app->moduleEnemy->LoadFlyEnemicSpawn(configFlyEnemicSpawn);
-			app->moduleEnemy->loadFlyEnemicSpawn == false;
+			configEnemicData = configSaveLoad.child("enemicsData");
+			app->moduleEnemy->LoadEnemicsData(configEnemicData);
+			app->moduleEnemy->loadEnemicData == false;
 
 		}
 
