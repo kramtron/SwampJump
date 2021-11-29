@@ -157,11 +157,15 @@ bool Scene::Update(float dt)
 		reset = false;
 	}
 	//LOAD SAVE
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		app->LoadGameRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+		app->LoadGameRequest();//Cargar Datos
+		loadPlayerData = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		app->SaveGameRequest();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+		app->SaveGameRequest();//Guardar Datos
+	}
 	
 	if (godMode) {
 		LOG("GODMODE ON");
@@ -710,8 +714,6 @@ bool Scene::CleanUp()
 bool Scene::LoadState(pugi::xml_node& configRenderer)
 {
 
-	player.x = configRenderer.child("player").attribute("x").as_int();
-	player.y = configRenderer.child("player").attribute("y").as_int();
 
 	return true;
 }
@@ -733,6 +735,7 @@ bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
 //Guarda la posicion del personaje NO SE USA EN ESTE CODIGO
 bool Scene::SaveState(pugi::xml_node& playerData) const
 {
+	//De momento no va
 	pugi::xml_node player1 = playerData;
 
 	player1.attribute("x").set_value(player.x);

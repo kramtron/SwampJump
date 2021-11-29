@@ -45,8 +45,8 @@ public:
 
 	struct player_struct
 	{
-		int x = 300;
-		int y = 300;
+		int x;
+		int y;
 		int vx = 0;
 		int vy = 0;
 		int ay = 1;

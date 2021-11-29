@@ -352,21 +352,21 @@ bool App::LoadGame()
 
 			configMeleEnemicSpawn = configSaveLoad.child("meleEnemicSpawn");
 			app->moduleEnemy->LoadMeleEnemicSpawn(configMeleEnemicSpawn);
-			app->moduleEnemy->loadMeleEnemicSpawn == false;
+			app->moduleEnemy->loadMeleEnemicSpawn = false;
 
 		}
 		if (app->moduleEnemy->loadEnemicData) {
 
 			configEnemicData = configSaveLoad.child("enemicsData");
 			app->moduleEnemy->LoadEnemicsData(configEnemicData);
-			app->moduleEnemy->loadEnemicData == false;
+			app->moduleEnemy->loadEnemicData = false;
 
 		}
 		if (app->scene->loadPlayerData) {
 
 			configPlayerData = configSaveLoad.child("player");
-			app->moduleEnemy->LoadEnemicsData(configPlayerData);
-			app->scene->loadPlayerData == false;
+			app->scene->LoadPlayerData(configPlayerData);
+			app->scene->loadPlayerData = false;
 
 		}
 	}
@@ -384,9 +384,12 @@ bool App::SaveGame()
 
 	if (configSaveLoad.empty() == false) {
 		ret = true;
+
 		//app->render->SaveState(configRenderer);
 		app->scene->SaveState(configPlayerData);
 		configSaveGame.save_file(SAVE_STATE_FILENAME);
+
+
 
 	}
 	saveGameRequested = false;
