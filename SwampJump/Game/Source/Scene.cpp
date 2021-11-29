@@ -716,6 +716,20 @@ bool Scene::LoadState(pugi::xml_node& configRenderer)
 	return true;
 }
 
+bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
+
+	player.x = playerData.attribute("x").as_float();
+	player.y = playerData.attribute("y").as_float();
+	player.w = playerData.attribute("width").as_float();
+	player.h = playerData.attribute("heigth").as_float();
+	player.v2x = playerData.attribute("xVelocity").as_float();
+	player.v2y = playerData.attribute("yVelocity").as_float();
+	player.actualPlayerHp = playerData.attribute("actualPlayerHp").as_float();
+	player.playerHp = playerData.attribute("playerHp").as_float();
+	player.playerDamage = playerData.attribute("playerDamage").as_float();
+
+	return true;
+}
 //Guarda la posicion del personaje NO SE USA EN ESTE CODIGO
 bool Scene::SaveState(pugi::xml_node& configRenderer) const
 {

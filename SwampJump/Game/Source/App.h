@@ -125,7 +125,7 @@ private:
 	pugi::xml_node configEnemicData;
 	pugi::xml_node confighpPickUp;
 	pugi::xml_node configPoints;
-	pugi::xml_node configPlayer;
+	pugi::xml_node configPlayerData;
 
 
 	uint frames;

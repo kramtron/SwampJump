@@ -362,7 +362,13 @@ bool App::LoadGame()
 			app->moduleEnemy->loadEnemicData == false;
 
 		}
+		if (app->scene->loadPlayerData) {
 
+			configPlayerData = configSaveLoad.child("player");
+			app->moduleEnemy->LoadEnemicsData(configPlayerData);
+			app->scene->loadPlayerData == false;
+
+		}
 	}
 
 

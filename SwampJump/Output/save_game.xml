@@ -9,7 +9,13 @@
 	<window />
 	<textures />
 	<audio />
-	<scene />
+	<scene>
+		<checkPoint1 x="0" y="0" />
+		<checkPoint2 x="0" y="0" />
+		<checkPoint3 x="0" y="0" />
+		<checkPoint4 x="0" y="0" />
+		<checkPoint5 x="0" y="0" />
+	</scene>
 	<points
 		starterPoints="0"
 		actualPoints="0"

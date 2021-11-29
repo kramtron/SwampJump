@@ -51,8 +51,14 @@ public:
 		int vy = 0;
 		int ay = 1;
 
-		int w = 64;
-		int h = 64;
+		float w;
+		float h;
+		float v2x;
+		float v2y;
+		float playerHp;
+		float actualPlayerHp;
+		float playerDamage;
+
 	}player;
 	iPoint disparo;
 	iPoint disparoPlayer;
@@ -83,6 +89,12 @@ public:
 	int spawn7FlyEnemicTimer = 1500;
 
 	bool LoadState(pugi::xml_node&);
+
+	bool LoadPlayerData(pugi::xml_node&);
+
+	
+	bool loadPlayerData = true;
+
 
 	bool SaveState(pugi::xml_node&) const;
 
