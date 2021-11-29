@@ -44,7 +44,6 @@ int main(int argc, char* args[])
 
 	while(state != EXIT)
 	{
-		double t = 0.0;
 		float dt = 16.0f; //frames
 		auto start = chrono::steady_clock::now();
 		switch(state)
