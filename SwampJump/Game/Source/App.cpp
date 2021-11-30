@@ -391,11 +391,12 @@ bool App::SaveGame()
 
 	if (configSaveLoad.empty() == false) {
 		ret = true;
-
+		
 		//app->render->SaveState(configRenderer);
-		app->scene->SaveState(configPlayerData);
-		configSaveGame.save_file(SAVE_STATE_FILENAME);
+		app->scene->SaveState(configPlayerData);//Guardado de los datos del player
+		app->scene->SaveScene1State(configScene1Data);//Guardado de los datos de la escena 1. Por el momento solo guarda si estan activados los obeliscos
 
+		configSaveGame.save_file(SAVE_STATE_FILENAME);
 
 
 	}

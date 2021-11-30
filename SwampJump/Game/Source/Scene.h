@@ -37,6 +37,8 @@ public:
 
 	void DrawDecorations();
 
+	void ObeliskMenuController();
+
 	bool debug = false;
 
 	bool godMode = false;
@@ -107,6 +109,7 @@ public:
 	CheckPoint checkPont5;
 
 	bool SaveState(pugi::xml_node&) const;
+	bool SaveScene1State(pugi::xml_node&) const;
 
 	SDL_Rect sensorSpawn1;
 	SDL_Rect meleEnemicSpawn1;
@@ -116,6 +119,19 @@ public:
 	SDL_Rect meleEnemicSpawn5;
 	SDL_Rect meleEnemicSpawn6;
 	SDL_Rect meleEnemicSpawn7;
+
+
+
+	bool obelisk1Up;
+	bool obelisk2Up;
+	bool obelisk3Up;
+	bool obelisk4Up;
+	bool obelisk5Up;
+
+	bool insideObelisk;
+	bool enterMenu=false;
+	
+	int menuPlace=0;
 
 private:
 	SDL_Texture* imgFons1 = nullptr;

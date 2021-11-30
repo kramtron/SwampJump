@@ -447,28 +447,60 @@ bool Scene::Update(float dt)
 
 
 	if (player.x > obelisk1Sensor.x && player.x < obelisk1Sensor.w + obelisk1Sensor.x && player.y<obelisk1Sensor.h + obelisk1Sensor.y && player.y>obelisk1Sensor.y) {
-		
-		app->SaveGameRequest();//Guardar Datos
-		
+		if (obelisk1Up) {
+			app->SaveGameRequest();//Guardar Datos
+			obelisk1Up = false;
+			insideObelisk = true;
+		}
+	}
+	else {
+		insideObelisk = false;
 	}
 	if (player.x > obelisk2Sensor.x && player.x < obelisk2Sensor.w + obelisk2Sensor.x && player.y<obelisk2Sensor.h + obelisk2Sensor.y && player.y>obelisk2Sensor.y) {
-
-		app->SaveGameRequest();//Guardar Datos
+		if (obelisk2Up) {
+			app->SaveGameRequest();//Guardar Datos
+			obelisk2Up = false;
+			insideObelisk = true;
+		}
+	}
+	else {
+		insideObelisk = false;
 
 	}
 	if (player.x > obelisk3Sensor.x && player.x < obelisk3Sensor.w + obelisk3Sensor.x && player.y<obelisk3Sensor.h + obelisk3Sensor.y && player.y>obelisk3Sensor.y) {
+		if (obelisk3Up) {
+			app->SaveGameRequest();//Guardar Datos
+			obelisk3Up = false;
+			insideObelisk = true;
 
-		app->SaveGameRequest();//Guardar Datos
+		}
+	}
+	else {
+		insideObelisk = false;
 
 	}
 	if (player.x > obelisk4Sensor.x && player.x < obelisk4Sensor.w + obelisk4Sensor.x && player.y<obelisk4Sensor.h + obelisk4Sensor.y && player.y>obelisk4Sensor.y) {
+		if (obelisk4Up) {
+			app->SaveGameRequest();//Guardar Datos
+			obelisk4Up = false;
+			insideObelisk = true;
 
-		app->SaveGameRequest();//Guardar Datos
+		}
+	}
+	else {
+		insideObelisk = false;
 
 	}
 	if (player.x > obelisk5Sensor.x && player.x < obelisk5Sensor.w + obelisk5Sensor.x && player.y<obelisk5Sensor.h + obelisk5Sensor.y && player.y>obelisk5Sensor.y) {
+		if (obelisk5Up){
+			app->SaveGameRequest();//Guardar Datos
+		obelisk5Up = false;
+		insideObelisk = true;
 
-		app->SaveGameRequest();//Guardar Datos
+		}
+	}
+	else {
+		insideObelisk = false;
 
 	}
 	SDL_Rect meleEnemicSpawn1={ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };
@@ -723,7 +755,9 @@ bool Scene::Update(float dt)
 			storage1 = storage1->next;
 		
 	}
-
+	if (insideObelisk) {
+		ObeliskMenuController();
+	}
 	return true;
 }
 
@@ -799,12 +833,17 @@ bool Scene::LoadScene1Data(pugi::xml_node& scene1Data) {
 	checkPont5.w = scene1Data.child("checkPoint5").attribute("width").as_float();
 	checkPont5.h = scene1Data.child("checkPoint5").attribute("height").as_float();
 
+	obelisk1Up = scene1Data.child("obelisksUp").attribute("obelisk1Up").as_bool();
+	obelisk2Up = scene1Data.child("obelisksUp").attribute("obelisk2Up").as_bool();
+	obelisk3Up = scene1Data.child("obelisksUp").attribute("obelisk3Up").as_bool();
+	obelisk4Up = scene1Data.child("obelisksUp").attribute("obelisk4Up").as_bool();
+	obelisk5Up = scene1Data.child("obelisksUp").attribute("obelisk5Up").as_bool();
 	return true;
 }
 //Guarda la posicion del personaje NO SE USA EN ESTE CODIGO
 bool Scene::SaveState(pugi::xml_node& playerData) const
 {
-	//De momento no va
+	//va bien
 	pugi::xml_node player1 = playerData;
 
 	player1.attribute("x").set_value(player.x);
@@ -813,7 +852,18 @@ bool Scene::SaveState(pugi::xml_node& playerData) const
 
 	return true;
 }
+bool Scene::SaveScene1State(pugi::xml_node& scene1Data) const {
 
+	pugi::xml_node scene1 = scene1Data;
+
+	scene1Data.child("obelisksUp").attribute("obelisk1Up").set_value(obelisk1Up);
+	scene1Data.child("obelisksUp").attribute("obelisk2Up").set_value(obelisk2Up);
+	scene1Data.child("obelisksUp").attribute("obelisk3Up").set_value(obelisk3Up);
+	scene1Data.child("obelisksUp").attribute("obelisk4Up").set_value(obelisk4Up);
+	scene1Data.child("obelisksUp").attribute("obelisk5Up").set_value(obelisk5Up);
+
+	return true;
+}
 //Dibuja los colliders
 void Scene::DebugDraw()
 {
@@ -896,4 +946,42 @@ void Scene::DrawDecorations() {
 	app->render->DrawTexture(bush8, 1900, 754, NULL, 1, 3);
 	app->render->DrawTexture(bush1, 4500, 790, NULL, 1, 3);
 	app->render->DrawTexture(bush3, 8260, 790, NULL, 1, 3);
+}
+
+void Scene::ObeliskMenuController() {
+	//Zona para controlar el menu de los obeliscos que se usaran para que el jugador se transporte entre ellos
+	//Primero imprimir sprite de pulsar E para entrar
+
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		if (enterMenu) {
+			enterMenu = false;
+		}
+		else if (!enterMenu) {
+			enterMenu = true;
+		}
+	}
+	if (enterMenu) {
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+			if (menuPlace <= 5) {
+				menuPlace++;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+			if (menuPlace > 0) {
+				menuPlace--;
+			}
+		}
+		//Imprimir sprite del menu para seleccionar el sitio donde te quieras tepear
+		switch (menuPlace)
+		{
+		case 1:
+			if(app->input->GetKey(SDL_SCANCODE_))
+
+			break;
+
+		case 2:
+			break;
+		}
+	}
+
 }
