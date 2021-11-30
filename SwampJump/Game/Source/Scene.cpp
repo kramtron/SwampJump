@@ -445,12 +445,18 @@ bool Scene::Update(float dt)
 		active = false;
 	}
 
+	//ObeliskDraw
+	obeliskFluctuationAngle += 0.01f;
+	if (obeliskFluctuationAngle >= 360)
+		obeliskFluctuationAngle = 1;
+	obeliskFluctuation = sin(obeliskFluctuationAngle) * 15.0f;
+
 	//Draw Obelisk on diferents points
-	app->render->DrawTexture(obelisk, checkPont1.x, checkPont1.y);
-	app->render->DrawTexture(obelisk, checkPont2.x, checkPont2.y);
-	app->render->DrawTexture(obelisk, checkPont3.x, checkPont3.y);
-	app->render->DrawTexture(obelisk, checkPont4.x, checkPont4.y);
-	app->render->DrawTexture(obelisk, checkPont5.x, checkPont5.y);
+	app->render->DrawTexture(obelisk, checkPont1.x, checkPont1.y + obeliskFluctuation);
+	app->render->DrawTexture(obelisk, checkPont2.x, checkPont2.y + obeliskFluctuation);
+	app->render->DrawTexture(obelisk, checkPont3.x, checkPont3.y + obeliskFluctuation);
+	app->render->DrawTexture(obelisk, checkPont4.x, checkPont4.y + obeliskFluctuation);
+	app->render->DrawTexture(obelisk, checkPont5.x, checkPont5.y + obeliskFluctuation);
 
 	SDL_Rect obelisk1Sensor = { checkPont1.x, checkPont1.y ,checkPont1.w, checkPont1.h };
 	SDL_Rect obelisk2Sensor = { checkPont2.x, checkPont2.y ,checkPont2.w, checkPont2.h };
