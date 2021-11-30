@@ -128,7 +128,11 @@ public:
 	bool obelisk4Up;
 	bool obelisk5Up;
 
-	bool insideObelisk;
+	bool insideObelisk1;
+	bool insideObelisk2;
+	bool insideObelisk3;
+	bool insideObelisk4;
+	bool insideObelisk5;
 	bool enterMenu=false;
 	
 	int menuPlace=0;

@@ -447,60 +447,65 @@ bool Scene::Update(float dt)
 
 
 	if (player.x > obelisk1Sensor.x && player.x < obelisk1Sensor.w + obelisk1Sensor.x && player.y<obelisk1Sensor.h + obelisk1Sensor.y && player.y>obelisk1Sensor.y) {
+		insideObelisk1 = true;
+
 		if (obelisk1Up) {
 			app->SaveGameRequest();//Guardar Datos
 			obelisk1Up = false;
-			insideObelisk = true;
 		}
 	}
 	else {
-		insideObelisk = false;
+		insideObelisk1 = false;
 	}
 	if (player.x > obelisk2Sensor.x && player.x < obelisk2Sensor.w + obelisk2Sensor.x && player.y<obelisk2Sensor.h + obelisk2Sensor.y && player.y>obelisk2Sensor.y) {
+		insideObelisk2 = true;
+
 		if (obelisk2Up) {
 			app->SaveGameRequest();//Guardar Datos
 			obelisk2Up = false;
-			insideObelisk = true;
 		}
 	}
 	else {
-		insideObelisk = false;
+		insideObelisk2 = false;
 
 	}
 	if (player.x > obelisk3Sensor.x && player.x < obelisk3Sensor.w + obelisk3Sensor.x && player.y<obelisk3Sensor.h + obelisk3Sensor.y && player.y>obelisk3Sensor.y) {
+		insideObelisk3 = true;
+
 		if (obelisk3Up) {
 			app->SaveGameRequest();//Guardar Datos
 			obelisk3Up = false;
-			insideObelisk = true;
 
 		}
 	}
 	else {
-		insideObelisk = false;
+		insideObelisk3 = false;
 
 	}
 	if (player.x > obelisk4Sensor.x && player.x < obelisk4Sensor.w + obelisk4Sensor.x && player.y<obelisk4Sensor.h + obelisk4Sensor.y && player.y>obelisk4Sensor.y) {
+		insideObelisk4 = true;
+
 		if (obelisk4Up) {
 			app->SaveGameRequest();//Guardar Datos
 			obelisk4Up = false;
-			insideObelisk = true;
 
 		}
 	}
 	else {
-		insideObelisk = false;
+		insideObelisk4 = false;
 
 	}
 	if (player.x > obelisk5Sensor.x && player.x < obelisk5Sensor.w + obelisk5Sensor.x && player.y<obelisk5Sensor.h + obelisk5Sensor.y && player.y>obelisk5Sensor.y) {
+		insideObelisk5 = true;
+
 		if (obelisk5Up){
 			app->SaveGameRequest();//Guardar Datos
 		obelisk5Up = false;
-		insideObelisk = true;
 
 		}
 	}
 	else {
-		insideObelisk = false;
+		insideObelisk5 = false;
 
 	}
 	SDL_Rect meleEnemicSpawn1={ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };
@@ -526,13 +531,13 @@ bool Scene::Update(float dt)
 	spawnTimer5++;
 	spawnTimer6++;
 	spawnTimer7++;
-	LOG("SpawnTimer: %d", spawnTimer1);
+	/*LOG("SpawnTimer: %d", spawnTimer1);
 	LOG("SpawnTimer: %d", spawnTimer2);
 	LOG("SpawnTimer: %d", spawnTimer3);
 	LOG("SpawnTimer: %d", spawnTimer4);
 	LOG("SpawnTimer: %d", spawnTimer5);
 	LOG("SpawnTimer: %d", spawnTimer6);
-	LOG("SpawnTimer: %d", spawnTimer7);
+	LOG("SpawnTimer: %d", spawnTimer7);*/
 	spawn1FlyEnemicTimer++;
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		spawnTimer1 = 3000;
@@ -750,12 +755,12 @@ bool Scene::Update(float dt)
 		}
 
 			SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
-			LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
+			//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
 			app->render->DrawRectangle(enemic, 255, 255, 0);
 			storage1 = storage1->next;
 		
 	}
-	if (insideObelisk) {
+	if (insideObelisk1||insideObelisk2||insideObelisk3||insideObelisk4||insideObelisk5) {
 		ObeliskMenuController();
 	}
 	return true;
@@ -812,26 +817,35 @@ bool Scene::LoadScene1Data(pugi::xml_node& scene1Data) {
 	checkPont1.y = scene1Data.child("checkPoint1").attribute("y").as_float();
 	checkPont1.w = scene1Data.child("checkPoint1").attribute("width").as_float();
 	checkPont1.h = scene1Data.child("checkPoint1").attribute("height").as_float();
+	insideObelisk1= scene1Data.child("checkPoint1").attribute("insideObelisk").as_bool();
 
 	checkPont2.x = scene1Data.child("checkPoint2").attribute("x").as_float();
 	checkPont2.y = scene1Data.child("checkPoint2").attribute("y").as_float();
 	checkPont2.w = scene1Data.child("checkPoint2").attribute("width").as_float();
 	checkPont2.h = scene1Data.child("checkPoint2").attribute("height").as_float();
+	insideObelisk2 = scene1Data.child("checkPoint2").attribute("insideObelisk").as_bool();
+
 
 	checkPont3.x = scene1Data.child("checkPoint3").attribute("x").as_float();
 	checkPont3.y = scene1Data.child("checkPoint3").attribute("y").as_float();
 	checkPont3.w = scene1Data.child("checkPoint3").attribute("width").as_float();
 	checkPont3.h = scene1Data.child("checkPoint3").attribute("height").as_float();
+	insideObelisk3 = scene1Data.child("checkPoint3").attribute("insideObelisk").as_bool();
+
 
 	checkPont4.x = scene1Data.child("checkPoint4").attribute("x").as_float();
 	checkPont4.y = scene1Data.child("checkPoint4").attribute("y").as_float();
 	checkPont4.w = scene1Data.child("checkPoint4").attribute("width").as_float();
 	checkPont4.h = scene1Data.child("checkPoint4").attribute("height").as_float();
+	insideObelisk4 = scene1Data.child("checkPoint4").attribute("insideObelisk").as_bool();
+
 
 	checkPont5.x = scene1Data.child("checkPoint5").attribute("x").as_float();
 	checkPont5.y = scene1Data.child("checkPoint5").attribute("y").as_float();
 	checkPont5.w = scene1Data.child("checkPoint5").attribute("width").as_float();
 	checkPont5.h = scene1Data.child("checkPoint5").attribute("height").as_float();
+	insideObelisk5 = scene1Data.child("checkPoint5").attribute("insideObelisk").as_bool();
+
 
 	obelisk1Up = scene1Data.child("obelisksUp").attribute("obelisk1Up").as_bool();
 	obelisk2Up = scene1Data.child("obelisksUp").attribute("obelisk2Up").as_bool();
@@ -975,13 +989,73 @@ void Scene::ObeliskMenuController() {
 		switch (menuPlace)
 		{
 		case 1:
-			if(app->input->GetKey(SDL_SCANCODE_))
+			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
+				if (!obelisk1Up) {
+					player.x = checkPont1.x;
+					player.y = checkPont1.y+(checkPont1.h/2);
+				}
+				else {
+					//Imprimir mensaje de obelisco no desbloqueado
+					LOG("Obleisco no conseguido");
+				}
+			}
 
 			break;
 
 		case 2:
+			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
+				if (!obelisk2Up) {
+					player.x = checkPont2.x;
+					player.y = checkPont2.y + (checkPont2.h/2);
+				}
+				else {
+					//Imprimir mensaje de obelisco no desbloqueado
+					LOG("Obleisco no conseguido");
+
+				}
+			}
+			break;
+		case 3:
+			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
+				if (!obelisk3Up) {
+					player.x = checkPont3.x;
+					player.y = checkPont3.y + (checkPont3.h/2);
+				}
+				else {
+					//Imprimir mensaje de obelisco no desbloqueado
+					LOG("Obleisco no conseguido");
+
+				}
+			}
+			break;
+		case 4:
+			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
+				if (!obelisk4Up) {
+					player.x = checkPont4.x;
+					player.y = checkPont4.y + (checkPont4.h/2);
+				}
+				else {
+					//Imprimir mensaje de obelisco no desbloqueado
+					LOG("Obleisco no conseguido");
+
+				}
+			}
+			break;
+		case 5:
+			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
+				if (!obelisk5Up) {
+					player.x = checkPont5.x;
+					player.y = checkPont5.y + (checkPont5.h/2);
+				}
+				else {
+					//Imprimir mensaje de obelisco no desbloqueado
+					LOG("Obleisco no conseguido");
+
+				}
+			}
 			break;
 		}
 	}
+	LOG("Menu Place: %d ", menuPlace);
 
 }
