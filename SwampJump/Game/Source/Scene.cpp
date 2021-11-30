@@ -57,6 +57,7 @@ bool Scene::Start()
 
 	obelisk = app->tex->Load("Assets/textures/obelisk/obeliskAlone.png");
 	thunder = app->tex->Load("Assets/textures/thunder.png");
+	menuEToEnter= app->tex->Load("Assets/textures/MenuInGame/obeliskMenuEToEnter.png");
 
 	//Sprites Decoració
 	arbre1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Willows/3.png");
@@ -792,6 +793,8 @@ bool Scene::Update(float dt)
 	}
 	if (insideObelisk1||insideObelisk2||insideObelisk3||insideObelisk4||insideObelisk5) {
 		ObeliskMenuController();
+		app->render->DrawTexture(menuEToEnter, obelisk1Sensor.x-10, obelisk1Sensor.y-20);
+
 	}
 	return true;
 }
@@ -1006,7 +1009,7 @@ void Scene::ObeliskMenuController() {
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
-			if (menuPlace > 0) {
+			if (menuPlace > 1) {
 				menuPlace--;
 			}
 		}
