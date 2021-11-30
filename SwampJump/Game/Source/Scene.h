@@ -127,6 +127,7 @@ public:
 	bool obelisk3Up;
 	bool obelisk4Up;
 	bool obelisk5Up;
+	bool obeliskTp = false;
 
 	bool insideObelisk1;
 	bool insideObelisk2;
@@ -135,7 +136,7 @@ public:
 	bool insideObelisk5;
 	bool enterMenu=false;
 	
-	int menuPlace=0;
+	int menuPlace=1;
 
 private:
 	SDL_Texture* imgFons1 = nullptr;
@@ -145,6 +146,7 @@ private:
 	SDL_Texture* granota = nullptr;
 
 	SDL_Texture* obelisk = nullptr;
+	SDL_Texture* thunder = nullptr;
 
 	SDL_Texture* arbre1 = nullptr;
 	SDL_Texture* arbre2 = nullptr;
@@ -169,6 +171,8 @@ private:
 	Animation walkLAnim;
 	Animation staticRAnim;
 	Animation staticLAnim;
+
+	Animation thunderAnim;
 };
 
 #endif // __SCENE_H__

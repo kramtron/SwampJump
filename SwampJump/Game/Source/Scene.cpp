@@ -56,6 +56,7 @@ bool Scene::Start()
 	granota = app->tex->Load("Assets/textures/frog.png");
 
 	obelisk = app->tex->Load("Assets/textures/obelisk/obeliskAlone.png");
+	thunder = app->tex->Load("Assets/textures/thunder.png");
 
 	//Sprites Decoració
 	arbre1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Willows/3.png");
@@ -128,6 +129,15 @@ bool Scene::Start()
 	walkLAnim.speed = 0.02f;
 	
 	currentFrogAnimation = &idleRAnim;
+	
+	thunderAnim.Empty();
+	for (int i = 0; i < 13; i++) {
+		thunderAnim.PushBack({ i * 64, 0, 64, 64 });
+	}
+	thunderAnim.loop = false;
+	thunderAnim.pingpong = false;
+	thunderAnim.speed = 0.05f;
+	
 	// ANIMACIONS
 
 	app->modulescore->HpCreate(100, 400, 0);
@@ -146,6 +156,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
+		obeliskTp = true;
+	}
 
 	//beforeCoords player
 	before_camera.x = app->render->camera.x;
@@ -691,6 +704,17 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(granota, player.x, player.y, &currentFrogAnimation->GetCurrentFrame(), 1, 4);
 	//
 
+	//Thunder Animation
+	if (obeliskTp) {
+		app->render->DrawTexture(thunder, player.x - 64, player.y - 116, &thunderAnim.GetCurrentFrame(), 1.0f, 3.0f);
+		thunderAnim.Update();
+
+		if (thunderAnim.HasFinished()) {
+			obeliskTp = false;
+			thunderAnim.Reset();
+		}
+	}
+
 	p2List_item<MeleEnemic*>* storage1 = app->moduleEnemy->meleEnemic1List.getFirst();
 	while (storage1 != NULL) {
 		if (storage1->data->spawnPlace == 1) {
@@ -967,12 +991,7 @@ void Scene::ObeliskMenuController() {
 	//Primero imprimir sprite de pulsar E para entrar
 
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
-		if (enterMenu) {
-			enterMenu = false;
-		}
-		else if (!enterMenu) {
-			enterMenu = true;
-		}
+		enterMenu = !enterMenu;
 	}
 	if (enterMenu) {
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
@@ -985,75 +1004,73 @@ void Scene::ObeliskMenuController() {
 				menuPlace--;
 			}
 		}
+		
+		
 		//Imprimir sprite del menu para seleccionar el sitio donde te quieras tepear
-		switch (menuPlace)
-		{
-		case 1:
-			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
-				if (!obelisk1Up) {
-					player.x = checkPont1.x;
-					player.y = checkPont1.y+(checkPont1.h/2);
-				}
-				else {
-					//Imprimir mensaje de obelisco no desbloqueado
-					LOG("Obleisco no conseguido");
+
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+			obeliskTp = true;
+		}
+
+		if (obeliskTp) {
+			if (thunderAnim.GetCurrentFrame().x == 320) {
+				switch (menuPlace) {
+				case 1:
+					if (!obelisk1Up) {
+						player.x = checkPont1.x;
+						player.y = checkPont1.y + (checkPont1.h / 2);
+					}
+					else {
+						//Imprimir Obelisco No conseguido
+						LOG("Obleisco no conseguido");
+					}
+				break;
+
+				case 2:
+					if (!obelisk2Up) {
+						player.x = checkPont2.x;
+						player.y = checkPont2.y + (checkPont2.h / 2);
+					}
+					else {
+						//Imprimir Obelisco No conseguido
+						LOG("Obleisco no conseguido");
+					}
+				break;
+
+				case 3:
+					if (!obelisk3Up) {
+						player.x = checkPont3.x;
+						player.y = checkPont3.y + (checkPont3.h / 2);
+					}
+					else {
+						//Imprimir Obelisco No conseguido
+						LOG("Obleisco no conseguido");
+					}
+				break;
+
+				case 4:
+					if (!obelisk4Up) {
+						player.x = checkPont4.x;
+						player.y = checkPont4.y + (checkPont4.h / 2);
+					}
+					else {
+						//Imprimir Obelisco No conseguido
+						LOG("Obleisco no conseguido");
+					}
+				break;
+
+				case 5:
+					if (!obelisk5Up) {
+						player.x = checkPont5.x;
+						player.y = checkPont5.y + (checkPont5.h / 2);
+					}
+					else {
+						//Imprimir Obelisco No conseguido
+						LOG("Obleisco no conseguido");
+					}
+				break;
 				}
 			}
-
-			break;
-
-		case 2:
-			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
-				if (!obelisk2Up) {
-					player.x = checkPont2.x;
-					player.y = checkPont2.y + (checkPont2.h/2);
-				}
-				else {
-					//Imprimir mensaje de obelisco no desbloqueado
-					LOG("Obleisco no conseguido");
-
-				}
-			}
-			break;
-		case 3:
-			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
-				if (!obelisk3Up) {
-					player.x = checkPont3.x;
-					player.y = checkPont3.y + (checkPont3.h/2);
-				}
-				else {
-					//Imprimir mensaje de obelisco no desbloqueado
-					LOG("Obleisco no conseguido");
-
-				}
-			}
-			break;
-		case 4:
-			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
-				if (!obelisk4Up) {
-					player.x = checkPont4.x;
-					player.y = checkPont4.y + (checkPont4.h/2);
-				}
-				else {
-					//Imprimir mensaje de obelisco no desbloqueado
-					LOG("Obleisco no conseguido");
-
-				}
-			}
-			break;
-		case 5:
-			if (app->input->GetKey(SDL_SCANCODE_RETURN)) {
-				if (!obelisk5Up) {
-					player.x = checkPont5.x;
-					player.y = checkPont5.y + (checkPont5.h/2);
-				}
-				else {
-					//Imprimir mensaje de obelisco no desbloqueado
-					LOG("Obleisco no conseguido");
-
-				}
-			}
-			break;
 		}
 	}
 	LOG("Menu Place: %d ", menuPlace);
