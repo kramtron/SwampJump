@@ -793,9 +793,28 @@ bool Scene::Update(float dt)
 	}
 	if (insideObelisk1||insideObelisk2||insideObelisk3||insideObelisk4||insideObelisk5) {
 		ObeliskMenuController();
-		app->render->DrawTexture(menuEToEnter, obelisk1Sensor.x-10, obelisk1Sensor.y-20);
+		if (insideObelisk1&&!enterMenu) {
+			app->render->DrawTexture(menuEToEnter, obelisk1Sensor.x - 50, obelisk1Sensor.y - 30);
 
+		}
+		else if (insideObelisk2&&!enterMenu) {
+			app->render->DrawTexture(menuEToEnter, obelisk2Sensor.x - 50, obelisk2Sensor.y - 30);
+
+		}
+		else if (insideObelisk3&&!enterMenu) {
+			app->render->DrawTexture(menuEToEnter, obelisk3Sensor.x - 50, obelisk3Sensor.y - 30);
+
+		}
+		else if (insideObelisk4&&!enterMenu) {
+			app->render->DrawTexture(menuEToEnter, obelisk4Sensor.x - 50, obelisk4Sensor.y - 30);
+
+		}
+		else if (insideObelisk5&&!enterMenu) {
+			app->render->DrawTexture(menuEToEnter, obelisk5Sensor.x - 50, obelisk5Sensor.y - 30);
+
+		}
 	}
+	
 	return true;
 }
 
@@ -1002,6 +1021,7 @@ void Scene::ObeliskMenuController() {
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
 		enterMenu = !enterMenu;
 	}
+	
 	if (enterMenu) {
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 			if (menuPlace <= 5) {
@@ -1026,8 +1046,11 @@ void Scene::ObeliskMenuController() {
 				switch (menuPlace) {
 				case 1:
 					if (!obelisk1Up) {
-						player.x = checkPont1.x;
+						player.x = checkPont1.x+36;
 						player.y = checkPont1.y + (checkPont1.h / 2);
+						enterMenu = false;
+						menuPlace = 1;
+
 					}
 					else {
 						//Imprimir Obelisco No conseguido
@@ -1037,8 +1060,10 @@ void Scene::ObeliskMenuController() {
 
 				case 2:
 					if (!obelisk2Up) {
-						player.x = checkPont2.x;
+						player.x = checkPont2.x+36;
 						player.y = checkPont2.y + (checkPont2.h / 2);
+						enterMenu = false;
+						menuPlace = 1;
 					}
 					else {
 						//Imprimir Obelisco No conseguido
@@ -1048,8 +1073,10 @@ void Scene::ObeliskMenuController() {
 
 				case 3:
 					if (!obelisk3Up) {
-						player.x = checkPont3.x;
+						player.x = checkPont3.x+36;
 						player.y = checkPont3.y + (checkPont3.h / 2);
+						enterMenu = false;
+						menuPlace = 1;
 					}
 					else {
 						//Imprimir Obelisco No conseguido
@@ -1059,8 +1086,10 @@ void Scene::ObeliskMenuController() {
 
 				case 4:
 					if (!obelisk4Up) {
-						player.x = checkPont4.x;
+						player.x = checkPont4.x+36;
 						player.y = checkPont4.y + (checkPont4.h / 2);
+						enterMenu = false;
+						menuPlace = 1;
 					}
 					else {
 						//Imprimir Obelisco No conseguido
@@ -1070,8 +1099,10 @@ void Scene::ObeliskMenuController() {
 
 				case 5:
 					if (!obelisk5Up) {
-						player.x = checkPont5.x;
+						player.x = checkPont5.x+36;
 						player.y = checkPont5.y + (checkPont5.h / 2);
+						enterMenu = false;
+						menuPlace = 1;
 					}
 					else {
 						//Imprimir Obelisco No conseguido
@@ -1082,6 +1113,7 @@ void Scene::ObeliskMenuController() {
 			}
 		}
 	}
+
 	LOG("Menu Place: %d ", menuPlace);
 
 }

@@ -11,7 +11,7 @@
 		<checkPoint3 x="9750" y="170" width="128" height="256" insideObelsik="false" />
 		<checkPoint4 x="14125" y="520" width="128" height="256" insideObelsik="false" />
 		<checkPoint5 x="18685" y="550" width="128" height="256" insideObelsik="false" />
-		<obelisksUp obelisk1UP="true" obelisk2Up="false" obelisk3Up="false" obelisk4Up="false" obelisk5Up="true" />
+		<obelisksUp obelisk1UP="true" obelisk2Up="false" obelisk3Up="false" obelisk4Up="false" obelisk5Up="false" />
 	</scene1>
 	<points starterPoints="0" actualPoints="0" normalApplePoints="5" goldApplePoints="10" />
 	<hpPickUp width="32" heigth="32" hpUp="5" />
@@ -37,5 +37,5 @@
 	<renderer>
 		<camera x="0" y="-50" />
 	</renderer>
-	<player startingX="417" startingY="416" x="14126" y="704" width="50" heigth="50" xVelocity="2" yVelocity="2" playerHp="50" actualPlayerHp="0" maxHp="50" playerDamage="5" />
+	<player startingX="417" startingY="416" x="18686" y="736" width="50" heigth="50" xVelocity="2" yVelocity="2" playerHp="50" actualPlayerHp="0" maxHp="50" playerDamage="5" />
 </game_state>
