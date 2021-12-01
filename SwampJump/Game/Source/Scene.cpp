@@ -718,7 +718,7 @@ bool Scene::Update(float dt)
 
 	//Thunder Animation
 	if (obeliskTp) {
-		thunderAnim.speed = 0.15f * dt;
+		thunderAnim.speed = 0.20f * dt;
 
 		app->render->DrawTexture(thunder, player.x - 64, player.y - 116, &thunderAnim.GetCurrentFrame(), 1.0f, 3.0f);
 		thunderAnim.Update();

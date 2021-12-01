@@ -117,7 +117,7 @@ bool ModuleEnemy::Update(float dt)
 
 			if (!storage1->data->enemicFlySensor) {
 
-				storage1->data->y = (400 + sin(angle) * 60);//Falta poner el dt
+				storage1->data->y = (400 + sin((angle)) * 60);//Falta poner el dt
 				//Path predeterminado
 				if (!storage1->data->movimentFlyEnemic) {
 					storage1->data->x -= 1*dt;
