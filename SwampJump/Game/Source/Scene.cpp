@@ -283,18 +283,23 @@ bool Scene::Update(float dt)
 		app->map->Getcolision_coords(player.x, player.y);
 
 		for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
-			if ((player.x + player.w  + player.vx > app->map->colision_coords[i]->x) && (player.x  + player.vx < app->map->colision_coords[i]->x + 32) &&
+			if ((player.x + player.w  + player.vx > app->map->colision_coords[i]->x) && (player.x  + player.vx < (app->map->colision_coords[i]->x + 32)) &&
 				(player.y + player.h  + player.vy > app->map->colision_coords[i]->y) && (player.y  + player.vy < app->map->colision_coords[i]->y + 32)) {
 
 				//El player està colisionant amb una o més tiles
-				if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
-					(player.y + 64 > app->map->colision_coords[i]->y) && (player.y < app->map->colision_coords[i]->y + 32)) {
+				if ((player.x + player.w + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < (app->map->colision_coords[i]->x + 32)/2) &&
+					(player.y + player.w > app->map->colision_coords[i]->y -1) && (player.y < app->map->colision_coords[i]->y + 32 + 1)) {
 					//Xoca pel costat
 					player.vx = 0;
 				}
+				else if ((player.x + player.vx > (app->map->colision_coords[i]->x+32)/2) && (player.x + player.vx < (app->map->colision_coords[i]->x + 32)) &&
+					(player.y + player.w > app->map->colision_coords[i]->y  + 1) && (player.y < app->map->colision_coords[i]->y + 32 - 1)) {
+					player.vx = 0;
 
-				if ((player.x + 64 > app->map->colision_coords[i]->x) && (player.x < app->map->colision_coords[i]->x + 32) &&
-					(player.y + 64 + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
+				}
+
+				if ((player.x + player.w > app->map->colision_coords[i]->x) && (player.x < app->map->colision_coords[i]->x + 32) &&
+					(player.y + player.w + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
 					//xoc vertical
 					if (player.vy >= 0) { //xoca amb el terra
 						tocant_terra = true;

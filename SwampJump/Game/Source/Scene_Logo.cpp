@@ -60,7 +60,7 @@ bool Scene_Logo::Update(float dt)
 			active = false;
 			app->scene_intro->active = true;
 		}
-		timerLogo++;
+		timerLogo+=2;
 	}
 
 	return ret;
