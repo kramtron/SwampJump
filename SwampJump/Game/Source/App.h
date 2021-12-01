@@ -58,7 +58,7 @@ public:
 	void LoadGameRequest();//Es LoadGameRequest
 	void SaveGameRequest() const;
 	void SetDt(float t) {
-		dt = t;
+		this->dt = t;
 	}
 private:
 

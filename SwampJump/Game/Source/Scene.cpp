@@ -222,8 +222,8 @@ bool Scene::Update(float dt)
 
 	}
 	else if (!godMode) {
-		LOG("GODMODE OFF");
-
+		//LOG("GODMODE OFF");
+		LOG("DtScene: %.4f", dt);
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
  			player.vx = -player.v2x*dt;

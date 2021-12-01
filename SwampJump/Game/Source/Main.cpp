@@ -91,7 +91,8 @@ int main(int argc, char* args[])
 
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
-			app->SetDt((float)telapsed/dt);
+			app->SetDt((float)telapsed/(float)dt);
+			LOG("DtMain: %.4f", (float)telapsed / (float)dt);
 			if(app->Update() == false)
 				state = CLEAN;
 			break;
@@ -126,8 +127,8 @@ int main(int argc, char* args[])
 		//Entra si hay diferencia de tiempo
 		if (dt - telapsed > 0.0f) {
 			//Para el programa el tiempo restante
-			Sleep((dt - telapsed) / 1000);
-			telapsed = dt;
+			SDL_Delay((dt - telapsed)/1000);
+			telapsed = (long long)dt;
 		}
 	}
 
