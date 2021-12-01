@@ -125,11 +125,11 @@ int main(int argc, char* args[])
 		telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
  		LOG("dt: %f", DELTA_TIME);
 		//Entra si hay diferencia de tiempo
-		/*if (DELTA_TIME - telapsed > 0.0f) {
+		if (DELTA_TIME - telapsed > 0.0f) {
 			//Para el programa el tiempo restante
-			SDL_Delay(((DELTA_TIME - telapsed)/1000)/2);
-			//telapsed = (long long)DELTA_TIME;
-		}*/
+			SDL_Delay(((DELTA_TIME - telapsed)/1000));
+			//telapsed = DELTA_TIME;
+		}
 		LOG("ALGO QUE NO FUNCIONA: %.4f", (telapsed / DELTA_TIME));
 
 	}
