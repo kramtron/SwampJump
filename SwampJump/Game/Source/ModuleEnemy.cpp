@@ -117,14 +117,14 @@ bool ModuleEnemy::Update(float dt)
 
 			if (!storage1->data->enemicFlySensor) {
 
-				storage1->data->y = 400 + sin(angle) * 60;
+				storage1->data->y = (400 + sin(angle) * 60);//Falta poner el dt
 				//Path predeterminado
 				if (!storage1->data->movimentFlyEnemic) {
-					storage1->data->x -= 1;
+					storage1->data->x -= 1*dt;
 
 				}
 				else if (storage1->data->movimentFlyEnemic) {
-					storage1->data->x += 1;
+					storage1->data->x += 1*dt;
 
 				}
 				/*if (storage1->data->x < 2850) {
@@ -137,7 +137,7 @@ bool ModuleEnemy::Update(float dt)
 			if (storage1->data->enemicFlySensor) {
 				//Path de seguimiento
 
-				storage1->data->x++;
+				storage1->data->x+=2*dt;
 			}
 			SDL_Rect enemicFlySensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
 

@@ -34,7 +34,7 @@ public:
 
 	void DebugDraw();
 
-	int timerLogo = 0;
+	float timerLogo = 0;
 
 	SDL_Texture* gameIntro;
 
