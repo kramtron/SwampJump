@@ -37,5 +37,5 @@
 	<renderer>
 		<camera x="0" y="-50" />
 	</renderer>
-	<player startingX="417" startingY="416" x="18686" y="736" width="50" heigth="50" xVelocity="3" yVelocity="3" playerHp="50" actualPlayerHp="0" maxHp="50" playerDamage="5" />
+	<player startingX="417" startingY="416" x="18686" y="736" width="50" heigth="50" xVelocity="5" yVelocity="5" playerHp="50" actualPlayerHp="0" maxHp="50" playerDamage="5" />
 </game_state>

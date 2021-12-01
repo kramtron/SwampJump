@@ -137,8 +137,7 @@ bool Scene::Start()
 	}
 	thunderAnim.loop = false;
 	thunderAnim.pingpong = false;
-	thunderAnim.speed = 0.05f;
-	
+
 	// ANIMACIONS
 
 	app->modulescore->HpCreate(100, 400, 0);
@@ -157,6 +156,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
 		obeliskTp = true;
 	}
@@ -283,8 +283,8 @@ bool Scene::Update(float dt)
 		app->map->Getcolision_coords(player.x, player.y);
 
 		for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
-			if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
-				(player.y + 64 + player.vy > app->map->colision_coords[i]->y) && (player.y + player.vy < app->map->colision_coords[i]->y + 32)) {
+			if ((player.x + player.w  + player.vx > app->map->colision_coords[i]->x) && (player.x  + player.vx < app->map->colision_coords[i]->x + 32) &&
+				(player.y + player.h  + player.vy > app->map->colision_coords[i]->y) && (player.y  + player.vy < app->map->colision_coords[i]->y + 32)) {
 
 				//El player està colisionant amb una o més tiles
 				if ((player.x + 64 + player.vx > app->map->colision_coords[i]->x) && (player.x + player.vx < app->map->colision_coords[i]->x + 32) &&
@@ -447,10 +447,10 @@ bool Scene::Update(float dt)
 	}
 
 	//ObeliskDraw
-	obeliskFluctuationAngle += 0.01f;
+	obeliskFluctuationAngle += 0.03f*dt;
 	if (obeliskFluctuationAngle >= 360)
 		obeliskFluctuationAngle = 1;
-	obeliskFluctuation = sin(obeliskFluctuationAngle) * 15.0f;
+	obeliskFluctuation = (sin(obeliskFluctuationAngle) * 15.0f);
 
 	//Draw Obelisk on diferents points
 	app->render->DrawTexture(obelisk, checkPont1.x, checkPont1.y + obeliskFluctuation);
@@ -713,6 +713,8 @@ bool Scene::Update(float dt)
 
 	//Thunder Animation
 	if (obeliskTp) {
+		thunderAnim.speed = 0.075f * dt;
+
 		app->render->DrawTexture(thunder, player.x - 64, player.y - 116, &thunderAnim.GetCurrentFrame(), 1.0f, 3.0f);
 		thunderAnim.Update();
 
@@ -829,7 +831,7 @@ bool Scene::PostUpdate()
 	if (debug)
 		DebugDraw();
 
-	LOG("Player x: %d y: %d", player.x, player.y);
+	//LOG("Player x: %d y: %d", player.x, player.y);
 	return ret;
 }
 

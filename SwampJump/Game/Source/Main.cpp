@@ -14,6 +14,7 @@ using namespace std;
 
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
+#define DELTA_TIME 16.0f
 
 // NOTE: Library linkage is configured in Linker Options
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
@@ -44,7 +45,6 @@ int main(int argc, char* args[])
 
 	while(state != EXIT)
 	{
-		float dt = 16.0f; //frames
 		auto start = chrono::steady_clock::now();
 		switch(state)
 		{
@@ -91,8 +91,8 @@ int main(int argc, char* args[])
 
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
-			app->SetDt((float)telapsed/(float)dt);
-			LOG("DtMain: %.4f", (float)telapsed / (float)dt);
+			app->SetDt((float)telapsed/(float)DELTA_TIME);
+			LOG("DtMain: %.4f", (float)telapsed / (float)DELTA_TIME);
 			if(app->Update() == false)
 				state = CLEAN;
 			break;
@@ -123,13 +123,15 @@ int main(int argc, char* args[])
 		//Check en salida de la diferencia de temps
 		LOG("Elapsed time in milliseconds: %d", chrono::duration_cast<chrono::milliseconds>(end - start).count(), " ms");
 		telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
- 		LOG("dt: %f", dt);
+ 		LOG("dt: %f", DELTA_TIME);
 		//Entra si hay diferencia de tiempo
-		if (dt - telapsed > 0.0f) {
+		/*if (DELTA_TIME - telapsed > 0.0f) {
 			//Para el programa el tiempo restante
-			SDL_Delay((dt - telapsed)/1000);
-			telapsed = (long long)dt;
-		}
+			SDL_Delay(((DELTA_TIME - telapsed)/1000)/2);
+			//telapsed = (long long)DELTA_TIME;
+		}*/
+		LOG("ALGO QUE NO FUNCIONA: %.4f", (telapsed / DELTA_TIME));
+
 	}
 
 	
