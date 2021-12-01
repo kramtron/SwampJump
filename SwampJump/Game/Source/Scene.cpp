@@ -647,11 +647,11 @@ bool Scene::Update(float dt)
 				disparoRetroceso = false;
 			}
 			if (disparoRetroceso) {
-				disparo.x += 4*dt;
+				disparo.x += 8*dt;
 
 			}
 			else if (!disparoRetroceso) {
-				disparo.x -= 4*dt;
+				disparo.x -= 8*dt;
 			}
 			if (disparo.x <  60) {
 				boolDisparo = false;
@@ -668,10 +668,10 @@ bool Scene::Update(float dt)
 				disparoRetroceso = false;
 			}
 			if (disparoRetroceso) {
-				disparo.x -= 4*dt;
+				disparo.x -= 8*dt;
 			}
 			else if (!disparoRetroceso) {
-				disparo.x += 4*dt;
+				disparo.x += 8*dt;
 			}
 			if (disparo.x > 10) {
 				boolDisparo = false;
@@ -718,7 +718,7 @@ bool Scene::Update(float dt)
 
 	//Thunder Animation
 	if (obeliskTp) {
-		thunderAnim.speed = 0.075f * dt;
+		thunderAnim.speed = 0.15f * dt;
 
 		app->render->DrawTexture(thunder, player.x - 64, player.y - 116, &thunderAnim.GetCurrentFrame(), 1.0f, 3.0f);
 		thunderAnim.Update();
