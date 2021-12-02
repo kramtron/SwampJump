@@ -57,30 +57,25 @@ bool ModuleEnemy::Update(float dt)
 	bool ret = true;
 	
 	//Lista enemigos 
-	p2List_item<MeleEnemic*>* storage1 = meleEnemic1List.getFirst();
+	p2List_item<MeleEnemic*>* storage1 = meleEnemic1List.getFirst();//No solo es de enemigos mele es de todos los tipos
 	angle += 0.01f;
 	if (angle >= 360)angle = 0.01f;
 	//SDL_Rect sensorSpawn1 = { app->moduleEnemy->meleEnemicSpawn1.x - 800,app->moduleEnemy->meleEnemicSpawn1.y - 500, 1500,1000 };
 
 	while (storage1 != NULL) {
 
-		storage1->data->w = normalEnemicsWH.w;
-		storage1->data->h = normalEnemicsWH.h;
 
 		//Mele Enemic Move
 		if (storage1->data->enemicType == 0) {
-			storage1->data->hp = meleEnemicsHp;
-			storage1->data->damage = meleEnemicsDamage;
-			storage1->data->vx = meleEnemicsVelocity.x;
-			storage1->data->vy = meleEnemicsVelocity.y;
+			
 		
 			if (!storage1->data->enemicMeleSensor) {
 				//Path predeterminado
 				if (!storage1->data->movimentMeleEnemic) {
-					storage1->data->x-=storage1->data->vx;
+					storage1->data->x-=storage1->data->vx*dt;
 				}
 				else if (storage1->data->movimentMeleEnemic) {
-					storage1->data->x+=storage1->data->vx;
+					storage1->data->x+=storage1->data->vx*dt;
 				}
 			}
 			if (storage1->data->enemicMeleSensor) {
@@ -108,23 +103,17 @@ bool ModuleEnemy::Update(float dt)
 		}
 		//Fly enemic Move
 		if (storage1->data->enemicType == 1) {
-
-			storage1->data->hp = flyEnemicsHp;
-			storage1->data->damage = flyEnemicsDamage;
-			storage1->data->vx = flyEnemicsVelocity.x;
-			storage1->data->vy = flyEnemicsVelocity.y;
 			
-
 			if (!storage1->data->enemicFlySensor) {
 
 				storage1->data->y = (400 + sin((angle)) * 60);//Falta poner el dt
 				//Path predeterminado
 				if (!storage1->data->movimentFlyEnemic) {
-					storage1->data->x -= 1*dt;
+					storage1->data->x -= storage1->data->vx*dt;//Pinta de que funciona mal!!
 
 				}
 				else if (storage1->data->movimentFlyEnemic) {
-					storage1->data->x += 1*dt;
+					storage1->data->x += storage1->data->vx*dt;
 
 				}
 				/*if (storage1->data->x < 2850) {
@@ -157,10 +146,21 @@ bool ModuleEnemy::Update(float dt)
 		if (app->scene->boolDisparo) {
 			if (app->scene->disparoPlayer.x > enemic.x && app->scene->disparoPlayer.x < enemic.w + enemic.x && app->scene->disparoPlayer.y<enemic.h + enemic.y && app->scene->disparoPlayer.y>enemic.y) {
 				app->scene->disparoRetroceso = false;
-				MeleEnemic* b = storage1->data;
-				storage1 = storage1->next;
-				app->moduleEnemy->meleEnemic1List.del(app->moduleEnemy->meleEnemic1List.findNode(b));
-				delete b;
+
+				//Segun la vida del enemigo se hacen 2 cosas. 
+				// EN el if se elimina el enemigo de la lista en caso de que no tenga vida.
+				//En el else if le baja la vida segun el daño que haga la rana.
+				if (storage1->data->actualHp <= 0) {
+
+					MeleEnemic* b = storage1->data;
+					storage1 = storage1->next;
+					app->moduleEnemy->meleEnemic1List.del(app->moduleEnemy->meleEnemic1List.findNode(b));
+					delete b;
+					LOG("Enemigo muerto!");
+				}
+				else if (storage1->data->actualHp>0) {
+					storage1->data->actualHp = storage1->data->actualHp - app->scene->player.playerDamage;
+				}
 			}
 		}
 		
@@ -247,10 +247,16 @@ MeleEnemic* ModuleEnemy::meleEnemicCreator(int x, int y,int spawnPlace) {
 
 	newEnemy->x = x;
 	newEnemy->y = y;
-
+	newEnemy->w = normalEnemicsWH.w;
+	newEnemy->h = normalEnemicsWH.h;
+	newEnemy->hp = meleEnemicsHp;
 	newEnemy->spawnPlace = spawnPlace;
-	
+	newEnemy->damage = meleEnemicsDamage;
+	newEnemy->vx = meleEnemicsVelocity.x;
+	newEnemy->vy = meleEnemicsVelocity.y;
 	newEnemy->enemicType = 0;
+	newEnemy->actualHp = meleEnemicsHp;
+
 
 	return newEnemy;
 }
@@ -260,9 +266,14 @@ MeleEnemic* ModuleEnemy::flyEnemicCreator(int x, int y,int spawnPlace) {
 
 	newEnemy->x = x;
 	newEnemy->y = y;
-
+	newEnemy->w = normalEnemicsWH.w;
+	newEnemy->h = normalEnemicsWH.h;
 	newEnemy->spawnPlace = spawnPlace;
-
+	newEnemy->hp = flyEnemicsHp;
+	newEnemy->damage = flyEnemicsDamage;
+	newEnemy->vx = flyEnemicsVelocity.x;
+	newEnemy->vy = flyEnemicsVelocity.y;
+	newEnemy->actualHp = flyEnemicsHp;
 	newEnemy->enemicType = 1;
 
 	return newEnemy;

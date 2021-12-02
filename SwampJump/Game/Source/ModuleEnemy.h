@@ -14,6 +14,7 @@ public:
 	float vx, vy;
 	float w, h;
 	float hp;
+	float actualHp;
 	float damage;
 
 
