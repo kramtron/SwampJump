@@ -564,6 +564,10 @@ bool Scene::Update(float dt)
 	LOG("SpawnTimer: %d", spawnTimer6);
 	LOG("SpawnTimer: %d", spawnTimer7);*/
 	spawn1FlyEnemicTimer++;
+	spawn2FlyEnemicTimer++;
+	spawn3FlyEnemicTimer++;
+	spawn6FlyEnemicTimer++;
+	spawn7FlyEnemicTimer++;
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		spawnTimer1 = 3000;
 		spawnTimer2 = 3000;
@@ -766,7 +770,7 @@ bool Scene::Update(float dt)
 			if (app->scene->player.x > sensorSpawn2.x && app->scene->player.x < sensorSpawn2.w + sensorSpawn2.x) {
 				if (spawn2FlyEnemicTimer >= 1500) {
 					if (storage1->data->enemicType == 0) {
-						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 80, 2));
+						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 40, 2));
 						spawn2FlyEnemicTimer = 0;
 					}
 
@@ -791,7 +795,122 @@ bool Scene::Update(float dt)
 				}
 			}
 		}
+		if (storage1->data->spawnPlace == 3) {
 
+			if (app->scene->player.x > sensorSpawn3.x && app->scene->player.x < sensorSpawn3.w + sensorSpawn3.x) {
+				if (spawn3FlyEnemicTimer >= 1500) {
+					if (storage1->data->enemicType == 0) {
+						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 40, 3));
+						spawn3FlyEnemicTimer = 0;
+					}
+
+				}
+			}
+			if (storage1->data->enemicType == 0) {
+
+				if (storage1->data->x < 6559) {
+					storage1->data->movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x > 6785) {
+					storage1->data->movimentMeleEnemic = false;
+				}
+			}
+			if (storage1->data->enemicType == 1) {
+
+				if (storage1->data->x < 6559) {
+					storage1->data->movimentFlyEnemic = true;
+				}
+				else if (storage1->data->x > 6785) {
+					storage1->data->movimentFlyEnemic = false;
+				}
+			}
+		}
+		if (storage1->data->spawnPlace == 4) {
+
+			if (storage1->data->enemicType == 0) {
+
+				if (storage1->data->x < 8095) {
+					storage1->data->movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x > 8350) {
+					storage1->data->movimentMeleEnemic = false;
+				}
+			}
+			
+		}
+		if (storage1->data->spawnPlace == 5) {
+
+			if (storage1->data->enemicType == 0) {
+
+				if (storage1->data->x < 9125) {
+					storage1->data->movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x >9555) {
+					storage1->data->movimentMeleEnemic = false;
+				}
+			}
+
+		}
+		if (storage1->data->spawnPlace == 6) {
+
+			if (app->scene->player.x > sensorSpawn6.x && app->scene->player.x < sensorSpawn6.w + sensorSpawn6.x) {
+				if (spawn6FlyEnemicTimer >= 1500) {
+					if (storage1->data->enemicType == 0) {
+						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 30, 6));
+						spawn6FlyEnemicTimer = 0;
+					}
+
+				}
+			}
+			if (storage1->data->enemicType == 0) {
+
+				if (storage1->data->x < 11976) {
+					storage1->data->movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x > 12280) {
+					storage1->data->movimentMeleEnemic = false;
+				}
+			}
+			if (storage1->data->enemicType == 1) {
+
+				if (storage1->data->x < 11976) {
+					storage1->data->movimentFlyEnemic = true;
+				}
+				else if (storage1->data->x > 12280) {
+					storage1->data->movimentFlyEnemic = false;
+				}
+			}
+		}
+		if (storage1->data->spawnPlace == 7) {
+
+			if (app->scene->player.x > sensorSpawn7.x && app->scene->player.x < sensorSpawn7.w + sensorSpawn7.x) {
+				if (spawn7FlyEnemicTimer >= 1500) {
+					if (storage1->data->enemicType == 0) {
+						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 30, 7));
+						spawn7FlyEnemicTimer = 0;
+					}
+
+				}
+			}
+			if (storage1->data->enemicType == 0) {
+
+				if (storage1->data->x < 12385) {
+					storage1->data->movimentMeleEnemic = true;
+				}
+				else if (storage1->data->x > 12705) {
+					storage1->data->movimentMeleEnemic = false;
+				}
+			}
+			if (storage1->data->enemicType == 1) {
+
+				if (storage1->data->x < 12385) {
+					storage1->data->movimentFlyEnemic = true;
+				}
+				else if (storage1->data->x > 12705) {
+					storage1->data->movimentFlyEnemic = false;
+				}
+			}
+		}
 			SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
 			//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
 			app->render->DrawRectangle(enemic, 255, 255, 0);
@@ -821,7 +940,7 @@ bool Scene::Update(float dt)
 
 		}
 	}
-	
+	LOG("Player x: %f Player y: %f", player.x, player.y);
 	return true;
 }
 

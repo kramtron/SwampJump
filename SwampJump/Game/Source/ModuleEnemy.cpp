@@ -109,7 +109,7 @@ bool ModuleEnemy::Update(float dt)
 				storage1->data->y = (400 + sin((angle)) * 60);//Falta poner el dt
 				//Path predeterminado
 				if (!storage1->data->movimentFlyEnemic) {
-					storage1->data->x -= storage1->data->vx*dt;//Pinta de que funciona mal!!
+					storage1->data->x -= storage1->data->vx*dt;
 
 				}
 				else if (storage1->data->movimentFlyEnemic) {
