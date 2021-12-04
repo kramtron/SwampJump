@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "p2List.h"
+#include "Animation.h"
+
 
 struct SDL_Texture;
 class MeleEnemic {
@@ -26,6 +28,8 @@ public:
 	bool movimentMeleEnemic = false;//False esquerra True dreta
 	bool movimentFlyEnemic = false;//False esquerra True dreta
 	bool enemicMeleSensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
+
+	Animation* currentMeleAnimation = nullptr;
 };
 class ModuleEnemy : public Module
 {
@@ -122,6 +126,13 @@ public:
 	SDL_Rect test;
 	SDL_Rect enemic;
 
+	SDL_Texture* meleEnemyTexture = nullptr;
+	SDL_Texture* flyingEnemyTexture = nullptr;
+
+	Animation flyingEnemy_IdleRAnim;
+	Animation flyingEnemy_IdleLAnim;
+	Animation flyingEnemy_AttackRAnim;
+	Animation flyingEnemy_AttackLAnim;
 private:
 };
 

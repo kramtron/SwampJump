@@ -41,7 +41,41 @@ bool ModuleEnemy::Awake()
 // Called before the first frame
 bool ModuleEnemy::Start()
 {
-	
+	meleEnemyTexture = nullptr; //afegir sprite
+	flyingEnemyTexture = app->tex->Load("Assets/textures/bee_spritesheet.png");
+
+	//falta carregar
+	flyingEnemy_IdleRAnim.Empty();
+
+	flyingEnemy_IdleLAnim.Empty();
+	flyingEnemy_IdleLAnim.PushBack({ 1, 0, 25, 27 });
+	flyingEnemy_IdleLAnim.PushBack({ 26, 0, 24, 27 });
+	flyingEnemy_IdleLAnim.PushBack({ 51, 0, 25, 28 });
+	flyingEnemy_IdleLAnim.PushBack({ 76, 0, 24, 28 });
+	flyingEnemy_IdleLAnim.loop = true;
+	flyingEnemy_IdleLAnim.pingpong = true;
+	flyingEnemy_IdleLAnim.speed = 1.0f;
+
+	//falta carregar
+	flyingEnemy_AttackRAnim.Empty();
+
+	flyingEnemy_AttackLAnim.Empty();
+	flyingEnemy_AttackLAnim.PushBack({ 1, 63, 26, 27 });
+	flyingEnemy_AttackLAnim.PushBack({ 27, 63, 25, 29 });
+	flyingEnemy_AttackLAnim.PushBack({ 53, 63, 24, 29 });
+	flyingEnemy_AttackLAnim.PushBack({ 79, 63, 24, 30 });
+	flyingEnemy_AttackLAnim.PushBack({ 105, 63, 25, 29 });
+	flyingEnemy_AttackLAnim.PushBack({ 131, 63, 25, 29 });
+	flyingEnemy_AttackLAnim.PushBack({ 157, 63, 25, 29 });
+	flyingEnemy_AttackLAnim.PushBack({ 184, 63, 25, 29 });
+	flyingEnemy_AttackLAnim.PushBack({ 209, 63, 24, 30 });
+	flyingEnemy_AttackLAnim.PushBack({ 235, 63, 24, 29 });
+	flyingEnemy_AttackLAnim.PushBack({ 261, 63, 25, 28 });
+	flyingEnemy_AttackLAnim.PushBack({ 287, 63, 25, 27 });
+	flyingEnemy_AttackLAnim.loop = true;
+	flyingEnemy_AttackLAnim.speed = 1.0f;
+
+
 	return true;
 }
 
@@ -163,15 +197,18 @@ bool ModuleEnemy::Update(float dt)
 				}
 			}
 		}
-		
+
 		if (storage1 != NULL) {
 			storage1 = storage1->next;
 
 		}
-
 	}
 
-	
+	flyingEnemy_AttackLAnim.Update();
+	flyingEnemy_AttackRAnim.Update();
+	flyingEnemy_IdleLAnim.Update();
+	flyingEnemy_IdleRAnim.Update();
+
 	return ret;
 }
 
