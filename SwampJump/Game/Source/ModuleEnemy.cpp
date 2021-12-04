@@ -159,7 +159,7 @@ bool ModuleEnemy::Update(float dt)
 					LOG("Enemigo muerto!");
 				}
 				else if (storage1->data->actualHp>0) {
-					storage1->data->actualHp = storage1->data->actualHp - app->scene->player.playerDamage;
+					storage1->data->actualHp -= app->scene->player.playerDamage;
 				}
 			}
 		}
@@ -245,6 +245,7 @@ MeleEnemic* ModuleEnemy::meleEnemicCreator(int x, int y,int spawnPlace) {
 	
 	MeleEnemic* newEnemy = new MeleEnemic();
 
+
 	newEnemy->x = x;
 	newEnemy->y = y;
 	newEnemy->w = normalEnemicsWH.w;
@@ -256,6 +257,7 @@ MeleEnemic* ModuleEnemy::meleEnemicCreator(int x, int y,int spawnPlace) {
 	newEnemy->vy = meleEnemicsVelocity.y;
 	newEnemy->enemicType = 0;
 	newEnemy->actualHp = meleEnemicsHp;
+
 
 
 	return newEnemy;
