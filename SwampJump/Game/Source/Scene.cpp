@@ -549,20 +549,21 @@ bool Scene::Update(float dt)
 	SDL_Rect sensorSpawn5 = { app->moduleEnemy->meleEnemicSpawn5.x - 800,app->moduleEnemy->meleEnemicSpawn5.y - 500, 1500,1000 };
 	SDL_Rect sensorSpawn6 = { app->moduleEnemy->meleEnemicSpawn6.x - 130,app->moduleEnemy->meleEnemicSpawn6.y - 100, 300,200 };
 	SDL_Rect sensorSpawn7 = { app->moduleEnemy->meleEnemicSpawn7.x - 130,app->moduleEnemy->meleEnemicSpawn7.y - 100, 300,200 };
-	/*spawnTimer1 = spawnTimer1 * dt;
-	spawnTimer2 = spawnTimer2 * dt;
-	spawnTimer3 = spawnTimer3 * dt;
-	spawnTimer4 = spawnTimer4 * dt;
-	spawnTimer5 = spawnTimer5 * dt;
-	spawnTimer6 = spawnTimer6 * dt;
-	spawnTimer7 = spawnTimer7 * dt;*/
-	spawnTimer1++;
+	spawnTimer1 = spawnTimer1 + (1.0f * dt);
+	spawnTimer2 = spawnTimer2 + (1.0f * dt);
+	spawnTimer3 = spawnTimer3 + (1.0f * dt);
+	spawnTimer4 = spawnTimer4 + (1.0f * dt);
+	spawnTimer5 = spawnTimer5 + (1.0f * dt);
+	spawnTimer6 = spawnTimer6 + (1.0f * dt);
+	spawnTimer7 = spawnTimer7 + (1.0f * dt);
+	LOG("SpawnTimer: %.2f", spawnTimer1);
+	/*spawnTimer1++;
 	spawnTimer2++;
 	spawnTimer3++;
 	spawnTimer4++;
 	spawnTimer5++;
 	spawnTimer6++;
-	spawnTimer7++;
+	spawnTimer7++;*/
 	/*LOG("SpawnTimer: %d", spawnTimer1);
 	LOG("SpawnTimer: %d", spawnTimer2);
 	LOG("SpawnTimer: %d", spawnTimer3);
@@ -572,11 +573,11 @@ bool Scene::Update(float dt)
 	LOG("SpawnTimer: %d", spawnTimer7);*/
 	/*spawn1FlyEnemicTimer *= dt;
 	spawn2FlyEnemicTimer*=dt;*/
-	spawn1FlyEnemicTimer++;
+	/*spawn1FlyEnemicTimer++;
 	spawn2FlyEnemicTimer++;
 	spawn3FlyEnemicTimer++;
 	spawn6FlyEnemicTimer++;
-	spawn7FlyEnemicTimer++;
+	spawn7FlyEnemicTimer++;*/
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		spawnTimer1 = 3000;
 		spawnTimer2 = 3000;
