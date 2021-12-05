@@ -97,11 +97,12 @@ bool ModuleEnemy::Update(float dt)
 	//SDL_Rect sensorSpawn1 = { app->moduleEnemy->meleEnemicSpawn1.x - 800,app->moduleEnemy->meleEnemicSpawn1.y - 500, 1500,1000 };
 
 	while (storage1 != NULL) {
-
+		
 
 		//Mele Enemic Move
 		if (storage1->data->enemicType == 0) {
-			
+			SDL_Rect enemicMeleSensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+			SDL_Rect atackMeleEnemicSensor = { storage1->data->x - 25,storage1->data->y-25,storage1->data->w + 50,storage1->data->h+50 };
 		
 			if (!storage1->data->enemicMeleSensor) {
 				//Path predeterminado
@@ -115,10 +116,31 @@ bool ModuleEnemy::Update(float dt)
 			if (storage1->data->enemicMeleSensor) {
 				//Path de seguimiento
 				LOG("Dentro de range de ataque!");
+
+
+
+				//Ataque
+				if (app->scene->player.x > atackMeleEnemicSensor.x 
+					&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w))
+					&& app->scene->player.y > atackMeleEnemicSensor.y
+					&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+
+					LOG("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+
+				}
+			
+
+
+
+
+
+
+
+
 				//storage1->data->x++;
 			}
-			SDL_Rect enemicMeleSensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
-			SDL_Rect atackMeleEnemicSensor = { storage1->data->x - 25,storage1->data->y - 25,storage1->data->w + 25,storage1->data->h + 25 };
+			
 
 
 			if (app->scene->player.x > enemicMeleSensorRec.x && app->scene->player.x < enemicMeleSensorRec.w + enemicMeleSensorRec.x && 

@@ -549,6 +549,8 @@ bool Scene::Update(float dt)
 	SDL_Rect sensorSpawn5 = { app->moduleEnemy->meleEnemicSpawn5.x - 800,app->moduleEnemy->meleEnemicSpawn5.y - 500, 1500,1000 };
 	SDL_Rect sensorSpawn6 = { app->moduleEnemy->meleEnemicSpawn6.x - 130,app->moduleEnemy->meleEnemicSpawn6.y - 100, 300,200 };
 	SDL_Rect sensorSpawn7 = { app->moduleEnemy->meleEnemicSpawn7.x - 130,app->moduleEnemy->meleEnemicSpawn7.y - 100, 300,200 };
+
+	//Se puede pasar a funciones para reducir espacio el el update
 	spawnTimer1 = spawnTimer1 + (1.0f * dt);
 	spawnTimer2 = spawnTimer2 + (1.0f * dt);
 	spawnTimer3 = spawnTimer3 + (1.0f * dt);
@@ -556,28 +558,15 @@ bool Scene::Update(float dt)
 	spawnTimer5 = spawnTimer5 + (1.0f * dt);
 	spawnTimer6 = spawnTimer6 + (1.0f * dt);
 	spawnTimer7 = spawnTimer7 + (1.0f * dt);
-	LOG("SpawnTimer: %.2f", spawnTimer1);
-	/*spawnTimer1++;
-	spawnTimer2++;
-	spawnTimer3++;
-	spawnTimer4++;
-	spawnTimer5++;
-	spawnTimer6++;
-	spawnTimer7++;*/
-	/*LOG("SpawnTimer: %d", spawnTimer1);
-	LOG("SpawnTimer: %d", spawnTimer2);
-	LOG("SpawnTimer: %d", spawnTimer3);
-	LOG("SpawnTimer: %d", spawnTimer4);
-	LOG("SpawnTimer: %d", spawnTimer5);
-	LOG("SpawnTimer: %d", spawnTimer6);
-	LOG("SpawnTimer: %d", spawnTimer7);*/
-	/*spawn1FlyEnemicTimer *= dt;
-	spawn2FlyEnemicTimer*=dt;*/
-	/*spawn1FlyEnemicTimer++;
-	spawn2FlyEnemicTimer++;
-	spawn3FlyEnemicTimer++;
-	spawn6FlyEnemicTimer++;
-	spawn7FlyEnemicTimer++;*/
+	spawn1FlyEnemicTimer = spawn1FlyEnemicTimer + (1.0f * dt);
+	spawn2FlyEnemicTimer = spawn2FlyEnemicTimer + (1.0f * dt);
+	spawn3FlyEnemicTimer = spawn3FlyEnemicTimer + (1.0f * dt);
+	spawn4FlyEnemicTimer = spawn4FlyEnemicTimer + (1.0f * dt);
+	spawn5FlyEnemicTimer = spawn5FlyEnemicTimer + (1.0f * dt);
+	spawn6FlyEnemicTimer = spawn6FlyEnemicTimer + (1.0f * dt);
+	spawn7FlyEnemicTimer = spawn7FlyEnemicTimer + (1.0f * dt);
+
+	
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		spawnTimer1 = 3000;
 		spawnTimer2 = 3000;
@@ -1100,7 +1089,9 @@ void Scene::DebugDraw()
 	while (storage1 != NULL) {
 
 		SDL_Rect enemicSensor = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
-		app->render->DrawRectangle(enemicSensor, 255, 200, 50,40);
+		SDL_Rect atackMeleEnemicSensor = { storage1->data->x-25 ,storage1->data->y-25 ,storage1->data->w + 50,storage1->data->h+50};
+		app->render->DrawRectangle(enemicSensor, 255, 200, 50, 40);
+		app->render->DrawRectangle(atackMeleEnemicSensor, 255, 255, 255,40);
 		storage1 = storage1->next;
 	}
 	SDL_Rect meleEnemicSpawn1{ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };
