@@ -102,8 +102,11 @@ bool ModuleEnemy::Update(float dt)
 		//Mele Enemic Move
 		if (storage1->data->enemicType == 0) {
 			SDL_Rect enemicMeleSensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+
 			SDL_Rect atackMeleEnemicSensor = { storage1->data->x - 25,storage1->data->y-25,storage1->data->w + 50,storage1->data->h+50 };
-		
+			SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+			SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
+
 			if (!storage1->data->enemicMeleSensor) {
 				//Path predeterminado
 				if (!storage1->data->movimentMeleEnemic) {
@@ -117,17 +120,34 @@ bool ModuleEnemy::Update(float dt)
 				//Path de seguimiento
 				LOG("Dentro de range de ataque!");
 
-
+				
 
 				//Ataque
-				if (app->scene->player.x > atackMeleEnemicSensor.x 
-					&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w))
+				if (app->scene->player.x > (atackMeleEnemicSensor.x+atackMeleEnemicSensor.w/2) 
+					&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
 					&& app->scene->player.y > atackMeleEnemicSensor.y
 					&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
-
+					storage1->data->meleRightAtackBool = true;
 					LOG("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+					
+
+				}
+				else {
+					storage1->data->meleRightAtackBool = false;
+
+				}
+				if ((app->scene->player.x+app->scene->player.w) > atackMeleEnemicSensor.x
+					&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w/2))
+					&& app->scene->player.y > atackMeleEnemicSensor.y
+					&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+					storage1->data->meleLeftAtackBool = true;
+
+					LOG("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 
 
+				}
+				else {
+					storage1->data->meleLeftAtackBool = false;
 				}
 			
 

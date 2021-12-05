@@ -913,8 +913,20 @@ bool Scene::Update(float dt)
 			SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
 			//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
 			app->render->DrawRectangle(enemic, 255, 255, 0);
+
+			//Ataque
+			if (storage1->data->meleLeftAtackBool) {
+				SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+				app->render->DrawRectangle(meleLeftAtackRect, 255, 0, 0);
+			}
+			if (storage1->data->meleRightAtackBool) {
+				SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
+				app->render->DrawRectangle(meleRightAtackRect, 255, 0, 0);
+			}
+
+
 			storage1 = storage1->next;
-		
+			
 	}
 	if (insideObelisk1||insideObelisk2||insideObelisk3||insideObelisk4||insideObelisk5) {
 		ObeliskMenuController();

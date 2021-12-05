@@ -28,7 +28,8 @@ public:
 	bool movimentMeleEnemic = false;//False esquerra True dreta
 	bool movimentFlyEnemic = false;//False esquerra True dreta
 	bool enemicMeleSensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
-
+	bool meleLeftAtackBool = false;
+	bool meleRightAtackBool = false;
 	Animation* currentMeleAnimation = nullptr;
 };
 class ModuleEnemy : public Module
