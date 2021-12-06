@@ -124,36 +124,40 @@ bool ModuleEnemy::Update(float dt)
 				LOG("Dentro de range de ataque!");
 
 				
-				storage1->data->atackTimer = storage1->data->atackTimer + (1 * dt);
+				storage1->data->atackTimer = storage1->data->atackTimer + (1 * dt);//Timer del tiempo en el que el enemigo puede volver a atacar
+
 				if (storage1->data->atackTimer >= 50) {
 					//Ataque
-					if (app->scene->player.x > (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w / 2)
+					//Right
+					if (app->scene->player.x > (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w / 2)//If para detectar si el jugador esta tocando el sensor de ataque del enemigo
 						&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
 						&& app->scene->player.y > atackMeleEnemicSensor.y
 						&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
-						storage1->data->meleRightAtackBool = true;
-						SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
+						storage1->data->meleRightAtackBool = true;//Activa el bool de que el enemigo está atacando
+						SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };//Rect del collider del ataque del enemigo
 
-						if ((meleRightAtackRect.x + meleRightAtackRect.w) > app->scene->player.x
+						if ((meleRightAtackRect.x + meleRightAtackRect.w) > app->scene->player.x//If para ver si el ataque del enemigo está tocando al jugador
 							&& (meleRightAtackRect.x + meleRightAtackRect.w) < (app->scene->player.x + app->scene->player.w)
 							&& meleRightAtackRect.y > app->scene->player.y
 							&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
 
 
-							app->scene->player.actualPlayerHp -= storage1->data->damage;
+							app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
+							//Resetea todos los contadores y bools del ataque del enemigo
 							storage1->data->atackTime = 0;
 							storage1->data->atackTimer = 0;
 							storage1->data->meleRightAtackBool = false;
 
 						}
-						LOG("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
 
 					}
-					else {
+					else {//Cuando el jugador no está dentro del sensor de ataque del enemigo coloca el bool de ataque en false
 						storage1->data->meleRightAtackBool = false;
 
 					}
+					//Left
+					//Lo mismo que arriba pero para el lado izquierdo
 					if ((app->scene->player.x + app->scene->player.w) > atackMeleEnemicSensor.x
 						&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w / 2))
 						&& app->scene->player.y > atackMeleEnemicSensor.y
@@ -161,7 +165,6 @@ bool ModuleEnemy::Update(float dt)
 						storage1->data->meleLeftAtackBool = true;
 						SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
 
-						LOG("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
 
 						if ((meleLeftAtackRect.x) > app->scene->player.x
 							&& (meleLeftAtackRect.x) < (app->scene->player.x + app->scene->player.w)
