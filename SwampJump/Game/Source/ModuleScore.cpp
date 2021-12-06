@@ -152,11 +152,19 @@ bool ModuleScore::LoadPickUpsSpawn(pugi::xml_node& scoreSpawnData) {
 }
 bool ModuleScore::LoadPointsData(pugi::xml_node& pointsData) {
 
-	return true;
 
+
+	return true;
 }
 
 bool ModuleScore::LoadHpData(pugi::xml_node& hpData) {
 
+
+
 	return true;
+}
+
+bool ModuleScore::SaveState(pugi::xml_node& saveData)const {
+
+
 }
