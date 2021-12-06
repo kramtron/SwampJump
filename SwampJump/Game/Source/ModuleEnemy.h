@@ -14,6 +14,7 @@ public:
 public:
 	float x = 0, y = 0;
 	float vx, vy;
+	float ay=1;
 	float w, h;
 	float hp;
 	float actualHp;
@@ -23,6 +24,9 @@ public:
 	int spawnPlace;//Del 1 - 7 segun los diferentes puntos de spawn
 	int enemicType;//0 para enemigos mele  1 para enemigos voladores
 	
+	float atackTimer = 50;
+	float atackTime = 0;
+
 	bool atack = false;
 	bool enemicFlySensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
 	bool movimentMeleEnemic = false;//False esquerra True dreta
@@ -30,6 +34,13 @@ public:
 	bool enemicMeleSensor = false;//False tiene el path predeterminado True tiene el path de seguimiento
 	bool meleLeftAtackBool = false;
 	bool meleRightAtackBool = false;
+
+	bool tocant_terra;
+	bool doblesalt;
+	float aceleration_timer;
+	bool coyotejump;
+	bool tocant_terra_abans;
+	
 	Animation* currentMeleAnimation = nullptr;
 };
 class ModuleEnemy : public Module
@@ -69,6 +80,7 @@ public:
 
 	bool SaveState(pugi::xml_node&) const;
 
+	void meleEnemicMove(p2List_item<MeleEnemic*>*,float dt);
 
 	//Enemic Move
 	

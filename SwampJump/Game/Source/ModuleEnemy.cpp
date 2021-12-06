@@ -99,8 +99,11 @@ bool ModuleEnemy::Update(float dt)
 	while (storage1 != NULL) {
 		
 
+
 		//Mele Enemic Move
 		if (storage1->data->enemicType == 0) {
+			//meleEnemicMove(storage1, dt);
+
 			SDL_Rect enemicMeleSensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
 
 			SDL_Rect atackMeleEnemicSensor = { storage1->data->x - 25,storage1->data->y-25,storage1->data->w + 50,storage1->data->h+50 };
@@ -121,34 +124,67 @@ bool ModuleEnemy::Update(float dt)
 				LOG("Dentro de range de ataque!");
 
 				
+				storage1->data->atackTimer = storage1->data->atackTimer + (1 * dt);
+				if (storage1->data->atackTimer >= 50) {
+					//Ataque
+					if (app->scene->player.x > (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w / 2)
+						&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
+						&& app->scene->player.y > atackMeleEnemicSensor.y
+						&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+						storage1->data->meleRightAtackBool = true;
+						SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
 
-				//Ataque
-				if (app->scene->player.x > (atackMeleEnemicSensor.x+atackMeleEnemicSensor.w/2) 
-					&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
-					&& app->scene->player.y > atackMeleEnemicSensor.y
-					&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
-					storage1->data->meleRightAtackBool = true;
-					LOG("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-					
+						if ((meleRightAtackRect.x + meleRightAtackRect.w) > app->scene->player.x
+							&& (meleRightAtackRect.x + meleRightAtackRect.w) < (app->scene->player.x + app->scene->player.w)
+							&& meleRightAtackRect.y > app->scene->player.y
+							&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
 
+
+							app->scene->player.actualPlayerHp -= storage1->data->damage;
+							storage1->data->atackTime = 0;
+							storage1->data->atackTimer = 0;
+							storage1->data->meleRightAtackBool = false;
+
+						}
+						LOG("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
+
+					}
+					else {
+						storage1->data->meleRightAtackBool = false;
+
+					}
+					if ((app->scene->player.x + app->scene->player.w) > atackMeleEnemicSensor.x
+						&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w / 2))
+						&& app->scene->player.y > atackMeleEnemicSensor.y
+						&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+						storage1->data->meleLeftAtackBool = true;
+						SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+
+						LOG("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+
+						if ((meleLeftAtackRect.x) > app->scene->player.x
+							&& (meleLeftAtackRect.x) < (app->scene->player.x + app->scene->player.w)
+							&& meleLeftAtackRect.y > app->scene->player.y
+							&& meleLeftAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
+
+
+							storage1->data->meleRightAtackBool = false;
+							app->scene->player.actualPlayerHp -= storage1->data->damage;
+							storage1->data->atackTime = 0;
+							storage1->data->atackTimer = 0;
+						}
+					}
+					else {
+						storage1->data->meleLeftAtackBool = false;
+					}
+					storage1->data->atackTime = storage1->data->atackTime + (1 * dt);
+					if (storage1->data->atackTime>=5) {
+						storage1->data->atackTimer = 0;
+						storage1->data->atackTime = 0;
+					}
 				}
-				else {
-					storage1->data->meleRightAtackBool = false;
 
-				}
-				if ((app->scene->player.x+app->scene->player.w) > atackMeleEnemicSensor.x
-					&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w/2))
-					&& app->scene->player.y > atackMeleEnemicSensor.y
-					&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
-					storage1->data->meleLeftAtackBool = true;
-
-					LOG("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-
-
-				}
-				else {
-					storage1->data->meleLeftAtackBool = false;
-				}
 			
 
 
@@ -179,7 +215,6 @@ bool ModuleEnemy::Update(float dt)
 		}
 		//Fly enemic Move
 		if (storage1->data->enemicType == 1) {
-			
 			if (!storage1->data->enemicFlySensor) {
 
 				storage1->data->y = (400 + sin((angle)) * 60);//Falta poner el dt
@@ -300,8 +335,8 @@ bool ModuleEnemy::LoadEnemicsData(pugi::xml_node& enemicsData) {
 	//Toda la carga de las caracteristicas generales de los enemigos
 	flyEnemicsHp = enemicsData.attribute("flyEnemicHp").as_float();
 	meleEnemicsHp = enemicsData.attribute("meleEnemicHp").as_float();
-	meleEnemicsDamage = enemicsData.attribute("meleEnemicsDamage").as_float();
-	flyEnemicsDamage = enemicsData.attribute("flyEnemicsDamage").as_float();
+	meleEnemicsDamage = enemicsData.attribute("meleEnemicDamage").as_float();
+	flyEnemicsDamage = enemicsData.attribute("flyEnemicDamage").as_float();
 	meleEnemicsVelocity.x = enemicsData.attribute("xMeleVelocity").as_float();
 	meleEnemicsVelocity.y = enemicsData.attribute("yMeleVelocity").as_float();
 	flyEnemicsVelocity.x = enemicsData.attribute("xFlyVelocity").as_float();
@@ -359,3 +394,90 @@ MeleEnemic* ModuleEnemy::flyEnemicCreator(int x, int y,int spawnPlace) {
 
 	return newEnemy;
 }
+
+void ModuleEnemy::meleEnemicMove(p2List_item<MeleEnemic*>* meleEnemic, float dt) {
+
+	/*if (meleEnemic->data->aceleration_timer <= 0) {
+		meleEnemic->data->vy += meleEnemic->data->ay;
+		meleEnemic->data->aceleration_timer = 10;
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //Aguantar el salt
+			aceleration_timer = 25;
+		}
+	}
+	else {
+		meleEnemic->data->aceleration_timer -= 1 * dt;
+	}
+
+	if (meleEnemic->data->vy == 0) {
+		meleEnemic->data->vy = 1;
+	}*/
+
+	//Salt
+	/*if (tocant_terra) { //Si estic al terra
+		doblesalt = false;
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			player.vy = -4;
+			doblesalt = true;
+		}
+	}
+	else {			//NO toco terra
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && (doblesalt || coyotejump)) {
+			player.vy = -4;
+			doblesalt = false;
+			coyotejump = false;
+			jumpRAnim.Reset();
+			jumpLAnim.Reset();
+		}
+	}
+	if (tocant_terra_abans && tocant_terra)
+		coyotejump = true;*/
+
+	//tocant_terra_abans = tocant_terra;
+	//												COLISIONS COLISIONS
+		//												COLISIONS COLISIONS
+		//COLISIONS
+	//abans de res colision coords
+	meleEnemic->data->vy = meleEnemic->data->ay;
+ 	meleEnemic->data->y += meleEnemic->data->vy;
+	app->map->Getcolision_coords(meleEnemic->data->x,meleEnemic->data->y);
+
+	for (int i = 0; app->map->colision_coords[i] != nullptr; ++i) {
+		if ((meleEnemic->data->x + (meleEnemic->data->w - 4) + meleEnemic->data->vy > app->map->colision_coords[i]->x) && (meleEnemic->data->x + meleEnemic->data->vx < (app->map->colision_coords[i]->x + 32)) &&
+			(meleEnemic->data->y + meleEnemic->data->h + meleEnemic->data->vy > app->map->colision_coords[i]->y) && (meleEnemic->data->y + meleEnemic->data->vy < app->map->colision_coords[i]->y + 32)) {
+
+			//El player està colisionant amb una o més tiles
+			if ((meleEnemic->data->x + (meleEnemic->data->w - 4) + meleEnemic->data->vx > app->map->colision_coords[i]->x) && (meleEnemic->data->x + meleEnemic->data->vx < (app->map->colision_coords[i]->x + 32) / 2) &&
+				(meleEnemic->data->y + meleEnemic->data->h > app->map->colision_coords[i]->y - 1) && (meleEnemic->data->y < app->map->colision_coords[i]->y + 32 + 1)) {
+				//Xoca pel costat
+				meleEnemic->data->vx = 0;
+			}
+			else if ((meleEnemic->data->x + meleEnemic->data->vx > (app->map->colision_coords[i]->x + 32) / 2) && (meleEnemic->data->x + meleEnemic->data->vx < (app->map->colision_coords[i]->x + 32)) &&
+				(meleEnemic->data->y + meleEnemic->data->h > app->map->colision_coords[i]->y + 1) && (meleEnemic->data->y < app->map->colision_coords[i]->y + 32 - 1)) {
+				meleEnemic->data->vx = 0;
+
+			}
+
+			if ((meleEnemic->data->x + (meleEnemic->data->w - 4) > app->map->colision_coords[i]->x) && (meleEnemic->data->x < app->map->colision_coords[i]->x + 32) &&
+				(meleEnemic->data->y + meleEnemic->data->h + meleEnemic->data->vy > app->map->colision_coords[i]->y) && (meleEnemic->data->y + meleEnemic->data->vy < app->map->colision_coords[i]->y + 32)) {
+				//xoc vertical
+				if (meleEnemic->data->vy >= 0) { //xoca amb el terra
+					//tocant_terra = true;
+				}
+				meleEnemic->data->vy = 0;
+			}
+		}
+	}
+	//												COLISIONS COLISIONS
+	//												COLISIONS COLISIONS
+
+	//MOVIMENT
+	/*meleEnemic->data->x += meleEnemic->data->vx;
+	meleEnemic->data->y += meleEnemic->data->vy;
+	meleEnemic->data->vx = 0;*/
+
+}
+
+
+
+
+

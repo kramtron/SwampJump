@@ -952,6 +952,7 @@ bool Scene::Update(float dt)
 		}
 	}
 	LOG("Player x: %f Player y: %f", player.x, player.y);
+	LOG("Player Hp: %f", player.actualPlayerHp);
 	return true;
 }
 
