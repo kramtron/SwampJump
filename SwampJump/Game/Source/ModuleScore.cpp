@@ -141,3 +141,22 @@ void ModuleScore::CollidePickUps() {
 		current_pickUp = current_pickUp->next;
 	}
 }
+
+bool ModuleScore::LoadPickUpsSpawn(pugi::xml_node& scoreSpawnData) {
+
+
+
+
+	return true;
+
+}
+bool ModuleScore::LoadPointsData(pugi::xml_node& pointsData) {
+
+	return true;
+
+}
+
+bool ModuleScore::LoadHpData(pugi::xml_node& hpData) {
+
+	return true;
+}

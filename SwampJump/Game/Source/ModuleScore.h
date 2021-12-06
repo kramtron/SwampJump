@@ -61,6 +61,22 @@ public:
 	PickUp* CoinCreate(int x, int y, int value);
 	//bool SaveState(pugi::xml_node&) const;
 	p2List<PickUp*> pickUpList;
+
+	bool LoadPickUpsSpawn(pugi::xml_node&);
+	bool LoadPointsData(pugi::xml_node&);
+	bool LoadHpData(pugi::xml_node&);
+
+
+	bool SaveState(pugi::xml_node&) const;
+
+	float normalApplePoints;
+	float goldApplePoints;
+	struct WH {
+		float w, y;
+	};
+	WH normalWhPoints;
+	WH normalWhHp;
+	float hpUp;
 	
 private:
 	void DebugDrawPickUps();
