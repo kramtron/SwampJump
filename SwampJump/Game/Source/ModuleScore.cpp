@@ -166,5 +166,5 @@ bool ModuleScore::LoadHpData(pugi::xml_node& hpData) {
 
 bool ModuleScore::SaveState(pugi::xml_node& saveData)const {
 
-
+	return true;
 }
