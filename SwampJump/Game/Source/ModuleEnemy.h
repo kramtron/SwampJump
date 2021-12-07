@@ -11,6 +11,9 @@ class MeleEnemic {
 public:
 	MeleEnemic();
 	virtual ~MeleEnemic();
+
+	iPoint pathfind();
+
 public:
 	float x = 0, y = 0;
 	float vx, vy;
@@ -20,6 +23,8 @@ public:
 	float actualHp;
 	float damage;
 
+	iPoint movingTo;
+	bool moving;
 
 	int spawnPlace;//Del 1 - 7 segun los diferentes puntos de spawn
 	int enemicType;//0 para enemigos mele  1 para enemigos voladores
@@ -43,6 +48,7 @@ public:
 	
 	Animation* currentMeleAnimation = nullptr;
 };
+
 class ModuleEnemy : public Module
 {
 public:

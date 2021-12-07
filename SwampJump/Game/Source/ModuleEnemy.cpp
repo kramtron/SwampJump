@@ -239,20 +239,47 @@ bool ModuleEnemy::Update(float dt)
 			}
 			if (storage1->data->enemicFlySensor) {	//Pathfinding Flying Enemy
 				//Path de seguimiento
+				//if position reached, pathfind
+				if(!storage1->data->moving){
+					iPoint mov = storage1->data->pathfind();
+					storage1->data->movingTo = app->map->MapToWorld(mov.x, mov.y);
+					storage1->data->moving = true;
+				}
+				//movement
+				if (storage1->data->movingTo.x == -32 && storage1->data->movingTo.y == -32) {
+					storage1->data->moving = false;
+				}
+				else {
+					if (storage1->data->movingTo.x > storage1->data->x) {	//move right
+						storage1->data->x += storage1->data->vx * dt;
+					}
+					else if (storage1->data->movingTo.x < storage1->data->x) {	//move left
+						storage1->data->x -= storage1->data->vx * dt;
+					}
 
-
-
-
-				storage1->data->x+=2*dt;
+					if (storage1->data->movingTo.y > storage1->data->y) {	//move down
+						storage1->data->y += storage1->data->vy * dt;
+					}
+					else if (storage1->data->movingTo.y < storage1->data->y) {	//move up
+						storage1->data->y -= storage1->data->vy * dt;
+					}
+				}
+				
+				if (storage1->data->x > (storage1->data->movingTo.x - 10) &&
+					storage1->data->x < (storage1->data->movingTo.x + 10) &&
+					storage1->data->y >(storage1->data->movingTo.y - 10) &&
+					storage1->data->y < (storage1->data->movingTo.y + 10)) {
+					storage1->data->moving = false;
+				}
 			}
 			SDL_Rect enemicFlySensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
 
-			/*if (app->scene->player.x > enemicFlySensorRec.x && app->scene->player.x < enemicFlySensorRec.w + enemicFlySensorRec.x && app->scene->player.y<enemicFlySensorRec.h + enemicFlySensorRec.y && app->scene->player.y>enemicFlySensorRec.y) {
+			if (app->scene->player.x > enemicFlySensorRec.x && app->scene->player.x < enemicFlySensorRec.w + enemicFlySensorRec.x && app->scene->player.y<enemicFlySensorRec.h + enemicFlySensorRec.y && app->scene->player.y>enemicFlySensorRec.y) {
 				storage1->data->enemicFlySensor = true;
-			}*/
-			//else {
+			}
+			/*else {
 				storage1->data->enemicFlySensor = false;
-			//}
+			}*/
 		}
 
 		SDL_Rect enemic = {storage1->data->x,storage1->data->y,50,50};
@@ -346,7 +373,7 @@ bool ModuleEnemy::LoadEnemicsData(pugi::xml_node& enemicsData) {
 	meleEnemicsVelocity.x = enemicsData.attribute("xMeleVelocity").as_float();
 	meleEnemicsVelocity.y = enemicsData.attribute("yMeleVelocity").as_float();
 	flyEnemicsVelocity.x = enemicsData.attribute("xFlyVelocity").as_float();
-	flyEnemicsVelocity.x = enemicsData.attribute("yFlyVelocity").as_float();
+	flyEnemicsVelocity.y = enemicsData.attribute("yFlyVelocity").as_float();
 	normalEnemicsWH.w = enemicsData.attribute("width").as_float();
 	normalEnemicsWH.h = enemicsData.attribute("width").as_float();
 	bossEnemicMaxHp = enemicsData.attribute("bossEnemicMaxHp").as_float();
@@ -483,7 +510,7 @@ void ModuleEnemy::meleEnemicMove(p2List_item<MeleEnemic*>* meleEnemic, float dt)
 
 }
 
-
-
-
-
+iPoint MeleEnemic::pathfind() {
+	return app->map->Pathfinding(app->map->WorldToMap(x, y),
+		   app->map->WorldToMap(app->scene->player.x, app->scene->player.y));
+}

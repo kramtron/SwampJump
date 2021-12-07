@@ -36,7 +36,7 @@ public:
 	// Operators
 	VALUE& operator[](unsigned int index)
 	{
-		assert(index < numElements);	//ASSERT
+	//	assert(index < numElements);
 		return data[index];
 	}
 

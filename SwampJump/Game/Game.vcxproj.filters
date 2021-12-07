@@ -34,9 +34,6 @@
     <ClInclude Include="Source\Defs.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DynArray.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\List.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -66,6 +63,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Queue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DynArray.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

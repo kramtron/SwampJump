@@ -422,7 +422,19 @@ bool Scene::Update(float dt)
 
 	//Draw map
 	app->map->Draw();
-	
+
+	//PROVA PATHFINDING
+	/*iPoint pathf = app->map->Pathfinding(app->map->WorldToMap(player.x, player.y), iPoint(15, 13));
+	iPoint pathfinal = app->map->MapToWorld(pathf.x, pathf.y);
+	SDL_Rect pathr;
+	pathr.x = pathfinal.x;
+	pathr.y = pathfinal.y;
+	pathr.w = pathr.h = 32;
+
+	app->map->DrawPath();
+	app->render->DrawRectangle(pathr, 0, 0, 255);*/
+
+
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 				   app->map->mapData.width, app->map->mapData.height,
@@ -1136,6 +1148,7 @@ void Scene::DebugDraw()
 	app->render->DrawRectangle(obelisk4Sensor, 255, 255, 255, 40);
 	app->render->DrawRectangle(obelisk5Sensor,255,255,255,40);
 
+	app->map->DrawPath();
 
 	app->modulescore->DebugDraw();
 }
