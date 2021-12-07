@@ -62,6 +62,12 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\ModuleEnemy.h" />
     <ClInclude Include="Source\ModuleScore.h" />
+    <ClInclude Include="Source\PQueue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Queue.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

@@ -237,8 +237,11 @@ bool ModuleEnemy::Update(float dt)
 					storage1->data->movimentFlyEnemic = false;
 				}*/
 			}
-			if (storage1->data->enemicFlySensor) {
+			if (storage1->data->enemicFlySensor) {	//Pathfinding Flying Enemy
 				//Path de seguimiento
+
+
+
 
 				storage1->data->x+=2*dt;
 			}

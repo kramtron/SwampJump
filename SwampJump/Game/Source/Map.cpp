@@ -509,3 +509,91 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 	
 	return ret;
 }
+
+//PATHFINDING
+void Map::ResetPath(int x, int y)
+{
+	frontier.Clear();
+	visited.clear();
+	breadcrumbs.clear();
+	path.Clear();
+
+	frontier.Push(iPoint(x, y), 0);
+	visited.add(iPoint(x, y));
+	breadcrumbs.add(iPoint(x, y));
+}
+
+void Map::DrawPath()
+{
+	// Draw path
+	for (uint i = 0; i < path.Count(); ++i)
+	{
+		iPoint pos = MapToWorld(path[i].x, path[i].y);
+		app->render->DrawRectangle({ pos.x, pos.y, 32, 32 }, 0, 100, 0);
+	}
+}
+
+bool Map::IsWalkable(int x, int y) const
+{
+	bool isWalkable = false;
+	//afegir limits del mapa
+	if (x >= 0 && y >= 0) {
+		
+		//gets the second layer
+		ListItem<MapLayer*>* mapLayerItem;
+		mapLayerItem = mapData.layers.start;
+		mapLayerItem = mapLayerItem->next;
+
+		//identify if its collider or not
+		int gid = mapLayerItem->data->Get(x, y);
+
+		if (gid == 0) {
+			isWalkable = true;
+		}
+	}
+
+	return isWalkable;
+}
+
+void Map::ComputePath(int x, int y)
+{
+	path.Clear();
+	iPoint goal = WorldToMap(x, y);
+
+	//Follow the breadcrumbs to get the full path
+	while (goal != breadcrumbs.start->data) {
+		path.PushBack(goal);
+		goal = breadcrumbs.At(visited.find(goal))->data;
+	}
+	path.PushBack(goal);
+}
+
+void Map::PropagateBFS()
+{
+	//Take the last frontier element
+	iPoint curr;
+	if (frontier.Pop(curr))
+	{
+		//4 neighbor tiles
+		iPoint neighbors[4];
+		neighbors[0].create(curr.x + 1, curr.y + 0);
+		neighbors[1].create(curr.x + 0, curr.y + 1);
+		neighbors[2].create(curr.x - 1, curr.y + 0);
+		neighbors[3].create(curr.x + 0, curr.y - 1);
+
+		for (uint i = 0; i < 4; ++i)
+		{
+			//If is walkable...
+			if (IsWalkable(neighbors[i].x, neighbors[i].y))
+			{
+				//If the tile is not added in visited, add it
+				if (visited.find(neighbors[i]) == -1)
+				{
+					frontier.Push(neighbors[i], 0);
+					visited.add(neighbors[i]);
+					breadcrumbs.add(curr);
+				}
+			}
+		}
+	}
+}

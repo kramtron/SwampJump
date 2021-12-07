@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "PQueue.h"
+#include "DynArray.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -143,6 +145,16 @@ public:
 
 	iPoint* colision_coords[50];
 
+	//PATHFINDING
+	//initial x y position
+	void ResetPath(int x, int y);
+	void DrawPath();
+	bool IsWalkable(int x, int y) const;
+
+	void ComputePath(int x, int y);
+
+	void PropagateBFS();
+
 private:
 
 	// L03: Methods to load all required map data
@@ -171,6 +183,12 @@ private:
 
     SString folder;
     bool mapLoaded;
+
+	//pathfinding
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
+	List<iPoint> breadcrumbs;
+	DynArray<iPoint> path;
 };
 
 #endif // __MAP_H__
