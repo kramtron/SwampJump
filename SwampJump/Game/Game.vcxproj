@@ -104,6 +104,7 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\ModuleEnemy.h" />
     <ClInclude Include="Source\ModuleScore.h" />
@@ -126,7 +127,6 @@
     <ClCompile Include="Source\Log.cpp" />
     <ClInclude Include="Source\Point.h" />
     <ClInclude Include="Source\SString.h" />
-    <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp" />

@@ -529,7 +529,7 @@ void Map::DrawPath()
 	for (uint i = 0; i < path.Count(); ++i)
 	{
 		iPoint pos = MapToWorld(path[i].x, path[i].y);
-		app->render->DrawRectangle({ pos.x, pos.y, 32, 32 }, 0, 100, 0);
+		app->render->DrawRectangle({ pos.x, pos.y, 32, 32 }, 0, 50, 0);
 	}
 }
 
@@ -537,7 +537,7 @@ bool Map::IsWalkable(int x, int y) const
 {
 	bool isWalkable = false;
 	//afegir limits del mapa
-	if (x >= 0 && y >= 0) {
+	if (x >= 0 && y >= 0 && x <= 600 && y <= 32) {
 		
 		//gets the second layer
 		ListItem<MapLayer*>* mapLayerItem;
@@ -560,12 +560,16 @@ void Map::ComputePath(int x, int y)
 	path.Clear();
 	iPoint goal = WorldToMap(x, y);
 
-	//Follow the breadcrumbs to get the full path
-	while (goal != breadcrumbs.start->data) {
-		path.PushBack(goal);
-		goal = breadcrumbs.At(visited.find(goal))->data;
-	}
 	path.PushBack(goal);
+	int index = visited.find(goal);
+
+	//Follow the breadcrumbs to get the full path
+	while ((index >= 0) && (goal != breadcrumbs[index]))
+	{
+		goal = breadcrumbs[index];
+		path.PushBack(goal);
+		index = visited.find(goal);
+	}
 }
 
 void Map::PropagateBFS()
@@ -596,4 +600,31 @@ void Map::PropagateBFS()
 			}
 		}
 	}
+}
+
+iPoint Map::Pathfinding(iPoint initPoint, iPoint endPoint) {
+	//if init or end are not walkable quit
+	if (!IsWalkable(initPoint.x, initPoint.y) || !IsWalkable(endPoint.x, endPoint.y)) {
+		return iPoint(-1, -1);
+	}
+	
+	ResetPath(initPoint.x, initPoint.y);
+
+	/*for (int i = 0; i < 300; i++) {
+		PropagateBFS();
+
+	}*/
+
+	while (visited.find(endPoint) == -1) {
+		PropagateBFS();
+	}
+
+	iPoint endPoint2 = MapToWorld(endPoint.x, endPoint.y);
+	ComputePath(endPoint2.x, endPoint2.y);
+	
+	if ((path.Count() - 2) <= 0) {
+		return iPoint(-1, -1);
+	}
+	//return the position before the last (the next position the object has to move to)
+	return path[path.Count() - 2];
 }
