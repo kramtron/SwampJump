@@ -597,3 +597,14 @@ void Map::PropagateBFS()
 		}
 	}
 }
+
+iPoint Map::Pathfinding(iPoint initPoint, iPoint endPoint) {
+	ResetPath(initPoint.x, initPoint.y);
+	while (visited.find(endPoint) != -1) {
+		PropagateBFS();
+	}
+
+	ComputePath(endPoint.x, endPoint.y);
+	//return the position before the last (the next position the object has to move to)
+	return path[path.Count()-2];
+}

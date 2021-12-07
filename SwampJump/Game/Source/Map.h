@@ -155,6 +155,8 @@ public:
 
 	void PropagateBFS();
 
+	iPoint Pathfinding(iPoint initPoint, iPoint endPoint);
+
 private:
 
 	// L03: Methods to load all required map data
