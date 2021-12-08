@@ -66,8 +66,20 @@ public:
 	bool LoadPointsData(pugi::xml_node&);
 	bool LoadHpData(pugi::xml_node&);
 
+	bool loadScoreData = true;
 
 	bool SaveState(pugi::xml_node&) const;
+
+	struct PointsSpawnData {
+		float x, y;
+	};
+	PointsSpawnData pointSpawn1;
+	PointsSpawnData pointSpawn2;
+	PointsSpawnData pointSpawn3;
+	PointsSpawnData pointSpawn4;
+	PointsSpawnData pointSpawn5;
+	PointsSpawnData pointSpawn6;
+	PointsSpawnData pointSpawn7;
 
 	float normalApplePoints;
 	float goldApplePoints;

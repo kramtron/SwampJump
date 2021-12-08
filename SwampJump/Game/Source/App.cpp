@@ -376,6 +376,11 @@ bool App::LoadGame()
 			app->scene->loadScene1Data = false;
 
 		}
+		if (app->modulescore->loadScoreData) {
+			configScoreData = configSaveLoad.child("applePointSpawn");
+			app->modulescore->LoadPickUpsSpawn(configScoreData);
+			app->modulescore->loadScoreData = false;
+		}
 	}
 
 
