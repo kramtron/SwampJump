@@ -148,6 +148,12 @@ private:
 	SDL_Texture* obelisk = nullptr;
 	SDL_Texture* thunder = nullptr;
 	SDL_Texture* menuEToEnter = nullptr;
+	SDL_Texture* normalMenuZone = nullptr;
+	SDL_Texture* zone1Selected = nullptr;
+	SDL_Texture* zone2Selected = nullptr;
+	SDL_Texture* zone3Selected = nullptr;
+	SDL_Texture* zone4Selected = nullptr;
+	SDL_Texture* zone5Selected = nullptr;
 
 	SDL_Texture* arbre1 = nullptr;
 	SDL_Texture* arbre2 = nullptr;

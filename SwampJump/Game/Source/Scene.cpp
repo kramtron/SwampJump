@@ -58,6 +58,12 @@ bool Scene::Start()
 	obelisk = app->tex->Load("Assets/textures/obelisk/obeliskAlone.png");
 	thunder = app->tex->Load("Assets/textures/thunder.png");
 	menuEToEnter= app->tex->Load("Assets/textures/MenuInGame/obeliskMenuEToEnter.png");
+	normalMenuZone = app->tex->Load("Assets/textures/MenuInGame/menuVirgen.png");
+	zone1Selected = app->tex->Load("Assets/textures/MenuInGame/zone1Selected.png");
+	zone2Selected = app->tex->Load("Assets/textures/MenuInGame/zone2Selected.png");
+	zone3Selected = app->tex->Load("Assets/textures/MenuInGame/zone3Selected.png");
+	zone4Selected = app->tex->Load("Assets/textures/MenuInGame/zone4Selected.png");
+	zone5Selected = app->tex->Load("Assets/textures/MenuInGame/zone5Selected.png");
 
 	//Sprites Decoració
 	arbre1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Willows/3.png");
@@ -1165,6 +1171,7 @@ void Scene::DrawDecorations() {
 	app->render->DrawTexture(bush8, 1900, 754, NULL, 1, 3);
 	app->render->DrawTexture(bush1, 4500, 790, NULL, 1, 3);
 	app->render->DrawTexture(bush3, 8260, 790, NULL, 1, 3);
+
 }
 
 void Scene::ObeliskMenuController() {
@@ -1176,17 +1183,42 @@ void Scene::ObeliskMenuController() {
 	}
 	
 	if (enterMenu) {
-		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+		app->render->DrawTexture(normalMenuZone, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
+
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
 			if (menuPlace <= 5) {
 				menuPlace++;
 			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
 			if (menuPlace > 1) {
 				menuPlace--;
 			}
 		}
-		
+
+		switch (menuPlace)
+		{
+		case 1:
+			app->render->DrawTexture(zone1Selected, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
+
+			break;
+		case 2:
+			app->render->DrawTexture(zone2Selected, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
+
+			break;
+		case 3:
+			app->render->DrawTexture(zone3Selected, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
+
+			break;
+		case 4:
+			app->render->DrawTexture(zone4Selected, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
+
+			break;
+		case 5:
+			app->render->DrawTexture(zone5Selected, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
+
+			break;
+		}
 		
 		//Imprimir sprite del menu para seleccionar el sitio donde te quieras tepear
 
