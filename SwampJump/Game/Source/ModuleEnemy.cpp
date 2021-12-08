@@ -119,101 +119,103 @@ bool ModuleEnemy::Update(float dt)
 					storage1->data->x+=storage1->data->vx*dt;
 				}
 			}
-			if (storage1->data->enemicMeleSensor) {
-				//Path de seguimiento
-				LOG("Dentro de range de ataque!");
-
-				
-				storage1->data->atackTimer = storage1->data->atackTimer + (1 * dt);//Timer del tiempo en el que el enemigo puede volver a atacar
-
-				if (storage1->data->atackTimer >= 50) {
-					//Ataque
-					//Right
-					if (app->scene->player.x > (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w / 2)//If para detectar si el jugador esta tocando el sensor de ataque del enemigo
-						&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
-						&& app->scene->player.y > atackMeleEnemicSensor.y
-						&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
-						storage1->data->meleRightAtackBool = true;//Activa el bool de que el enemigo está atacando
-						SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };//Rect del collider del ataque del enemigo
-
-						if ((meleRightAtackRect.x + meleRightAtackRect.w) > app->scene->player.x//If para ver si el ataque del enemigo está tocando al jugador
-							&& (meleRightAtackRect.x + meleRightAtackRect.w) < (app->scene->player.x + app->scene->player.w)
-							&& meleRightAtackRect.y > app->scene->player.y
-							&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
+			if (!app->scene->godMode) {
+				if (storage1->data->enemicMeleSensor) {
+					//Path de seguimiento
+					LOG("Dentro de range de ataque!");
 
 
-							app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
-							//Resetea todos los contadores y bools del ataque del enemigo
-							storage1->data->atackTime = 0;
-							storage1->data->atackTimer = 0;
+					storage1->data->atackTimer = storage1->data->atackTimer + (1 * dt);//Timer del tiempo en el que el enemigo puede volver a atacar
+
+					if (storage1->data->atackTimer >= 50) {
+						//Ataque
+						//Right
+						if (app->scene->player.x > (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w / 2)//If para detectar si el jugador esta tocando el sensor de ataque del enemigo
+							&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
+							&& app->scene->player.y > atackMeleEnemicSensor.y
+							&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+							storage1->data->meleRightAtackBool = true;//Activa el bool de que el enemigo está atacando
+							SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };//Rect del collider del ataque del enemigo
+
+							if ((meleRightAtackRect.x + meleRightAtackRect.w) > app->scene->player.x//If para ver si el ataque del enemigo está tocando al jugador
+								&& (meleRightAtackRect.x + meleRightAtackRect.w) < (app->scene->player.x + app->scene->player.w)
+								&& meleRightAtackRect.y > app->scene->player.y
+								&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
+
+
+								app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
+								//Resetea todos los contadores y bools del ataque del enemigo
+								storage1->data->atackTime = 0;
+								storage1->data->atackTimer = 0;
+								storage1->data->meleRightAtackBool = false;
+
+							}
+
+
+						}
+						else {//Cuando el jugador no está dentro del sensor de ataque del enemigo coloca el bool de ataque en false
 							storage1->data->meleRightAtackBool = false;
 
 						}
+						//Left
+						//Lo mismo que arriba pero para el lado izquierdo
+						if ((app->scene->player.x + app->scene->player.w) > atackMeleEnemicSensor.x
+							&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w / 2))
+							&& app->scene->player.y > atackMeleEnemicSensor.y
+							&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+							storage1->data->meleLeftAtackBool = true;
+							SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
 
 
-					}
-					else {//Cuando el jugador no está dentro del sensor de ataque del enemigo coloca el bool de ataque en false
-						storage1->data->meleRightAtackBool = false;
-
-					}
-					//Left
-					//Lo mismo que arriba pero para el lado izquierdo
-					if ((app->scene->player.x + app->scene->player.w) > atackMeleEnemicSensor.x
-						&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w / 2))
-						&& app->scene->player.y > atackMeleEnemicSensor.y
-						&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
-						storage1->data->meleLeftAtackBool = true;
-						SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+							if ((meleLeftAtackRect.x) > app->scene->player.x
+								&& (meleLeftAtackRect.x) < (app->scene->player.x + app->scene->player.w)
+								&& meleLeftAtackRect.y > app->scene->player.y
+								&& meleLeftAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
 
 
-						if ((meleLeftAtackRect.x) > app->scene->player.x
-							&& (meleLeftAtackRect.x) < (app->scene->player.x + app->scene->player.w)
-							&& meleLeftAtackRect.y > app->scene->player.y
-							&& meleLeftAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
-
-
-							storage1->data->meleRightAtackBool = false;
-							app->scene->player.actualPlayerHp -= storage1->data->damage;
-							storage1->data->atackTime = 0;
+								storage1->data->meleRightAtackBool = false;
+								app->scene->player.actualPlayerHp -= storage1->data->damage;
+								storage1->data->atackTime = 0;
+								storage1->data->atackTimer = 0;
+							}
+						}
+						else {
+							storage1->data->meleLeftAtackBool = false;
+						}
+						storage1->data->atackTime = storage1->data->atackTime + (1 * dt);
+						if (storage1->data->atackTime >= 5) {
 							storage1->data->atackTimer = 0;
+							storage1->data->atackTime = 0;
 						}
 					}
-					else {
-						storage1->data->meleLeftAtackBool = false;
-					}
-					storage1->data->atackTime = storage1->data->atackTime + (1 * dt);
-					if (storage1->data->atackTime>=5) {
-						storage1->data->atackTimer = 0;
-						storage1->data->atackTime = 0;
-					}
+
+
+
+
+
+
+
+
+
+
+					//storage1->data->x++;
 				}
 
-			
 
 
+				if (app->scene->player.x > enemicMeleSensorRec.x && app->scene->player.x < enemicMeleSensorRec.w + enemicMeleSensorRec.x &&
+					app->scene->player.y<enemicMeleSensorRec.h + enemicMeleSensorRec.y && app->scene->player.y>enemicMeleSensorRec.y)
 
+				{
+					storage1->data->enemicMeleSensor = true;
 
+				}
+				else {
+					storage1->data->enemicMeleSensor = false;
+				}
+				if (storage1->data->atack) {
 
-
-
-
-				//storage1->data->x++;
-			}
-			
-
-
-			if (app->scene->player.x > enemicMeleSensorRec.x && app->scene->player.x < enemicMeleSensorRec.w + enemicMeleSensorRec.x && 
-				app->scene->player.y<enemicMeleSensorRec.h + enemicMeleSensorRec.y && app->scene->player.y>enemicMeleSensorRec.y) 
-			
-			{
-				storage1->data->enemicMeleSensor = true;
-
-			}
-			else {
-				storage1->data->enemicMeleSensor = false;
-			}
-			if (storage1->data->atack) {
-
+				}
 			}
 		}
 		//Fly enemic Move
@@ -223,11 +225,11 @@ bool ModuleEnemy::Update(float dt)
 				storage1->data->y = (400 + sin((angle)) * 60);//Falta poner el dt
 				//Path predeterminado
 				if (!storage1->data->movimentFlyEnemic) {
-					storage1->data->x -= storage1->data->vx*dt;
+					storage1->data->x -= storage1->data->vx * dt;
 
 				}
 				else if (storage1->data->movimentFlyEnemic) {
-					storage1->data->x += storage1->data->vx*dt;
+					storage1->data->x += storage1->data->vx * dt;
 
 				}
 				/*if (storage1->data->x < 2850) {
@@ -237,49 +239,54 @@ bool ModuleEnemy::Update(float dt)
 					storage1->data->movimentFlyEnemic = false;
 				}*/
 			}
-			if (storage1->data->enemicFlySensor) {	//Pathfinding Flying Enemy
-				//Path de seguimiento
-				//if position reached, pathfind
-				if(!storage1->data->moving){
-					iPoint mov = storage1->data->pathfind();
-					storage1->data->movingTo = app->map->MapToWorld(mov.x, mov.y);
-					storage1->data->moving = true;
-				}
-				//movement
-				if (storage1->data->movingTo.x == -32 && storage1->data->movingTo.y == -32) {
-					storage1->data->moving = false;
-				}
-				else {
-					if (storage1->data->movingTo.x > storage1->data->x) {	//move right
-						storage1->data->x += storage1->data->vx * dt;
+			if (!app->scene->godMode) {
+
+				if (storage1->data->enemicFlySensor) {	//Pathfinding Flying Enemy
+
+						//Path de seguimiento
+						//if position reached, pathfind
+					if (!storage1->data->moving) {
+						iPoint mov = storage1->data->pathfind();
+						storage1->data->movingTo = app->map->MapToWorld(mov.x, mov.y);
+						storage1->data->moving = true;
 					}
-					else if (storage1->data->movingTo.x < storage1->data->x) {	//move left
-						storage1->data->x -= storage1->data->vx * dt;
+					//movement
+					if (storage1->data->movingTo.x == -32 && storage1->data->movingTo.y == -32) {
+						storage1->data->moving = false;
+					}
+					else {
+						if (storage1->data->movingTo.x > storage1->data->x) {	//move right
+							storage1->data->x += storage1->data->vx * dt;
+						}
+						else if (storage1->data->movingTo.x < storage1->data->x) {	//move left
+							storage1->data->x -= storage1->data->vx * dt;
+						}
+
+						if (storage1->data->movingTo.y > storage1->data->y) {	//move down
+							storage1->data->y += storage1->data->vy * dt;
+						}
+						else if (storage1->data->movingTo.y < storage1->data->y) {	//move up
+							storage1->data->y -= storage1->data->vy * dt;
+						}
 					}
 
-					if (storage1->data->movingTo.y > storage1->data->y) {	//move down
-						storage1->data->y += storage1->data->vy * dt;
-					}
-					else if (storage1->data->movingTo.y < storage1->data->y) {	//move up
-						storage1->data->y -= storage1->data->vy * dt;
+					if (storage1->data->x > (storage1->data->movingTo.x - 10) &&
+						storage1->data->x < (storage1->data->movingTo.x + 10) &&
+						storage1->data->y >(storage1->data->movingTo.y - 10) &&
+						storage1->data->y < (storage1->data->movingTo.y + 10)) {
+						storage1->data->moving = false;
 					}
 				}
-				
-				if (storage1->data->x > (storage1->data->movingTo.x - 10) &&
-					storage1->data->x < (storage1->data->movingTo.x + 10) &&
-					storage1->data->y >(storage1->data->movingTo.y - 10) &&
-					storage1->data->y < (storage1->data->movingTo.y + 10)) {
-					storage1->data->moving = false;
-				}
-			}
-			SDL_Rect enemicFlySensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
 
-			if (app->scene->player.x > enemicFlySensorRec.x && app->scene->player.x < enemicFlySensorRec.w + enemicFlySensorRec.x && app->scene->player.y<enemicFlySensorRec.h + enemicFlySensorRec.y && app->scene->player.y>enemicFlySensorRec.y) {
-				storage1->data->enemicFlySensor = true;
+				SDL_Rect enemicFlySensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+
+				if (app->scene->player.x > enemicFlySensorRec.x && app->scene->player.x < enemicFlySensorRec.w + enemicFlySensorRec.x && app->scene->player.y<enemicFlySensorRec.h + enemicFlySensorRec.y && app->scene->player.y>enemicFlySensorRec.y) {
+					storage1->data->enemicFlySensor = true;
+				}
+				/*else {
+					storage1->data->enemicFlySensor = false;
+				}*/
 			}
-			/*else {
-				storage1->data->enemicFlySensor = false;
-			}*/
 		}
 
 		SDL_Rect enemic = {storage1->data->x,storage1->data->y,50,50};

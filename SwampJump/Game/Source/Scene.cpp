@@ -1186,7 +1186,7 @@ void Scene::ObeliskMenuController() {
 		app->render->DrawTexture(normalMenuZone, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
 
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
-			if (menuPlace <= 5) {
+			if (menuPlace < 5) {
 				menuPlace++;
 			}
 		}
