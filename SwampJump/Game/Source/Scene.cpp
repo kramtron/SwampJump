@@ -243,7 +243,7 @@ bool Scene::Update(float dt)
 		//
 		
 		if (aceleration_timer <= 0) {
-			player.vy += player.ay;
+			player.vy += (player.ay*dt);
 			aceleration_timer = 10;
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //Aguantar el salt
 				aceleration_timer = 25;
