@@ -123,6 +123,8 @@ bool App::Start()
 	ListItem<Module*>* item;
 	item = modules.start;
 
+	LoadGame();
+
 	while(item != NULL && ret == true)
 	{
 		ret = item->data->Start();
@@ -197,7 +199,6 @@ void App::FinishUpdate()
 	// L02: DONE 1: This is a good place to call Load / Save methods
 	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
-	if (app->moduleEnemy->loadMeleEnemicSpawn==true)LoadGame();
 
 }
 

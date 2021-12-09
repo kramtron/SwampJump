@@ -146,13 +146,11 @@ bool Scene::Start()
 
 	// ANIMACIONS
 
-	app->modulescore->HpCreate(100, 400, 0);
-	app->modulescore->HpCreate(200, 400, 0);
 	app->modulescore->CoinCreate(app->modulescore->pointSpawn1.x, app->modulescore->pointSpawn1.y, app->modulescore->normalApplePoints);
 	app->modulescore->CoinCreate(app->modulescore->pointSpawn2.x, app->modulescore->pointSpawn2.y, app->modulescore->normalApplePoints);
 	app->modulescore->CoinCreate(app->modulescore->pointSpawn3.x, app->modulescore->pointSpawn3.y, app->modulescore->goldApplePoints);
 	app->modulescore->CoinCreate(app->modulescore->pointSpawn4.x, app->modulescore->pointSpawn4.y, app->modulescore->normalApplePoints);
-
+	
 	return true;
 }
 
