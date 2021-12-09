@@ -148,7 +148,10 @@ bool Scene::Start()
 
 	app->modulescore->HpCreate(100, 400, 0);
 	app->modulescore->HpCreate(200, 400, 0);
-	app->modulescore->CoinCreate(300, 600, 0);
+	app->modulescore->CoinCreate(app->modulescore->pointSpawn1.x, app->modulescore->pointSpawn1.y, app->modulescore->normalApplePoints);
+	app->modulescore->CoinCreate(app->modulescore->pointSpawn2.x, app->modulescore->pointSpawn2.y, app->modulescore->normalApplePoints);
+	app->modulescore->CoinCreate(app->modulescore->pointSpawn3.x, app->modulescore->pointSpawn3.y, app->modulescore->goldApplePoints);
+	app->modulescore->CoinCreate(app->modulescore->pointSpawn4.x, app->modulescore->pointSpawn4.y, app->modulescore->normalApplePoints);
 
 	return true;
 }
@@ -162,7 +165,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-
+	LOG("Player X: %f", player.x);
+	LOG("Player Y: %f", player.y);
 	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
 		obeliskTp = true;
 	}

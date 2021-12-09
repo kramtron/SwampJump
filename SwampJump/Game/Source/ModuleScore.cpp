@@ -129,7 +129,10 @@ void ModuleScore::CollidePickUps() {
 			
 			switch (current_pickUp->data->pickUpType) {
 			case PickUp::PickUpType::HP:	//HP effect
-				
+				if(app->scene->player.actualPlayerHp < app->scene->player.playerHp)
+					app->scene->player.actualPlayerHp += current_pickUp->data->value;
+				if (app->scene->player.actualPlayerHp >= 50)
+					app->scene->player.actualPlayerHp == 50;
 				break;
 			case PickUp::PickUpType::COIN:	//COIN effect
 
