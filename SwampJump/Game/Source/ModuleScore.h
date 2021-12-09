@@ -67,6 +67,8 @@ public:
 	bool LoadHpData(pugi::xml_node&);
 
 	bool loadScoreData = true;
+	bool loadPointsData = true;
+	bool loadHpData = true;
 
 	bool SaveState(pugi::xml_node&) const;
 
@@ -83,8 +85,9 @@ public:
 
 	float normalApplePoints;
 	float goldApplePoints;
+
 	struct WH {
-		float w, y;
+		float w, h;
 	};
 	WH normalWhPoints;
 	WH normalWhHp;

@@ -143,8 +143,16 @@ void ModuleScore::CollidePickUps() {
 }
 
 bool ModuleScore::LoadPickUpsSpawn(pugi::xml_node& scoreSpawnData) {
+	//meleEnemicSpawn1.x = configMeleEnemicSpawn.child("spawnPosition1").attribute("x").as_int();
 
-
+	pointSpawn1.x = scoreSpawnData.child("spawnPosition1").attribute("x").as_float();
+	pointSpawn1.y = scoreSpawnData.child("spawnPosition1").attribute("y").as_float();
+	pointSpawn2.x = scoreSpawnData.child("spawnPosition2").attribute("x").as_float();
+	pointSpawn2.y = scoreSpawnData.child("spawnPosition2").attribute("y").as_float();
+	pointSpawn3.x = scoreSpawnData.child("spawnPosition3").attribute("x").as_float();
+	pointSpawn3.y = scoreSpawnData.child("spawnPosition3").attribute("y").as_float();
+	pointSpawn4.x = scoreSpawnData.child("spawnPosition4").attribute("x").as_float();
+	pointSpawn4.y = scoreSpawnData.child("spawnPosition4").attribute("y").as_float();
 
 
 	return true;
@@ -152,14 +160,19 @@ bool ModuleScore::LoadPickUpsSpawn(pugi::xml_node& scoreSpawnData) {
 }
 bool ModuleScore::LoadPointsData(pugi::xml_node& pointsData) {
 
-
+	normalWhPoints.w = pointsData.attribute("width").as_float();
+	normalWhPoints.h = pointsData.attribute("heigth").as_float();
+	normalApplePoints = pointsData.attribute("normalApplePoints").as_float();
+	goldApplePoints = pointsData.attribute("goldApplePoints").as_float();
 
 	return true;
 }
 
 bool ModuleScore::LoadHpData(pugi::xml_node& hpData) {
 
-
+	hpUp = hpData.attribute("hpUp").as_float();
+	normalWhHp.w= hpData.attribute("width").as_float();
+	normalWhHp.h= hpData.attribute("heigth").as_float();
 
 	return true;
 }

@@ -130,6 +130,8 @@ private:
 	pugi::xml_node configPlayerData;
 	pugi::xml_node configScene1Data;
 	pugi::xml_node configScoreData;
+	pugi::xml_node configPointsData;
+	pugi::xml_node configHpData;
 
 
 	uint frames;
