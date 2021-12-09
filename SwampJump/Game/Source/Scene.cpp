@@ -143,6 +143,7 @@ bool Scene::Start()
 	}
 	thunderAnim.loop = false;
 	thunderAnim.pingpong = false;
+	thunderAnim.speed = 1.0f;
 
 	// ANIMACIONS
 
@@ -163,8 +164,15 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	LOG("Player X: %f", player.x);
-	LOG("Player Y: %f", player.y);
+	idleRAnim.speed = 0.015f * dt;
+	idleLAnim.speed = 0.015f * dt;
+	jumpRAnim.speed = 0.03f * dt;
+	jumpLAnim.speed = 0.03f * dt;
+	walkRAnim.speed = 0.02f * dt;
+	walkLAnim.speed = 0.02f * dt;
+	thunderAnim.speed = 1.0f * dt;
+
+
 	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN) {
 		obeliskTp = true;
 	}
