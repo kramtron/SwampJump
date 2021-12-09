@@ -604,16 +604,11 @@ void Map::PropagateBFS()
 
 iPoint Map::Pathfinding(iPoint initPoint, iPoint endPoint) {
 	//if init or end are not walkable quit
-	if (!IsWalkable(initPoint.x, initPoint.y) || !IsWalkable(endPoint.x, endPoint.y)) {
+	if ((!IsWalkable(initPoint.x, initPoint.y) || !IsWalkable(endPoint.x, endPoint.y)) || (initPoint == endPoint)) {
 		return iPoint(-1, -1);
 	}
 	
 	ResetPath(initPoint.x, initPoint.y);
-
-	/*for (int i = 0; i < 300; i++) {
-		PropagateBFS();
-
-	}*/
 
 	while (visited.find(endPoint) == -1) {
 		PropagateBFS();

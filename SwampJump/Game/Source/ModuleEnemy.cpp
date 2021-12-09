@@ -255,25 +255,37 @@ bool ModuleEnemy::Update(float dt)
 						storage1->data->moving = false;
 					}
 					else {
-						if (storage1->data->movingTo.x > storage1->data->x) {	//move right
-							storage1->data->x += storage1->data->vx * dt;
+						if (storage1->data->x > (storage1->data->movingTo.x + 3) ||
+							storage1->data->x < (storage1->data->movingTo.x - 3)) {
+							if (storage1->data->movingTo.x > storage1->data->x) {	//move right
+								storage1->data->x += storage1->data->vx * dt;
+							}
+							else if (storage1->data->movingTo.x < storage1->data->x) {	//move left
+								storage1->data->x -= storage1->data->vx * dt;
+							}
 						}
-						else if (storage1->data->movingTo.x < storage1->data->x) {	//move left
-							storage1->data->x -= storage1->data->vx * dt;
+						else {
+							storage1->data->x = storage1->data->movingTo.x;
 						}
 
-						if (storage1->data->movingTo.y > storage1->data->y) {	//move down
-							storage1->data->y += storage1->data->vy * dt;
+						if (storage1->data->y > (storage1->data->movingTo.y + 3) ||
+							storage1->data->y < (storage1->data->movingTo.y - 3)) {	//if its close to the point, no move
+							if (storage1->data->movingTo.y > storage1->data->y) {	//move down
+								storage1->data->y += storage1->data->vy * dt;
+							}
+							else if (storage1->data->movingTo.y < storage1->data->y) {	//move up
+								storage1->data->y -= storage1->data->vy * dt;
+							}
 						}
-						else if (storage1->data->movingTo.y < storage1->data->y) {	//move up
-							storage1->data->y -= storage1->data->vy * dt;
+						else {
+							storage1->data->y = storage1->data->movingTo.y;
 						}
 					}
 
-					if (storage1->data->x > (storage1->data->movingTo.x - 10) &&
-						storage1->data->x < (storage1->data->movingTo.x + 10) &&
-						storage1->data->y >(storage1->data->movingTo.y - 10) &&
-						storage1->data->y < (storage1->data->movingTo.y + 10)) {
+					if (storage1->data->x > (storage1->data->movingTo.x - 16) &&
+						storage1->data->x < (storage1->data->movingTo.x + 16) &&
+						storage1->data->y >(storage1->data->movingTo.y - 16) &&
+						storage1->data->y < (storage1->data->movingTo.y + 16)) {
 						storage1->data->moving = false;
 					}
 				}
