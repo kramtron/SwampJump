@@ -157,7 +157,6 @@ bool ModuleScore::LoadPickUpsSpawn(pugi::xml_node& scoreSpawnData) {
 	pointSpawn4.x = scoreSpawnData.child("spawnPosition4").attribute("x").as_float();
 	pointSpawn4.y = scoreSpawnData.child("spawnPosition4").attribute("y").as_float();
 
-
 	return true;
 
 }
