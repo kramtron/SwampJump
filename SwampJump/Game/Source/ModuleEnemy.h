@@ -46,7 +46,7 @@ public:
 	bool coyotejump;
 	bool tocant_terra_abans;
 	
-	Animation* currentMeleAnimation = nullptr;
+	Animation* currentAnimation = nullptr;
 };
 
 class ModuleEnemy : public Module
@@ -152,6 +152,13 @@ public:
 	Animation flyingEnemy_IdleLAnim;
 	Animation flyingEnemy_AttackRAnim;
 	Animation flyingEnemy_AttackLAnim;
+
+	Animation meleEnemy_WalkRAnim;
+	Animation meleEnemy_WalkLAnim;
+	Animation meleEnemy_HurtRAnim;
+	Animation meleEnemy_HurtLAnim;
+	Animation meleEnemy_AttackRAnim;
+	Animation meleEnemy_AttackLAnim;
 private:
 };
 

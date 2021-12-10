@@ -41,11 +41,20 @@ bool ModuleEnemy::Awake()
 // Called before the first frame
 bool ModuleEnemy::Start()
 {
-	meleEnemyTexture = nullptr; //afegir sprite
+	//ENEMY Spritesheets
 	flyingEnemyTexture = app->tex->Load("Assets/textures/bee_spritesheet.png");
+	meleEnemyTexture = app->tex->Load("Assets/textures/centipede_spritesheet.png");
 
-	//falta carregar
+	//FLY ENEMY ANIMATION
+	//Idle Animation
 	flyingEnemy_IdleRAnim.Empty();
+	flyingEnemy_IdleRAnim.PushBack({ 1, 33, 24, 26 });
+	flyingEnemy_IdleRAnim.PushBack({ 25, 33, 25, 26 });
+	flyingEnemy_IdleRAnim.PushBack({ 51, 33, 24, 26 });
+	flyingEnemy_IdleRAnim.PushBack({ 75, 33, 25, 26 });
+	flyingEnemy_IdleRAnim.loop = true;
+	flyingEnemy_IdleRAnim.pingpong = true;
+	flyingEnemy_IdleRAnim.speed = 1.0f;
 
 	flyingEnemy_IdleLAnim.Empty();
 	flyingEnemy_IdleLAnim.PushBack({ 1, 0, 25, 27 });
@@ -56,8 +65,22 @@ bool ModuleEnemy::Start()
 	flyingEnemy_IdleLAnim.pingpong = true;
 	flyingEnemy_IdleLAnim.speed = 1.0f;
 
-	//falta carregar
+	//AttackAnimation
 	flyingEnemy_AttackRAnim.Empty();
+	flyingEnemy_AttackRAnim.PushBack({ 2, 94, 25, 26});
+	flyingEnemy_AttackRAnim.PushBack({ 28, 94, 25, 27});
+	flyingEnemy_AttackRAnim.PushBack({ 55, 94, 24, 28});
+	flyingEnemy_AttackRAnim.PushBack({ 81, 94, 24, 28});
+	flyingEnemy_AttackRAnim.PushBack({ 105, 94, 25, 27});
+	flyingEnemy_AttackRAnim.PushBack({ 132, 94, 25, 27});
+	flyingEnemy_AttackRAnim.PushBack({ 158, 94, 25, 27});
+	flyingEnemy_AttackRAnim.PushBack({ 184, 94, 25, 27});
+	flyingEnemy_AttackRAnim.PushBack({ 211, 94, 24, 28});
+	flyingEnemy_AttackRAnim.PushBack({ 237, 94, 24, 28});
+	flyingEnemy_AttackRAnim.PushBack({ 262, 94, 25, 28});
+	flyingEnemy_AttackRAnim.PushBack({ 288, 94, 25, 26});
+	flyingEnemy_AttackRAnim.loop = true;
+	flyingEnemy_AttackRAnim.speed = 1.0f;
 
 	flyingEnemy_AttackLAnim.Empty();
 	flyingEnemy_AttackLAnim.PushBack({ 1, 63, 26, 27 });
@@ -75,6 +98,58 @@ bool ModuleEnemy::Start()
 	flyingEnemy_AttackLAnim.loop = true;
 	flyingEnemy_AttackLAnim.speed = 1.0f;
 
+
+	//MELE ANIMATIONS
+	//walk animation
+	meleEnemy_WalkRAnim.Empty();
+	meleEnemy_WalkRAnim.PushBack({ 216, 83, 51, 39 });
+	meleEnemy_WalkRAnim.PushBack({ 144, 84, 50, 38 });
+	meleEnemy_WalkRAnim.PushBack({ 72, 83, 51, 39 });
+	meleEnemy_WalkRAnim.PushBack({ 0, 82, 52, 40 });
+	meleEnemy_WalkRAnim.loop = true;
+	meleEnemy_WalkRAnim.pingpong = true;
+	meleEnemy_WalkRAnim.speed = 1.0f;
+
+	meleEnemy_WalkLAnim.Empty();
+	meleEnemy_WalkLAnim.PushBack({ 1, 3, 51 , 39 });
+	meleEnemy_WalkLAnim.PushBack({ 74, 4, 50, 38 });
+	meleEnemy_WalkLAnim.PushBack({ 145, 3, 51, 39 });
+	meleEnemy_WalkLAnim.PushBack({ 216, 2, 52, 40 });
+	meleEnemy_WalkLAnim.loop = true;
+	meleEnemy_WalkLAnim.pingpong = true;
+	meleEnemy_WalkLAnim.speed = 1.0f;
+
+	//attack animation
+	meleEnemy_AttackRAnim.Empty();
+	meleEnemy_AttackRAnim.PushBack({ 358, 307, 49, 41 });
+	meleEnemy_AttackRAnim.PushBack({ 286, 304, 46, 44 });
+	meleEnemy_AttackRAnim.PushBack({ 214, 304, 46, 44 });
+	meleEnemy_AttackRAnim.PushBack({ 143, 304, 66, 44 });
+	meleEnemy_AttackRAnim.PushBack({ 72, 318, 69, 30 });
+	meleEnemy_AttackRAnim.PushBack({ 0, 318, 69, 30 });
+	meleEnemy_AttackRAnim.loop = true;
+	meleEnemy_AttackRAnim.speed = 1.0f;
+
+	meleEnemy_AttackLAnim.Empty();
+	meleEnemy_AttackLAnim.PushBack({ 1, 235, 49, 41 });
+	meleEnemy_AttackLAnim.PushBack({ 76, 232, 46, 44 });
+	meleEnemy_AttackLAnim.PushBack({ 148, 232, 46, 44 });
+	meleEnemy_AttackLAnim.PushBack({ 199, 232, 66, 44 });
+	meleEnemy_AttackLAnim.PushBack({ 267, 246, 69, 30 });
+	meleEnemy_AttackLAnim.PushBack({ 344, 246, 65, 30 });
+	meleEnemy_AttackLAnim.loop = true;
+	meleEnemy_AttackLAnim.speed = 1.0f;
+
+	//hurt animation
+	meleEnemy_HurtRAnim.Empty();
+	meleEnemy_HurtRAnim.PushBack({ 72, 155, 50, 39 });
+	meleEnemy_HurtRAnim.loop = false;
+	meleEnemy_HurtRAnim.speed = 1.0f;
+
+	meleEnemy_HurtLAnim.Empty();
+	meleEnemy_HurtLAnim.PushBack({ 2, 155, 50, 39 });
+	meleEnemy_HurtLAnim.loop = false;
+	meleEnemy_HurtLAnim.speed = 1.0f;
 
 	return true;
 }
