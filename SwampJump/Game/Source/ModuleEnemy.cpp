@@ -420,6 +420,15 @@ bool ModuleEnemy::Update(float dt)
 bool ModuleEnemy::PostUpdate()
 {
 	bool ret = true;
+
+	p2List_item<MeleEnemic*>* storage1 = meleEnemic1List.getFirst();
+	while (storage1 != NULL) {
+		
+		EnemyDraw(storage1->data);
+
+		storage1 = storage1->next;
+	}
+
 	return ret;
 }
 
@@ -499,7 +508,7 @@ MeleEnemic* ModuleEnemy::meleEnemicCreator(int x, int y,int spawnPlace) {
 	newEnemy->enemicType = 0;
 	newEnemy->actualHp = meleEnemicsHp;
 
-
+	newEnemy->currentAnimation = &meleEnemy_WalkLAnim;
 
 	return newEnemy;
 }
@@ -518,6 +527,8 @@ MeleEnemic* ModuleEnemy::flyEnemicCreator(int x, int y,int spawnPlace) {
 	newEnemy->vy = flyEnemicsVelocity.y;
 	newEnemy->actualHp = flyEnemicsHp;
 	newEnemy->enemicType = 1;
+
+	newEnemy->currentAnimation = &flyingEnemy_IdleLAnim;
 
 	return newEnemy;
 }
@@ -607,4 +618,13 @@ void ModuleEnemy::meleEnemicMove(p2List_item<MeleEnemic*>* meleEnemic, float dt)
 iPoint MeleEnemic::pathfind() {
 	return app->map->Pathfinding(app->map->WorldToMap(x, y),
 		   app->map->WorldToMap(app->scene->player.x, app->scene->player.y));
+}
+
+void ModuleEnemy::EnemyDraw(MeleEnemic* storage) {
+	if (storage->enemicType == 0) {	//mele enemy
+		app->render->DrawTexture(meleEnemyTexture, storage->x, storage->y, &storage->currentAnimation->GetCurrentFrame(), 1.0f, 1.0f);
+	}
+	else {	//flying enemy
+		app->render->DrawTexture(flyingEnemyTexture, storage->x, storage->y, &storage->currentAnimation->GetCurrentFrame(), 1.0f, 1.0f);
+	}
 }

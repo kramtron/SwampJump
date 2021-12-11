@@ -88,6 +88,7 @@ public:
 
 	void meleEnemicMove(p2List_item<MeleEnemic*>*,float dt);
 
+	void EnemyDraw(MeleEnemic* storage);
 	//Enemic Move
 	
 
