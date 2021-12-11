@@ -54,7 +54,7 @@ bool ModuleEnemy::Start()
 	flyingEnemy_IdleRAnim.PushBack({ 75, 33, 25, 26 });
 	flyingEnemy_IdleRAnim.loop = true;
 	flyingEnemy_IdleRAnim.pingpong = true;
-	flyingEnemy_IdleRAnim.speed = 1.0f;
+	flyingEnemy_IdleRAnim.speed = 0.05f;
 
 	flyingEnemy_IdleLAnim.Empty();
 	flyingEnemy_IdleLAnim.PushBack({ 1, 0, 25, 27 });
@@ -63,7 +63,7 @@ bool ModuleEnemy::Start()
 	flyingEnemy_IdleLAnim.PushBack({ 76, 0, 24, 28 });
 	flyingEnemy_IdleLAnim.loop = true;
 	flyingEnemy_IdleLAnim.pingpong = true;
-	flyingEnemy_IdleLAnim.speed = 1.0f;
+	flyingEnemy_IdleLAnim.speed = 0.05f;
 
 	//AttackAnimation
 	flyingEnemy_AttackRAnim.Empty();
@@ -80,7 +80,7 @@ bool ModuleEnemy::Start()
 	flyingEnemy_AttackRAnim.PushBack({ 262, 94, 25, 28});
 	flyingEnemy_AttackRAnim.PushBack({ 288, 94, 25, 26});
 	flyingEnemy_AttackRAnim.loop = true;
-	flyingEnemy_AttackRAnim.speed = 1.0f;
+	flyingEnemy_AttackRAnim.speed = 0.05f;
 
 	flyingEnemy_AttackLAnim.Empty();
 	flyingEnemy_AttackLAnim.PushBack({ 1, 63, 26, 27 });
@@ -96,7 +96,7 @@ bool ModuleEnemy::Start()
 	flyingEnemy_AttackLAnim.PushBack({ 261, 63, 25, 28 });
 	flyingEnemy_AttackLAnim.PushBack({ 287, 63, 25, 27 });
 	flyingEnemy_AttackLAnim.loop = true;
-	flyingEnemy_AttackLAnim.speed = 1.0f;
+	flyingEnemy_AttackLAnim.speed = 0.05f;
 
 
 	//MELE ANIMATIONS
@@ -108,7 +108,7 @@ bool ModuleEnemy::Start()
 	meleEnemy_WalkRAnim.PushBack({ 0, 82, 52, 40 });
 	meleEnemy_WalkRAnim.loop = true;
 	meleEnemy_WalkRAnim.pingpong = true;
-	meleEnemy_WalkRAnim.speed = 1.0f;
+	meleEnemy_WalkRAnim.speed = 0.05f;
 
 	meleEnemy_WalkLAnim.Empty();
 	meleEnemy_WalkLAnim.PushBack({ 1, 3, 51 , 39 });
@@ -117,7 +117,7 @@ bool ModuleEnemy::Start()
 	meleEnemy_WalkLAnim.PushBack({ 216, 2, 52, 40 });
 	meleEnemy_WalkLAnim.loop = true;
 	meleEnemy_WalkLAnim.pingpong = true;
-	meleEnemy_WalkLAnim.speed = 1.0f;
+	meleEnemy_WalkLAnim.speed = 0.05f;
 
 	//attack animation
 	meleEnemy_AttackRAnim.Empty();
@@ -128,7 +128,7 @@ bool ModuleEnemy::Start()
 	meleEnemy_AttackRAnim.PushBack({ 72, 318, 69, 30 });
 	meleEnemy_AttackRAnim.PushBack({ 0, 318, 69, 30 });
 	meleEnemy_AttackRAnim.loop = true;
-	meleEnemy_AttackRAnim.speed = 1.0f;
+	meleEnemy_AttackRAnim.speed = 0.05f;
 
 	meleEnemy_AttackLAnim.Empty();
 	meleEnemy_AttackLAnim.PushBack({ 1, 235, 49, 41 });
@@ -138,18 +138,16 @@ bool ModuleEnemy::Start()
 	meleEnemy_AttackLAnim.PushBack({ 267, 246, 69, 30 });
 	meleEnemy_AttackLAnim.PushBack({ 344, 246, 65, 30 });
 	meleEnemy_AttackLAnim.loop = true;
-	meleEnemy_AttackLAnim.speed = 1.0f;
+	meleEnemy_AttackLAnim.speed = 0.05f;
 
 	//hurt animation
 	meleEnemy_HurtRAnim.Empty();
 	meleEnemy_HurtRAnim.PushBack({ 72, 155, 50, 39 });
 	meleEnemy_HurtRAnim.loop = false;
-	meleEnemy_HurtRAnim.speed = 1.0f;
 
 	meleEnemy_HurtLAnim.Empty();
 	meleEnemy_HurtLAnim.PushBack({ 2, 155, 50, 39 });
 	meleEnemy_HurtLAnim.loop = false;
-	meleEnemy_HurtLAnim.speed = 1.0f;
 
 	return true;
 }
@@ -165,6 +163,19 @@ bool ModuleEnemy::Update(float dt)
 {
 	bool ret = true;
 	
+	//Animation Speeds
+	flyingEnemy_AttackLAnim.speed = 0.15f * dt;
+	flyingEnemy_AttackRAnim.speed = 0.15f * dt;
+	flyingEnemy_IdleLAnim.speed = 0.15f * dt;
+	flyingEnemy_IdleRAnim.speed = 0.15f * dt;
+
+	meleEnemy_WalkLAnim.speed = 0.15f * dt;
+	meleEnemy_WalkRAnim.speed = 0.15f * dt;
+	meleEnemy_AttackLAnim.speed = 0.15f * dt;
+	meleEnemy_AttackRAnim.speed = 0.15f * dt;
+	meleEnemy_HurtLAnim.speed = 0.15f * dt;
+	meleEnemy_HurtRAnim.speed = 0.15f * dt;
+
 	//Lista enemigos 
 	p2List_item<MeleEnemic*>* storage1 = meleEnemic1List.getFirst();//No solo es de enemigos mele es de todos los tipos
 	angle += 0.01f;
@@ -413,6 +424,13 @@ bool ModuleEnemy::Update(float dt)
 	flyingEnemy_IdleLAnim.Update();
 	flyingEnemy_IdleRAnim.Update();
 
+	meleEnemy_WalkLAnim.Update();
+	meleEnemy_WalkRAnim.Update();
+	meleEnemy_AttackLAnim.Update();
+	meleEnemy_AttackRAnim.Update();
+	meleEnemy_HurtLAnim.Update();
+	meleEnemy_HurtRAnim.Update();
+
 	return ret;
 }
 
@@ -622,9 +640,9 @@ iPoint MeleEnemic::pathfind() {
 
 void ModuleEnemy::EnemyDraw(MeleEnemic* storage) {
 	if (storage->enemicType == 0) {	//mele enemy
-		app->render->DrawTexture(meleEnemyTexture, storage->x, storage->y, &storage->currentAnimation->GetCurrentFrame(), 1.0f, 1.0f);
+		app->render->DrawTexture(meleEnemyTexture, storage->x - 10, storage->y -5, &storage->currentAnimation->GetCurrentFrame(), 1.0f, 1.5f);
 	}
 	else {	//flying enemy
-		app->render->DrawTexture(flyingEnemyTexture, storage->x, storage->y, &storage->currentAnimation->GetCurrentFrame(), 1.0f, 1.0f);
+		app->render->DrawTexture(flyingEnemyTexture, storage->x, storage->y, &storage->currentAnimation->GetCurrentFrame(), 1.0f, 2.0f);
 	}
 }

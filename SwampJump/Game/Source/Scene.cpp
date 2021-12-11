@@ -164,12 +164,12 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	idleRAnim.speed = 0.015f * dt;
-	idleLAnim.speed = 0.015f * dt;
-	jumpRAnim.speed = 0.03f * dt;
-	jumpLAnim.speed = 0.03f * dt;
-	walkRAnim.speed = 0.02f * dt;
-	walkLAnim.speed = 0.02f * dt;
+	idleRAnim.speed = 0.045f * dt;
+	idleLAnim.speed = 0.045f * dt;
+	jumpRAnim.speed = 0.09f * dt;
+	jumpLAnim.speed = 0.09f * dt;
+	walkRAnim.speed = 0.06f * dt;
+	walkLAnim.speed = 0.06f * dt;
 	thunderAnim.speed = 1.0f * dt;
 
 
