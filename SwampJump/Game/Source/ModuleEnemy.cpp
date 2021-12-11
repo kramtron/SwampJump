@@ -7,9 +7,11 @@
 #include "Scene_Intro.h"
 #include "Scene_Logo.h"
 #include "ModuleEnemy.h"
+#include "ModuleScore.h"
 #include "Map.h"
 #include "p2List.h"
 #include "Scene.h"
+#include <time.h>
 
 #include "Defs.h"
 #include "Log.h"
@@ -41,6 +43,9 @@ bool ModuleEnemy::Awake()
 // Called before the first frame
 bool ModuleEnemy::Start()
 {
+	//randomizador
+	srand(time(NULL));
+
 	//ENEMY Spritesheets
 	flyingEnemyTexture = app->tex->Load("Assets/textures/bee_spritesheet.png");
 	meleEnemyTexture = app->tex->Load("Assets/textures/centipede_spritesheet.png");
@@ -400,6 +405,13 @@ bool ModuleEnemy::Update(float dt)
 				// EN el if se elimina el enemigo de la lista en caso de que no tenga vida.
 				//En el else if le baja la vida segun el daño que haga la rana.
 				if (storage1->data->actualHp <= 0) {
+
+					numRand = rand() % 3;
+	
+					if (numRand == 2)
+					{
+						app->modulescore->HpCreate(storage1->data->x, storage1->data->y, app->modulescore->hpUp);
+					}
 
 					MeleEnemic* b = storage1->data;
 					storage1 = storage1->next;

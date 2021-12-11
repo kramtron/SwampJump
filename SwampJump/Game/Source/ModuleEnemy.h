@@ -93,7 +93,7 @@ public:
 	
 
 	float angle = 45;
-
+	int numRand;
 	
 	p2List<MeleEnemic*>meleEnemic1List;
 
