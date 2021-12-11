@@ -253,10 +253,10 @@ bool Scene::Update(float dt)
 		//
 		
 		if (aceleration_timer <= 0) {
-			player.vy += (player.ay*dt);
-			aceleration_timer = 10;
+			player.vy += (player.ay*dt);//Va demasiado rapido el salto. Falta arreglar
+			aceleration_timer = 4;
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //Aguantar el salt
-				aceleration_timer = 25;
+				aceleration_timer = 8;
 			}
 		}
 		else {
@@ -938,19 +938,9 @@ bool Scene::Update(float dt)
 				}
 			}
 		}
-			SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
-			//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
-			app->render->DrawRectangle(enemic, 255, 255, 0);
+			
 
-			//Ataque
-			if (storage1->data->meleLeftAtackBool) {
-				SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
-				app->render->DrawRectangle(meleLeftAtackRect, 255, 0, 0);
-			}
-			if (storage1->data->meleRightAtackBool) {
-				SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
-				app->render->DrawRectangle(meleRightAtackRect, 255, 0, 0);
-			}
+			
 
 
 			storage1 = storage1->next;
@@ -1133,6 +1123,19 @@ void Scene::DebugDraw()
 		SDL_Rect atackMeleEnemicSensor = { storage1->data->x-25 ,storage1->data->y-25 ,storage1->data->w + 50,storage1->data->h+50};
 		app->render->DrawRectangle(enemicSensor, 255, 200, 50, 40);
 		app->render->DrawRectangle(atackMeleEnemicSensor, 255, 255, 255,40);
+		SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
+		//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
+		app->render->DrawRectangle(enemic, 255, 255, 0);
+
+		//Atack draw
+		if (storage1->data->meleLeftAtackBool) {
+			SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+			app->render->DrawRectangle(meleLeftAtackRect, 255, 0, 0);
+		}
+		if (storage1->data->meleRightAtackBool) {
+			SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
+			app->render->DrawRectangle(meleRightAtackRect, 255, 0, 0);
+		}
 		storage1 = storage1->next;
 	}
 	SDL_Rect meleEnemicSpawn1{ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };
