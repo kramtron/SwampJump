@@ -367,7 +367,7 @@ bool App::LoadGame()
 		if (app->scene->loadPlayerData) {
 
 			configPlayerData = configSaveLoad.child("player");
-			app->scene->LoadPlayerData(configPlayerData);
+			app->scene->LoadPlayerData(configPlayerData); 
 			app->scene->loadPlayerData = false;
 
 		}

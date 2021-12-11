@@ -974,11 +974,12 @@ bool Scene::Update(float dt)
 	
 	if (player.actualPlayerHp <= 0)
 	{
-		player.actualPlayerHp = player.playerHp;
 		active = false;
 		app->scene_end->active = true;
 		app->moduleEnemy->CleanUp();
 		loadPlayerData = true;
+		player.actualPlayerHp = player.playerHp;
+
 	}
 
 	//LOG("Player x: %f Player y: %f", player.x, player.y);
