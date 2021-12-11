@@ -133,13 +133,19 @@ void ModuleScore::CollidePickUps() {
 					app->scene->player.actualPlayerHp += current_pickUp->data->value;
 				if (app->scene->player.actualPlayerHp >= 50)
 					app->scene->player.actualPlayerHp == 50;
+
+				pickUpList.del(current_pickUp);
+
 				break;
 			case PickUp::PickUpType::COIN:	//COIN effect
+
+				app->scene->player.actualPoints += normalApplePoints;
+
+				pickUpList.del(current_pickUp);
 
 				break;
 			}
 
-			pickUpList.del(current_pickUp);
 		}
 		current_pickUp = current_pickUp->next;
 	}
@@ -160,11 +166,12 @@ bool ModuleScore::LoadPickUpsSpawn(pugi::xml_node& scoreSpawnData) {
 	return true;
 
 }
+
 bool ModuleScore::LoadPointsData(pugi::xml_node& pointsData) {
 
 	normalWhPoints.w = pointsData.attribute("width").as_float();
 	normalWhPoints.h = pointsData.attribute("heigth").as_float();
-	normalApplePoints = pointsData.attribute("normalApplePoints").as_float();
+ 	normalApplePoints = pointsData.attribute("normalApplePoints").as_float();
 	goldApplePoints = pointsData.attribute("goldApplePoints").as_float();
 
 	return true;

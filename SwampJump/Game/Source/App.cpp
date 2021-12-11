@@ -383,13 +383,13 @@ bool App::LoadGame()
 			app->modulescore->loadScoreData = false;
 		}
 		if (app->modulescore->loadPointsData) {
-			configPointsData = configSaveGame.child("points");
+			configPointsData = configSaveLoad.child("points");
 			app->modulescore->LoadPointsData(configPointsData);
 			app->modulescore->loadPointsData = false;
 
 		}
 		if (app->modulescore->loadHpData) {
-			configHpData = configSaveGame.child("hpPickUp");
+			configHpData = configSaveLoad.child("hpPickUp");
 			app->modulescore->LoadHpData(configHpData);
 			app->modulescore->loadHpData = false;
 

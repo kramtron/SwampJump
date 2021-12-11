@@ -205,34 +205,34 @@ bool Scene::Update(float dt)
 		LOG("GODMODE ON");
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			player.x += -5;
+			player.x += (-player.v2x*dt)*2;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			player.x += 5;
+			player.x += (player.v2x*dt)*2;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			player.y += -5;
+			player.y += (-player.v2y*dt)*2;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			player.y += 5;
+			player.y += (player.v2y *dt)*2;
 		}
 
 		//CAMERA
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			app->render->camera.y -= 1;
+			app->render->camera.y -= (1*dt);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			app->render->camera.y += 1;
+			app->render->camera.y += (1*dt);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			app->render->camera.x -= 5;
+			app->render->camera.x -= (5*dt);
 
 		}
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			app->render->camera.x += 5;
+			app->render->camera.x += (5*dt);
 
 		}
 
@@ -253,10 +253,10 @@ bool Scene::Update(float dt)
 		//
 		
 		if (aceleration_timer <= 0) {
-			player.vy += (player.ay*dt);
-			aceleration_timer = 10;
+			player.vy += (player.ay*dt);//Va demasiado rapido el salto. Falta arreglar
+			aceleration_timer = 4;
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) { //Aguantar el salt
-				aceleration_timer = 25;
+				aceleration_timer = 8;
 			}
 		}
 		else {
@@ -938,19 +938,9 @@ bool Scene::Update(float dt)
 				}
 			}
 		}
-			SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
-			//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
-			app->render->DrawRectangle(enemic, 255, 255, 0);
+			
 
-			//Ataque
-			if (storage1->data->meleLeftAtackBool) {
-				SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
-				app->render->DrawRectangle(meleLeftAtackRect, 255, 0, 0);
-			}
-			if (storage1->data->meleRightAtackBool) {
-				SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
-				app->render->DrawRectangle(meleRightAtackRect, 255, 0, 0);
-			}
+			
 
 
 			storage1 = storage1->next;
@@ -979,8 +969,9 @@ bool Scene::Update(float dt)
 
 		}
 	}
-	LOG("Player x: %f Player y: %f", player.x, player.y);
-	LOG("Player Hp: %f", player.actualPlayerHp);
+	//LOG("Player x: %f Player y: %f", player.x, player.y);
+	LOG("Player Hp: %.2f", player.actualPlayerHp);
+	LOG("Player Points: %.2f", player.actualPoints);
 	return true;
 }
 
@@ -1026,6 +1017,8 @@ bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
 	player.actualPlayerHp = playerData.attribute("actualPlayerHp").as_float();
 	player.playerHp = playerData.attribute("playerHp").as_float();
 	player.playerDamage = playerData.attribute("playerDamage").as_float();
+	player.startingPoints = playerData.attribute("starterPoints").as_float();
+	player.actualPoints = playerData.attribute("actualPoints").as_float();
 
 	return true;
 }
@@ -1081,6 +1074,7 @@ bool Scene::SaveState(pugi::xml_node& playerData) const
 	player1.attribute("x").set_value(player.x);
 	player1.attribute("y").set_value(player.y);
 	player1.attribute("actualPlayerHp").set_value(player.actualPlayerHp);
+	player1.attribute("actualPoints").set_value(player.actualPoints);
 
 	return true;
 }
@@ -1133,6 +1127,19 @@ void Scene::DebugDraw()
 		SDL_Rect atackMeleEnemicSensor = { storage1->data->x-25 ,storage1->data->y-25 ,storage1->data->w + 50,storage1->data->h+50};
 		app->render->DrawRectangle(enemicSensor, 255, 200, 50, 40);
 		app->render->DrawRectangle(atackMeleEnemicSensor, 255, 255, 255,40);
+		SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
+		//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
+		app->render->DrawRectangle(enemic, 255, 255, 0);
+
+		//Atack draw
+		if (storage1->data->meleLeftAtackBool) {
+			SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+			app->render->DrawRectangle(meleLeftAtackRect, 255, 0, 0);
+		}
+		if (storage1->data->meleRightAtackBool) {
+			SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };
+			app->render->DrawRectangle(meleRightAtackRect, 255, 0, 0);
+		}
 		storage1 = storage1->next;
 	}
 	SDL_Rect meleEnemicSpawn1{ app->moduleEnemy->meleEnemicSpawn1.x,app->moduleEnemy->meleEnemicSpawn1.y,50,50 };

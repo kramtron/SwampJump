@@ -60,6 +60,8 @@ public:
 		float playerHp;
 		float actualPlayerHp;
 		float playerDamage;
+		float startingPoints;
+		float actualPoints;
 
 	}player;
 	fPoint disparo;
