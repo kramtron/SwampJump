@@ -233,8 +233,9 @@ bool ModuleEnemy::Update(float dt)
 								&& meleRightAtackRect.y > app->scene->player.y
 								&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
 
-
-								app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
+								if (!app->scene->player.playerInmortal) {
+									app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
+								}
 								//Resetea todos los contadores y bools del ataque del enemigo
 								storage1->data->atackTime = 0;
 								storage1->data->atackTimer = 0;
@@ -265,7 +266,9 @@ bool ModuleEnemy::Update(float dt)
 
 
 								storage1->data->meleRightAtackBool = false;
-								app->scene->player.actualPlayerHp -= storage1->data->damage;
+								if (!app->scene->player.playerInmortal) {
+									app->scene->player.actualPlayerHp -= storage1->data->damage;
+								}
 								storage1->data->atackTime = 0;
 								storage1->data->atackTimer = 0;
 							}
