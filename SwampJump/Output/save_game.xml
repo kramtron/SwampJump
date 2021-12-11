@@ -37,5 +37,5 @@
 	<renderer>
 		<camera x="0" y="-50" />
 	</renderer>
-	<player startingX="417" startingY="416" x="18711.3125" y="736" width="64" heigth="64" xVelocity="5" yVelocity="5" playerHp="50" actualPlayerHp="50" maxHp="50" playerDamage="5" starterPoints="0" actualPoints="0" />
+	<player startingX="417" startingY="416" x="18711.3125" y="736" width="64" heigth="64" xVelocity="5" yVelocity="5" playerHp="50" actualPlayerHp="50" maxHp="50" playerDamage="5" starterPoints="0" actualPoints="0" playerInmortal="false"/>
 </game_state>

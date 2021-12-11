@@ -250,6 +250,10 @@ bool Scene::Update(float dt)
 			player.vx = player.v2x*dt;
 			sentit = true;
 		}
+
+		if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+			player.playerInmortal = true;
+		}
 		//
 		
 		if (aceleration_timer <= 0) {
@@ -1019,6 +1023,7 @@ bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
 	player.playerDamage = playerData.attribute("playerDamage").as_float();
 	player.startingPoints = playerData.attribute("starterPoints").as_float();
 	player.actualPoints = playerData.attribute("actualPoints").as_float();
+	player.playerInmortal = playerData.attribute("playerInmortal").as_bool();
 
 	return true;
 }
@@ -1075,6 +1080,7 @@ bool Scene::SaveState(pugi::xml_node& playerData) const
 	player1.attribute("y").set_value(player.y);
 	player1.attribute("actualPlayerHp").set_value(player.actualPlayerHp);
 	player1.attribute("actualPoints").set_value(player.actualPoints);
+	player1.attribute("playerInmortal").set_value(player.playerInmortal);
 
 	return true;
 }

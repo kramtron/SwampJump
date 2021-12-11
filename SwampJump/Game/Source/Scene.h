@@ -62,6 +62,7 @@ public:
 		float playerDamage;
 		float startingPoints;
 		float actualPoints;
+		bool playerInmortal;
 
 	}player;
 	fPoint disparo;
