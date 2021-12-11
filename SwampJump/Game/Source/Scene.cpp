@@ -973,6 +973,15 @@ bool Scene::Update(float dt)
 
 		}
 	}
+
+	if (player.actualPlayerHp <= 0)
+	{
+		//CleanUp();
+		active = false;
+		app->scene_end->active = true;
+		loadPlayerData = true;
+	}
+
 	//LOG("Player x: %f Player y: %f", player.x, player.y);
 	LOG("Player Hp: %.2f", player.actualPlayerHp);
 	LOG("Player Points: %.2f", player.actualPoints);
