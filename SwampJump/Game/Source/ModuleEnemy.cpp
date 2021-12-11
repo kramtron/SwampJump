@@ -205,9 +205,11 @@ bool ModuleEnemy::Update(float dt)
 				//Path predeterminado
 				if (!storage1->data->movimentMeleEnemic) {
 					storage1->data->x-=storage1->data->vx*dt;
+					storage1->data->currentAnimation = &meleEnemy_WalkLAnim;
 				}
 				else if (storage1->data->movimentMeleEnemic) {
 					storage1->data->x+=storage1->data->vx*dt;
+					storage1->data->currentAnimation = &meleEnemy_WalkRAnim;
 				}
 			}
 			if (!app->scene->godMode) {
@@ -319,11 +321,11 @@ bool ModuleEnemy::Update(float dt)
 				//Path predeterminado
 				if (!storage1->data->movimentFlyEnemic) {
 					storage1->data->x -= storage1->data->vx * dt;
-
+					storage1->data->currentAnimation = &flyingEnemy_IdleLAnim;
 				}
 				else if (storage1->data->movimentFlyEnemic) {
 					storage1->data->x += storage1->data->vx * dt;
-
+					storage1->data->currentAnimation = &flyingEnemy_IdleRAnim;
 				}
 				/*if (storage1->data->x < 2850) {
 					storage1->data->movimentFlyEnemic = true;
@@ -352,9 +354,11 @@ bool ModuleEnemy::Update(float dt)
 							storage1->data->x < (storage1->data->movingTo.x - 3)) {
 							if (storage1->data->movingTo.x > storage1->data->x) {	//move right
 								storage1->data->x += storage1->data->vx * dt;
+								storage1->data->currentAnimation = &flyingEnemy_IdleRAnim;
 							}
 							else if (storage1->data->movingTo.x < storage1->data->x) {	//move left
 								storage1->data->x -= storage1->data->vx * dt;
+								storage1->data->currentAnimation = &flyingEnemy_IdleLAnim;
 							}
 						}
 						else {
