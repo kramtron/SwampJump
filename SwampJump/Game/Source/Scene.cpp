@@ -205,34 +205,34 @@ bool Scene::Update(float dt)
 		LOG("GODMODE ON");
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			player.x += -5;
+			player.x += (-player.v2x*dt)*2;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			player.x += 5;
+			player.x += (player.v2x*dt)*2;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			player.y += -5;
+			player.y += (-player.v2y*dt)*2;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			player.y += 5;
+			player.y += (player.v2y *dt)*2;
 		}
 
 		//CAMERA
 		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT) {
-			app->render->camera.y -= 1;
+			app->render->camera.y -= (1*dt);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) {
-			app->render->camera.y += 1;
+			app->render->camera.y += (1*dt);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
-			app->render->camera.x -= 5;
+			app->render->camera.x -= (5*dt);
 
 		}
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
-			app->render->camera.x += 5;
+			app->render->camera.x += (5*dt);
 
 		}
 
@@ -969,8 +969,9 @@ bool Scene::Update(float dt)
 
 		}
 	}
-	LOG("Player x: %f Player y: %f", player.x, player.y);
-	LOG("Player Hp: %f", player.actualPlayerHp);
+	//LOG("Player x: %f Player y: %f", player.x, player.y);
+	LOG("Player Hp: %.2f", player.actualPlayerHp);
+	LOG("Player Points: %.2f", player.actualPoints);
 	return true;
 }
 
@@ -1016,6 +1017,8 @@ bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
 	player.actualPlayerHp = playerData.attribute("actualPlayerHp").as_float();
 	player.playerHp = playerData.attribute("playerHp").as_float();
 	player.playerDamage = playerData.attribute("playerDamage").as_float();
+	player.startingPoints = playerData.attribute("starterPoints").as_float();
+	player.actualPoints = playerData.attribute("actualPoints").as_float();
 
 	return true;
 }
@@ -1071,6 +1074,7 @@ bool Scene::SaveState(pugi::xml_node& playerData) const
 	player1.attribute("x").set_value(player.x);
 	player1.attribute("y").set_value(player.y);
 	player1.attribute("actualPlayerHp").set_value(player.actualPlayerHp);
+	player1.attribute("actualPoints").set_value(player.actualPoints);
 
 	return true;
 }
