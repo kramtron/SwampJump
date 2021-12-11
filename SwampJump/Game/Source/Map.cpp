@@ -104,13 +104,14 @@ void Map::Getcolision_coords(int player_x, int player_y) {
 	{
 		for (int y = (player_y / 32) - 2; y < (player_y / 32) + 10; y++)
 		{
-			int gid = mapLayerItem->data->Get(x, y);
+			if (x >= 0 && x < 600 && y >= 0 && y < 32) {
+				int gid = mapLayerItem->data->Get(x, y);
 
-			if (gid > 0) {	
-				colision_coords[i] = new iPoint (MapToWorld(x, y));
-				++i;
+				if (gid > 0) {
+					colision_coords[i] = new iPoint(MapToWorld(x, y));
+					++i;
+				}
 			}
-
 		}
 	}
 }
@@ -609,9 +610,14 @@ iPoint Map::Pathfinding(iPoint initPoint, iPoint endPoint) {
 	}
 	
 	ResetPath(initPoint.x, initPoint.y);
-
+	
+	int i = 0;
 	while (visited.find(endPoint) == -1) {
 		PropagateBFS();
+		i++;
+		if (i > 1000) {
+			return iPoint(-1, -1);
+		}
 	}
 
 	iPoint endPoint2 = MapToWorld(endPoint.x, endPoint.y);

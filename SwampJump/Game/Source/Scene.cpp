@@ -386,7 +386,7 @@ bool Scene::Update(float dt)
 	
 	//camera i límits de camera
 	app->render->camera.x = 300 - player.x;
-	app->render->camera.y = -50;			//350 - player.y
+	app->render->camera.y = -50;			//350 - player.y		//-50
 
 	if (app->render->camera.x > 0) {
 		app->render->camera.x = 0;
@@ -477,10 +477,8 @@ bool Scene::Update(float dt)
 		reset = true;
 	}
 
-	if (player.y > 2500 || player.x > 19000) {
-		reset = true;
-		app->scene_end->active = true;
-		active = false;
+	if (player.y > 1100 || player.x > 19000) {
+		player.actualPlayerHp = 0;
 	}
 
 	//ObeliskDraw
@@ -973,14 +971,15 @@ bool Scene::Update(float dt)
 
 		}
 	}
-
-	/*if (player.actualPlayerHp <= 0)
+	
+	if (player.actualPlayerHp <= 0)
 	{
+		player.actualPlayerHp = player.playerHp;
 		active = false;
 		app->scene_end->active = true;
-		CleanUp();
-		//		loadPlayerData = true;
-	}*/
+		app->moduleEnemy->CleanUp();
+		loadPlayerData = true;
+	}
 
 	//LOG("Player x: %f Player y: %f", player.x, player.y);
 	LOG("Player Hp: %.2f", player.actualPlayerHp);

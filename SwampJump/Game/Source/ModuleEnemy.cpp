@@ -315,8 +315,7 @@ bool ModuleEnemy::Update(float dt)
 		//Fly enemic Move
 		if (storage1->data->enemicType == 1) {
 			if (!storage1->data->enemicFlySensor) {
-
-				storage1->data->y = (400 + sin((angle)) * 60);//Falta poner el dt
+				storage1->data->y += sin(angle);//Falta poner el dt
 				//Path predeterminado
 				if (!storage1->data->movimentFlyEnemic) {
 					storage1->data->x -= storage1->data->vx * dt;
@@ -345,7 +344,7 @@ bool ModuleEnemy::Update(float dt)
 						storage1->data->moving = true;
 					}
 					//movement
-					if (storage1->data->movingTo.x == -32 && storage1->data->movingTo.y == -32) {
+					if (storage1->data->movingTo.x == -32 && storage1->data->movingTo.y == -32) {	//if error ocurred
 						storage1->data->moving = false;
 					}
 					else {
@@ -384,14 +383,14 @@ bool ModuleEnemy::Update(float dt)
 					}
 				}
 
-				SDL_Rect enemicFlySensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
+				SDL_Rect enemicFlySensorRec = { storage1->data->x - 500,storage1->data->y - 250,1000,600 };
 
 				if (app->scene->player.x > enemicFlySensorRec.x && app->scene->player.x < enemicFlySensorRec.w + enemicFlySensorRec.x && app->scene->player.y<enemicFlySensorRec.h + enemicFlySensorRec.y && app->scene->player.y>enemicFlySensorRec.y) {
 					storage1->data->enemicFlySensor = true;
 				}
-				/*else {
+				else {
 					storage1->data->enemicFlySensor = false;
-				}*/
+				}
 			}
 		}
 
@@ -469,6 +468,10 @@ bool ModuleEnemy::PostUpdate()
 bool ModuleEnemy::CleanUp()
 {
 	LOG("Freeing scene");
+
+	while (meleEnemic1List.count() != 0) {
+		meleEnemic1List.del(meleEnemic1List.getFirst());
+	}
 
 	return true;
 }
