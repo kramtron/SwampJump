@@ -43,7 +43,7 @@ You spawn in a lush forest where you will have to run and collect food to gain p
 ### Obelisk Menu
 * *Up arrow* Up in menu
 * *Down arrow* Down in menu
-* *Return/Space* Continue
+* *Return* Continue
 
 # GitHub Link
 https://github.com/kramtron/SwampJump
