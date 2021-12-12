@@ -22,6 +22,7 @@ You spawn in a lush forest where you will have to run and collect food to gain p
 * *F6* Load the previous state of the game.
 * *F9* View colliders.
 * *F10* GOD Mode.
+* *F11* Switch between 30fps and 60fps cap.
 
 ### Movement
 
@@ -29,6 +30,9 @@ You spawn in a lush forest where you will have to run and collect food to gain p
 * *D* Move right
 * *SPACE* Jump
 * *2 times SPACE* Double jump
+* *M* Attack
+* *E* Open/Close Obelisk menu
+* *N* Invencibility skill
 
 ### Menu
 
@@ -36,6 +40,10 @@ You spawn in a lush forest where you will have to run and collect food to gain p
 * *Right arrow* Right in menu
 * *Return/Space* Continue
 
+### Obelisk Menu
+* *Up arrow* Up in menu
+* *Down arrow* Down in menu
+* *Return/Space* Continue
 
 # GitHub Link
 https://github.com/kramtron/SwampJump
