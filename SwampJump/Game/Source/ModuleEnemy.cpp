@@ -289,12 +289,16 @@ bool ModuleEnemy::Update(float dt)
 					//only move if its not attacking
 					if (!storage1->data->meleRightAtackBool && storage1->data->atackTime == 0) {
 						if (storage1->data->x < app->scene->player.x) {	//move right
-							storage1->data->x += storage1->data->vx * dt;
-							storage1->data->currentAnimation = &meleEnemy_WalkRAnim;
+							if (EnemyWalkability(storage1->data, true)) {
+								storage1->data->x += storage1->data->vx * dt;
+								storage1->data->currentAnimation = &meleEnemy_WalkRAnim;
+							}
 						}
 						else {	//move left
-							storage1->data->x -= storage1->data->vx * dt;
-							storage1->data->currentAnimation = &meleEnemy_WalkLAnim;
+							if (EnemyWalkability(storage1->data, false)) {
+								storage1->data->x -= storage1->data->vx * dt;
+								storage1->data->currentAnimation = &meleEnemy_WalkLAnim;
+							}
 						}
 					}
 					
@@ -678,5 +682,74 @@ void ModuleEnemy::EnemyDraw(MeleEnemic* storage) {
 	}
 	else {	//flying enemy
 		app->render->DrawTexture(flyingEnemyTexture, storage->x, storage->y, &storage->currentAnimation->GetCurrentFrame(), 1.0f, 2.0f);
+	}
+}
+
+bool ModuleEnemy::EnemyWalkability(MeleEnemic* storage, bool right) {
+	if (right) {	//move right?
+		switch (storage->spawnPlace) {
+		case 1:
+			if (storage->x < 3354)
+				return true;
+			break;
+		case 2:
+			if (storage->x < 5773)
+				return true;
+			break;
+		case 3:
+			if (storage->x < 6785)
+				return true;
+			break;
+		case 4:
+			if (storage->x < 8350)
+				return true;
+			break;
+		case 5:
+			if (storage->x < 9555)
+				return true;
+			break;
+		case 6:
+			if (storage->x < 12280)
+				return true;
+			break;
+		case 7:
+			if (storage->x < 12705)
+				return true;
+			break;
+		}
+		return false;
+	}
+	else {	//move left?
+		switch (storage->spawnPlace) {
+		case 1:
+			if (storage->x > 2850)
+				return true;
+			break;
+		case 2:
+			if (storage->x > 5439)
+				return true;
+			break;
+		case 3:
+			if (storage->x > 6559)
+				return true;
+			break;
+		case 4:
+			if (storage->x > 8095)
+				return true;
+			break;
+		case 5:
+			if (storage->x > 9125)
+				return true;
+			break;
+		case 6:
+			if (storage->x > 11976)
+				return true;
+			break;
+		case 7:
+			if (storage->x > 12385)
+				return true;
+			break;
+		}
+		return false;
 	}
 }

@@ -89,6 +89,8 @@ public:
 	void meleEnemicMove(p2List_item<MeleEnemic*>*,float dt);
 
 	void EnemyDraw(MeleEnemic* storage);
+
+	bool EnemyWalkability(MeleEnemic* storage, bool right);
 	//Enemic Move
 	
 
