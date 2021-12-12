@@ -250,11 +250,24 @@ bool Scene::Update(float dt)
 			player.vx = player.v2x*dt;
 			sentit = true;
 		}
-
-		if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-			player.playerInmortal = true;
+		player.skillCooldown += 1 * dt;
+		if (player.skillCooldown >= 1600) {
+			if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+				player.playerInmortal = true;
+				player.skillCooldown = 0;
+			}
 		}
-		//
+		player.skillActiveTime += 1 * dt;
+		if (player.skillActiveTime >= 800) {
+			player.playerInmortal = false;
+			player.skillActiveTime = 0;
+		}
+		if (player.playerInmortal) {
+			LOG("Skill UP!");
+		}
+		else if (!player.playerInmortal) {
+			LOG("Skill down!");
+		}
 		
 		if (aceleration_timer <= 0) {
 			player.vy += (player.ay*dt);//Va demasiado rapido el salto. Falta arreglar

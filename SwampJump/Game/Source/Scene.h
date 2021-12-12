@@ -63,6 +63,8 @@ public:
 		float startingPoints;
 		float actualPoints;
 		bool playerInmortal;
+		float skillCooldown=1600;
+		float skillActiveTime;
 
 	}player;
 	fPoint disparo;
