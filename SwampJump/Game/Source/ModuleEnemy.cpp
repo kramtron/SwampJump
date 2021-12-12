@@ -286,7 +286,8 @@ bool ModuleEnemy::Update(float dt)
 					}
 
 					//Melee Enemy in-sensor movement
-					if ((storage1->data->currentAnimation != &meleEnemy_AttackLAnim) && (storage1->data->currentAnimation != &meleEnemy_AttackRAnim)) {	//only move if its not attacking
+					//only move if its not attacking
+					if (!storage1->data->meleRightAtackBool && storage1->data->atackTime == 0) {
 						if (storage1->data->x < app->scene->player.x) {	//move right
 							storage1->data->x += storage1->data->vx * dt;
 							storage1->data->currentAnimation = &meleEnemy_WalkRAnim;
@@ -296,6 +297,7 @@ bool ModuleEnemy::Update(float dt)
 							storage1->data->currentAnimation = &meleEnemy_WalkLAnim;
 						}
 					}
+					
 				}
 
 
