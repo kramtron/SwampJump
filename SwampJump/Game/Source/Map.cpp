@@ -530,7 +530,7 @@ void Map::DrawPath()
 	for (uint i = 0; i < path.Count(); ++i)
 	{
 		iPoint pos = MapToWorld(path[i].x, path[i].y);
-		app->render->DrawRectangle({ pos.x, pos.y, 32, 32 }, 0, 50, 0);
+		app->render->DrawRectangle({ pos.x, pos.y, 32, 32 }, 0, 50, 0, 50);
 	}
 }
 

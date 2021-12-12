@@ -289,13 +289,13 @@ bool ModuleEnemy::Update(float dt)
 					//only move if its not attacking
 					if (!storage1->data->meleRightAtackBool && storage1->data->atackTime == 0) {
 						if (storage1->data->x < app->scene->player.x) {	//move right
-							if (EnemyWalkability(storage1->data, true)) {
+							if (EnemyWalkability(storage1->data, true)) {	//only move if its not in the limit
 								storage1->data->x += storage1->data->vx * dt;
 								storage1->data->currentAnimation = &meleEnemy_WalkRAnim;
 							}
 						}
 						else {	//move left
-							if (EnemyWalkability(storage1->data, false)) {
+							if (EnemyWalkability(storage1->data, false)) {	//only move if its not in the limit
 								storage1->data->x -= storage1->data->vx * dt;
 								storage1->data->currentAnimation = &meleEnemy_WalkLAnim;
 							}
@@ -391,6 +391,81 @@ bool ModuleEnemy::Update(float dt)
 						storage1->data->y >(storage1->data->movingTo.y - 16) &&
 						storage1->data->y < (storage1->data->movingTo.y + 16)) {
 						storage1->data->moving = false;
+					}
+
+
+					//FLYING ENEMY ATTACK
+					SDL_Rect atackMeleEnemicSensor = { storage1->data->x - 25,storage1->data->y - 25,storage1->data->w + 50,storage1->data->h + 50 };
+					SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 40,25,25 };
+					SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 40,25,25 };
+
+					storage1->data->atackTimer = storage1->data->atackTimer + (1 * dt);//Timer del tiempo en el que el enemigo puede volver a atacar
+
+					if (storage1->data->atackTimer >= 50) {
+						//Ataque
+						//Right
+						if (app->scene->player.x > (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w / 2)//If para detectar si el jugador esta tocando el sensor de ataque del enemigo
+							&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
+							&& app->scene->player.y > atackMeleEnemicSensor.y
+							&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+							storage1->data->meleRightAtackBool = true;//Activa el bool de que el enemigo está atacando
+							SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };//Rect del collider del ataque del enemigo
+
+							if ((meleRightAtackRect.x + meleRightAtackRect.w) > app->scene->player.x//If para ver si el ataque del enemigo está tocando al jugador
+								&& (meleRightAtackRect.x + meleRightAtackRect.w) < (app->scene->player.x + app->scene->player.w)
+								&& meleRightAtackRect.y > app->scene->player.y
+								&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
+								storage1->data->currentAnimation = &meleEnemy_AttackRAnim;
+
+								if (!app->scene->player.playerInmortal) {
+									app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
+								}
+								//Resetea todos los contadores y bools del ataque del enemigo
+								storage1->data->atackTime = 0;
+								storage1->data->atackTimer = 0;
+								storage1->data->meleRightAtackBool = false;
+
+							}
+
+
+						}
+						else {//Cuando el jugador no está dentro del sensor de ataque del enemigo coloca el bool de ataque en false
+							storage1->data->meleRightAtackBool = false;
+
+						}
+						//Left
+						//Lo mismo que arriba pero para el lado izquierdo
+						if ((app->scene->player.x + app->scene->player.w) > atackMeleEnemicSensor.x
+							&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w / 2))
+							&& app->scene->player.y > atackMeleEnemicSensor.y
+							&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+							storage1->data->meleLeftAtackBool = true;
+							SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+
+
+							if ((meleLeftAtackRect.x) > app->scene->player.x
+								&& (meleLeftAtackRect.x) < (app->scene->player.x + app->scene->player.w)
+								&& meleLeftAtackRect.y > app->scene->player.y
+								&& meleLeftAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
+
+								storage1->data->currentAnimation = &meleEnemy_AttackLAnim;
+
+								storage1->data->meleRightAtackBool = false;
+								if (!app->scene->player.playerInmortal) {
+									app->scene->player.actualPlayerHp -= storage1->data->damage;
+								}
+								storage1->data->atackTime = 0;
+								storage1->data->atackTimer = 0;
+							}
+						}
+						else {
+							storage1->data->meleLeftAtackBool = false;
+						}
+						storage1->data->atackTime = storage1->data->atackTime + (1 * dt);
+						if (storage1->data->atackTime >= 5) {
+							storage1->data->atackTimer = 0;
+							storage1->data->atackTime = 0;
+						}
 					}
 				}
 
