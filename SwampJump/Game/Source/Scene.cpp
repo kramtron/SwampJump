@@ -186,9 +186,9 @@ bool Scene::Update(float dt)
 		obelisk5Up = true;
 		app->SaveGameRequest();
 	}
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+	/*if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		player.actualPlayerHp = 0;
-	}
+	}*/
 	idleRAnim.speed = 0.045f * dt;
 	idleLAnim.speed = 0.045f * dt;
 	jumpRAnim.speed = 0.09f * dt;
