@@ -978,7 +978,7 @@ bool Scene::Update(float dt)
 		app->scene_end->active = true;
 		app->moduleEnemy->CleanUp();
 		loadPlayerData = true;
-		player.actualPlayerHp = player.playerHp;
+		player.actualPlayerHp = player.playerHp;//Problemas con la carga de vida arreglo fácil.
 
 	}
 
