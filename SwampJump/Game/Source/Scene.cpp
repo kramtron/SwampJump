@@ -173,6 +173,12 @@ bool Scene::Update(float dt)
 		player.x = player.startingX;
 		player.y = player.startingY;
 		player.playedBefore = true;
+		obelisk1Up = true;
+		obelisk2Up = true;
+		obelisk3Up = true;
+		obelisk4Up = true;
+		obelisk5Up = true;
+		app->SaveGameRequest();
 	}
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		player.actualPlayerHp = 0;
