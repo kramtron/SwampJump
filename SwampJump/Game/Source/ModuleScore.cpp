@@ -36,6 +36,11 @@ bool ModuleScore::Awake()
 bool ModuleScore::Start()
 {
 	pickUpTexture = app->tex->Load("Assets/textures/pickups.png");
+
+	audio_apple = app->audio->LoadFx("Assets/audio/fx/applebite.wav");
+	audio_potion = app->audio->LoadFx("Assets/audio/fx/potion.wav");
+
+
 	return true;
 }
 
@@ -134,6 +139,7 @@ void ModuleScore::CollidePickUps() {
 				if (app->scene->player.actualPlayerHp >= 50)
 					app->scene->player.actualPlayerHp == 50;
 
+				app->audio->PlayFx(audio_potion);
 				pickUpList.del(current_pickUp);
 
 				break;
@@ -141,6 +147,7 @@ void ModuleScore::CollidePickUps() {
 
 				app->scene->player.actualPoints += normalApplePoints;
 
+				app->audio->PlayFx(audio_apple);
 				pickUpList.del(current_pickUp);
 
 				break;

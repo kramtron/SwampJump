@@ -48,6 +48,9 @@ bool Scene::Start()
 	
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+	audio_tp = app->audio->LoadFx("Assets/audio/fx/TP.wav");
+
+
 	hpBar1 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion1.png");
 	hpBar2 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion3.png");
 
@@ -1332,6 +1335,7 @@ void Scene::ObeliskMenuController() {
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 			obeliskTp = true;
+			app->audio->PlayFx(audio_tp);
 		}
 
 		if (obeliskTp) {

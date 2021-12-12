@@ -149,6 +149,9 @@ public:
 	int menuPlace=1;
 
 private:
+	uint audio_hurt;
+	uint audio_tp;
+
 	SDL_Texture* hpBar1 = nullptr;
 	SDL_Texture* hpBar2 = nullptr;
 

@@ -50,6 +50,8 @@ bool ModuleEnemy::Start()
 	flyingEnemyTexture = app->tex->Load("Assets/textures/bee_spritesheet.png");
 	meleEnemyTexture = app->tex->Load("Assets/textures/centipede_spritesheet.png");
 
+	audio_hurt = app->audio->LoadFx("Assets/audio/fx/Hurt.wav");
+
 	//FLY ENEMY ANIMATION
 	//Idle Animation
 	flyingEnemy_IdleRAnim.Empty();
@@ -236,6 +238,7 @@ bool ModuleEnemy::Update(float dt)
 
 								if (!app->scene->player.playerInmortal) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
+									app->audio->PlayFx(audio_hurt);
 								}
 								//Resetea todos los contadores y bools del ataque del enemigo
 								storage1->data->atackTime = 0;
@@ -270,6 +273,7 @@ bool ModuleEnemy::Update(float dt)
 								storage1->data->meleRightAtackBool = false;
 								if (!app->scene->player.playerInmortal) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;
+									app->audio->PlayFx(audio_hurt);
 								}
 								storage1->data->atackTime = 0;
 								storage1->data->atackTimer = 0;
@@ -419,6 +423,7 @@ bool ModuleEnemy::Update(float dt)
 
 								if (!app->scene->player.playerInmortal) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
+									app->audio->PlayFx(audio_hurt);
 								}
 								//Resetea todos los contadores y bools del ataque del enemigo
 								storage1->data->atackTime = 0;
@@ -453,6 +458,7 @@ bool ModuleEnemy::Update(float dt)
 								storage1->data->meleRightAtackBool = false;
 								if (!app->scene->player.playerInmortal) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;
+									app->audio->PlayFx(audio_hurt);
 								}
 								storage1->data->atackTime = 0;
 								storage1->data->atackTimer = 0;

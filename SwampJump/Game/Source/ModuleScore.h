@@ -83,6 +83,9 @@ public:
 	PointsSpawnData pointSpawn6;
 	PointsSpawnData pointSpawn7;
 
+	uint audio_apple;
+	uint audio_potion;
+
 	float normalApplePoints;
 	float goldApplePoints;
 

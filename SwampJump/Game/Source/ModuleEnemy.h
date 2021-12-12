@@ -148,6 +148,8 @@ public:
 	SDL_Rect test;
 	SDL_Rect enemic;
 
+	uint audio_hurt;
+
 	SDL_Texture* meleEnemyTexture = nullptr;
 	SDL_Texture* flyingEnemyTexture = nullptr;
 
