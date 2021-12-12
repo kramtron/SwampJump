@@ -149,6 +149,9 @@ public:
 	int menuPlace=1;
 
 private:
+	SDL_Texture* hpBar1 = nullptr;
+	SDL_Texture* hpBar2 = nullptr;
+
 	SDL_Texture* imgFons1 = nullptr;
 	SDL_Texture* imgFons2 = nullptr;
 	SDL_Texture* imgFons3 = nullptr;

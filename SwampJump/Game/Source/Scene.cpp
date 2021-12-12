@@ -48,7 +48,9 @@ bool Scene::Start()
 	
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
-	
+	hpBar1 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion1.png");
+	hpBar2 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion3.png");
+
 	imgFons1 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/1.png");
 	imgFons2 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/2.png");
 	imgFons3 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/2 Background/Layers/3.png");
@@ -172,6 +174,7 @@ bool Scene::Update(float dt)
 	if (!player.playedBefore) {
 		player.x = player.startingX;
 		player.y = player.startingY;
+		player.actualPlayerHp = player.playerHp;
 		player.playedBefore = true;
 		obelisk1Up = true;
 		obelisk2Up = true;
@@ -1004,6 +1007,14 @@ bool Scene::Update(float dt)
 		}
 	}
 	
+	//Hp draw
+
+	app->render->DrawTexture(hpBar1, -app->render->camera.x, -app->render->camera.y);
+	SDL_Rect hpRect = { -app->render->camera.x + 304, -app->render->camera.y + 31, player.actualPlayerHp/player.playerHp * 944.0f, 42};
+	app->render->DrawRectangle(hpRect, 143, 40, 108);
+	app->render->DrawTexture(hpBar2, -app->render->camera.x, -app->render->camera.y);
+
+
 	if (player.actualPlayerHp <= 0)
 	{
 		active = false;
@@ -1018,6 +1029,13 @@ bool Scene::Update(float dt)
 		 spawn5FlyEnemicTimer = 1500;
 		 spawn6FlyEnemicTimer = 1500;
 		 spawn7FlyEnemicTimer = 1500;
+		 spawnTimer1 = 3000;
+		 spawnTimer2 = 3000;
+		 spawnTimer3 = 3000;
+		 spawnTimer4 = 3000;
+		 spawnTimer5 = 3000;
+		 spawnTimer6 = 3000;
+		 spawnTimer7 = 3000;
 
 	}
 

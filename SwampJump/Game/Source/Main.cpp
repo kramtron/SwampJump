@@ -1,6 +1,7 @@
 #include "App.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Input.h"
 #include <time.h>
 
 #include <stdio.h>
@@ -20,7 +21,7 @@ using namespace std;
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
 
-
+int delta_time = 16.0f;
 
 enum MainState
 {
@@ -91,10 +92,19 @@ int main(int argc, char* args[])
 
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
-			app->SetDt((float)telapsed/(float)DELTA_TIME);
-			LOG("DtMain: %.4f", (float)telapsed / (float)DELTA_TIME);
+			app->SetDt((float)telapsed/(float)delta_time);
+			LOG("DtMain: %.4f", (float)telapsed / (float)delta_time);
 			if(app->Update() == false)
 				state = CLEAN;
+	
+			if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+				if (delta_time == 16.0f) {
+					delta_time = 32.0f;
+				}
+				else {
+					delta_time = 16.0f;
+				}
+			}
 			break;
 
 			// Cleanup allocated memory -----------------------------------------
@@ -123,14 +133,14 @@ int main(int argc, char* args[])
 		//Check en salida de la diferencia de temps
 		LOG("Elapsed time in milliseconds: %d", chrono::duration_cast<chrono::milliseconds>(end - start).count(), " ms");
 		telapsed = chrono::duration_cast<chrono::milliseconds>(end - start).count();
- 		LOG("dt: %f", DELTA_TIME);
+ 		LOG("dt: %f", delta_time);
 		//Entra si hay diferencia de tiempo
-		if (DELTA_TIME - telapsed > 0.0f) {
+		if (delta_time - telapsed > 0.0f) {
 			//Para el programa el tiempo restante
-			SDL_Delay(((DELTA_TIME - telapsed)/1000));
-			//telapsed = DELTA_TIME;
+			SDL_Delay((delta_time - telapsed)/1000);
+			telapsed = delta_time / 2.5f;
 		}
-		LOG("ALGO QUE NO FUNCIONA: %.4f", (telapsed / DELTA_TIME));
+		LOG("ALGO QUE NO FUNCIONA: %.4f", (telapsed / delta_time));
 
 	}
 
