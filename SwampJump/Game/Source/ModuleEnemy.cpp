@@ -58,7 +58,6 @@ bool ModuleEnemy::Start()
 	flyingEnemy_IdleRAnim.PushBack({ 51, 33, 24, 26 });
 	flyingEnemy_IdleRAnim.PushBack({ 75, 33, 25, 26 });
 	flyingEnemy_IdleRAnim.loop = true;
-	flyingEnemy_IdleRAnim.pingpong = true;
 	flyingEnemy_IdleRAnim.speed = 0.05f;
 
 	flyingEnemy_IdleLAnim.Empty();
@@ -67,7 +66,6 @@ bool ModuleEnemy::Start()
 	flyingEnemy_IdleLAnim.PushBack({ 51, 0, 25, 28 });
 	flyingEnemy_IdleLAnim.PushBack({ 76, 0, 24, 28 });
 	flyingEnemy_IdleLAnim.loop = true;
-	flyingEnemy_IdleLAnim.pingpong = true;
 	flyingEnemy_IdleLAnim.speed = 0.05f;
 
 	//AttackAnimation
@@ -287,16 +285,17 @@ bool ModuleEnemy::Update(float dt)
 						}
 					}
 
-
-
-
-
-
-
-
-
-
-					//storage1->data->x++;
+					//Melee Enemy in-sensor movement
+					if ((storage1->data->currentAnimation != &meleEnemy_AttackLAnim) && (storage1->data->currentAnimation != &meleEnemy_AttackRAnim)) {	//only move if its not attacking
+						if (storage1->data->x < app->scene->player.x) {	//move right
+							storage1->data->x += storage1->data->vx * dt;
+							storage1->data->currentAnimation = &meleEnemy_WalkRAnim;
+						}
+						else {	//move left
+							storage1->data->x -= storage1->data->vx * dt;
+							storage1->data->currentAnimation = &meleEnemy_WalkLAnim;
+						}
+					}
 				}
 
 
@@ -429,6 +428,15 @@ bool ModuleEnemy::Update(float dt)
 				}
 				else if (storage1->data->actualHp>0) {
 					storage1->data->actualHp -= app->scene->player.playerDamage;
+
+					if (storage1->data->enemicType == 0) {
+						if ((storage1->data->currentAnimation == &meleEnemy_AttackLAnim) || (storage1->data->currentAnimation == &meleEnemy_WalkLAnim)) {
+							storage1->data->currentAnimation = &meleEnemy_HurtLAnim;
+						}
+						else {
+							storage1->data->currentAnimation = &meleEnemy_HurtRAnim;
+						}
+					}
 				}
 			}
 		}
