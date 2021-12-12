@@ -164,6 +164,19 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
+	if (player.dead) {
+		player.actualPlayerHp = player.playerHp;
+		player.dead = false;
+	}
+	if (!player.playedBefore) {
+		player.x = player.startingX;
+		player.y = player.startingY;
+		player.playedBefore = true;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+		player.actualPlayerHp = 0;
+	}
 	idleRAnim.speed = 0.045f * dt;
 	idleLAnim.speed = 0.045f * dt;
 	jumpRAnim.speed = 0.09f * dt;
@@ -991,7 +1004,14 @@ bool Scene::Update(float dt)
 		app->scene_end->active = true;
 		app->moduleEnemy->CleanUp();
 		loadPlayerData = true;
-		player.actualPlayerHp = player.playerHp;//Problemas con la carga de vida arreglo fácil.
+		player.dead = true;
+		 spawn1FlyEnemicTimer = 1500;
+		 spawn2FlyEnemicTimer = 1500;
+		 spawn3FlyEnemicTimer = 1500;
+		 spawn4FlyEnemicTimer = 1500;
+		 spawn5FlyEnemicTimer = 1500;
+		 spawn6FlyEnemicTimer = 1500;
+		 spawn7FlyEnemicTimer = 1500;
 
 	}
 
@@ -1046,6 +1066,8 @@ bool Scene::LoadPlayerData(pugi::xml_node& playerData) {
 	player.startingPoints = playerData.attribute("starterPoints").as_float();
 	player.actualPoints = playerData.attribute("actualPoints").as_float();
 	player.playerInmortal = playerData.attribute("playerInmortal").as_bool();
+	player.startingX= playerData.attribute("startingX").as_float();
+	player.startingY = playerData.attribute("startingY").as_float();
 
 	return true;
 }
@@ -1090,6 +1112,8 @@ bool Scene::LoadScene1Data(pugi::xml_node& scene1Data) {
 	obelisk3Up = scene1Data.child("obelisksUp").attribute("obelisk3Up").as_bool();
 	obelisk4Up = scene1Data.child("obelisksUp").attribute("obelisk4Up").as_bool();
 	obelisk5Up = scene1Data.child("obelisksUp").attribute("obelisk5Up").as_bool();
+	player.playedBefore = scene1Data.child("game").attribute("playedBefore").as_bool();
+
 	return true;
 }
 //Guarda la posicion del personaje NO SE USA EN ESTE CODIGO
@@ -1115,6 +1139,7 @@ bool Scene::SaveScene1State(pugi::xml_node& scene1Data) const {
 	scene1Data.child("obelisksUp").attribute("obelisk3Up").set_value(obelisk3Up);
 	scene1Data.child("obelisksUp").attribute("obelisk4Up").set_value(obelisk4Up);
 	scene1Data.child("obelisksUp").attribute("obelisk5Up").set_value(obelisk5Up);
+	scene1Data.child("game").attribute("playedBefore").set_value(player.playedBefore);
 
 	return true;
 }
@@ -1172,11 +1197,11 @@ void Scene::DebugDraw()
 		}
 		else {
 			if (storage1->data->meleLeftAtackBool) {
-				SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 40,25,25 };
+				SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 35,25,25 };
 				app->render->DrawRectangle(meleLeftAtackRect, 255, 0, 0);
 			}
 			if (storage1->data->meleRightAtackBool) {
-				SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 40,25,25 };
+				SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 35,25,25 };
 				app->render->DrawRectangle(meleRightAtackRect, 255, 0, 0);
 			}
 		}

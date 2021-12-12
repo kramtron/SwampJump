@@ -396,8 +396,8 @@ bool ModuleEnemy::Update(float dt)
 
 					//FLYING ENEMY ATTACK
 					SDL_Rect atackMeleEnemicSensor = { storage1->data->x - 25,storage1->data->y - 25,storage1->data->w + 50,storage1->data->h + 50 };
-					SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 40,25,25 };
-					SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 40,25,25 };
+					SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 35,25,25 };
+					SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 35,25,25 };
 
 					storage1->data->atackTimer = storage1->data->atackTimer + (1 * dt);//Timer del tiempo en el que el enemigo puede volver a atacar
 
@@ -407,9 +407,9 @@ bool ModuleEnemy::Update(float dt)
 						if (app->scene->player.x > (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w / 2)//If para detectar si el jugador esta tocando el sensor de ataque del enemigo
 							&& (app->scene->player.x) < (atackMeleEnemicSensor.x + atackMeleEnemicSensor.w)
 							&& app->scene->player.y > atackMeleEnemicSensor.y
-							&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+							&& (app->scene->player.y) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
 							storage1->data->meleRightAtackBool = true;//Activa el bool de que el enemigo está atacando
-							SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 10,25,25 };//Rect del collider del ataque del enemigo
+							SDL_Rect meleRightAtackRect = { storage1->data->x + storage1->data->w ,storage1->data->y + 35,25,25 };
 
 							if ((meleRightAtackRect.x + meleRightAtackRect.w) > app->scene->player.x//If para ver si el ataque del enemigo está tocando al jugador
 								&& (meleRightAtackRect.x + meleRightAtackRect.w) < (app->scene->player.x + app->scene->player.w)
@@ -438,9 +438,9 @@ bool ModuleEnemy::Update(float dt)
 						if ((app->scene->player.x + app->scene->player.w) > atackMeleEnemicSensor.x
 							&& (app->scene->player.x + app->scene->player.w) < (atackMeleEnemicSensor.x + (atackMeleEnemicSensor.w / 2))
 							&& app->scene->player.y > atackMeleEnemicSensor.y
-							&& (app->scene->player.y + app->scene->player.h) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
+							&& (app->scene->player.y) < (atackMeleEnemicSensor.y + atackMeleEnemicSensor.h)) {
 							storage1->data->meleLeftAtackBool = true;
-							SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 10,25,25 };
+							SDL_Rect meleLeftAtackRect = { storage1->data->x - 25,storage1->data->y + 35,25,25 };
 
 
 							if ((meleLeftAtackRect.x) > app->scene->player.x

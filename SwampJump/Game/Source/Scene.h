@@ -49,6 +49,8 @@ public:
 	{
 		float x;
 		float y;
+		float startingX;
+		float startingY;
 		float vx = 0;
 		float vy = 0;
 		float ay = 1;
@@ -65,6 +67,9 @@ public:
 		bool playerInmortal;
 		float skillCooldown=1600;
 		float skillActiveTime;
+
+		bool playedBefore;
+		bool dead = false;
 
 	}player;
 	fPoint disparo;
