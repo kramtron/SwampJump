@@ -186,9 +186,9 @@ bool Scene::Update(float dt)
 		obelisk5Up = true;
 		app->SaveGameRequest();
 	}
-	/*if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		player.actualPlayerHp = 0;
-	}*/
+	}
 	idleRAnim.speed = 0.045f * dt;
 	idleLAnim.speed = 0.045f * dt;
 	jumpRAnim.speed = 0.09f * dt;
@@ -805,7 +805,7 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 1) {
 
 			if (app->scene->player.x > sensorSpawn1.x && app->scene->player.x < sensorSpawn1.w + sensorSpawn1.x) {
-				if (spawn1FlyEnemicTimer >= 1500) {
+				if (spawn1FlyEnemicTimer >= 300 ){
 					if (storage1->data->enemicType == 0) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 80, 1));
 						spawn1FlyEnemicTimer = 0;
@@ -835,7 +835,7 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 2) {
 
 			if (app->scene->player.x > sensorSpawn2.x && app->scene->player.x < sensorSpawn2.w + sensorSpawn2.x) {
-				if (spawn2FlyEnemicTimer >= 1500) {
+				if (spawn2FlyEnemicTimer >= 300) {
 					if (storage1->data->enemicType == 0) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 40, 2));
 						spawn2FlyEnemicTimer = 0;
@@ -865,7 +865,7 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 3) {
 
 			if (app->scene->player.x > sensorSpawn3.x && app->scene->player.x < sensorSpawn3.w + sensorSpawn3.x) {
-				if (spawn3FlyEnemicTimer >= 1500) {
+				if (spawn3FlyEnemicTimer >= 300) {
 					if (storage1->data->enemicType == 0) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 40, 3));
 						spawn3FlyEnemicTimer = 0;
@@ -921,7 +921,7 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 6) {
 
 			if (app->scene->player.x > sensorSpawn6.x && app->scene->player.x < sensorSpawn6.w + sensorSpawn6.x) {
-				if (spawn6FlyEnemicTimer >= 1500) {
+				if (spawn6FlyEnemicTimer >= 200) {
 					if (storage1->data->enemicType == 0) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 30, 6));
 						spawn6FlyEnemicTimer = 0;
@@ -951,7 +951,7 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 7) {
 
 			if (app->scene->player.x > sensorSpawn7.x && app->scene->player.x < sensorSpawn7.w + sensorSpawn7.x) {
-				if (spawn7FlyEnemicTimer >= 1500) {
+				if (spawn7FlyEnemicTimer >= 200) {
 					if (storage1->data->enemicType == 0) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 30, 7));
 						spawn7FlyEnemicTimer = 0;
@@ -1017,6 +1017,10 @@ bool Scene::Update(float dt)
 	app->render->DrawRectangle(hpRect, 143, 40, 108);
 	app->render->DrawTexture(hpBar2, -app->render->camera.x, -app->render->camera.y);
 
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+		app->modulescore->HpCreate(player.x+80,player.y,app->modulescore->hpUp);
+
+	}
 
 	if (player.actualPlayerHp <= 0)
 	{
@@ -1209,7 +1213,7 @@ void Scene::DebugDraw()
 		app->render->DrawRectangle(atackMeleEnemicSensor, 255, 255, 255,40);
 		SDL_Rect enemic = { storage1->data->x,storage1->data->y,app->moduleEnemy->normalEnemicsWH.w,app->moduleEnemy->normalEnemicsWH.h };
 		//LOG("Enemic x: %d y: %d", storage1->data->x, storage1->data->y);
-		app->render->DrawRectangle(enemic, 255, 255, 0);
+		app->render->DrawRectangle(enemic, 255, 255, 0,60);
 
 		//Atack draw
 		if (storage1->data->enemicType == 0) {
