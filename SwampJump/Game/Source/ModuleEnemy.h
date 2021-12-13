@@ -46,6 +46,8 @@ public:
 	bool coyotejump;
 	bool tocant_terra_abans;
 	
+	float flyEnemicTimer = 300;
+
 	Animation* currentAnimation = nullptr;
 };
 

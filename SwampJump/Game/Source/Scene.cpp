@@ -626,13 +626,13 @@ bool Scene::Update(float dt)
 	spawnTimer5 = spawnTimer5 + (1.0f * dt);
 	spawnTimer6 = spawnTimer6 + (1.0f * dt);
 	spawnTimer7 = spawnTimer7 + (1.0f * dt);
-	spawn1FlyEnemicTimer = spawn1FlyEnemicTimer + (1.0f * dt);
+	/*spawn1FlyEnemicTimer = spawn1FlyEnemicTimer + (1.0f * dt);
 	spawn2FlyEnemicTimer = spawn2FlyEnemicTimer + (1.0f * dt);
 	spawn3FlyEnemicTimer = spawn3FlyEnemicTimer + (1.0f * dt);
 	spawn4FlyEnemicTimer = spawn4FlyEnemicTimer + (1.0f * dt);
 	spawn5FlyEnemicTimer = spawn5FlyEnemicTimer + (1.0f * dt);
 	spawn6FlyEnemicTimer = spawn6FlyEnemicTimer + (1.0f * dt);
-	spawn7FlyEnemicTimer = spawn7FlyEnemicTimer + (1.0f * dt);
+	spawn7FlyEnemicTimer = spawn7FlyEnemicTimer + (1.0f * dt);*/
 
 	
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
@@ -805,10 +805,13 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 1) {
 
 			if (app->scene->player.x > sensorSpawn1.x && app->scene->player.x < sensorSpawn1.w + sensorSpawn1.x) {
-				if (spawn1FlyEnemicTimer >= 300 ){
-					if (storage1->data->enemicType == 0) {
+				
+				if (storage1->data->enemicType == 0) {
+					storage1->data->flyEnemicTimer += 1 * dt;
+					if (storage1->data->flyEnemicTimer >= 300) {
+
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 80, 1));
-						spawn1FlyEnemicTimer = 0;
+						storage1->data->flyEnemicTimer = 0;
 					}
 
 				}
@@ -835,10 +838,12 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 2) {
 
 			if (app->scene->player.x > sensorSpawn2.x && app->scene->player.x < sensorSpawn2.w + sensorSpawn2.x) {
-				if (spawn2FlyEnemicTimer >= 300) {
-					if (storage1->data->enemicType == 0) {
+				if (storage1->data->enemicType == 0) {
+					storage1->data->flyEnemicTimer += 1 * dt;
+
+					if (storage1->data->flyEnemicTimer >= 300) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 40, 2));
-						spawn2FlyEnemicTimer = 0;
+						storage1->data->flyEnemicTimer = 0;
 					}
 
 				}
@@ -865,10 +870,12 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 3) {
 
 			if (app->scene->player.x > sensorSpawn3.x && app->scene->player.x < sensorSpawn3.w + sensorSpawn3.x) {
-				if (spawn3FlyEnemicTimer >= 300) {
-					if (storage1->data->enemicType == 0) {
+				if (storage1->data->enemicType == 0) {
+
+					storage1->data->flyEnemicTimer += 1 * dt;
+					if (storage1->data->flyEnemicTimer >= 300) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 40, 3));
-						spawn3FlyEnemicTimer = 0;
+						storage1->data->flyEnemicTimer = 0;
 					}
 
 				}
@@ -921,10 +928,12 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 6) {
 
 			if (app->scene->player.x > sensorSpawn6.x && app->scene->player.x < sensorSpawn6.w + sensorSpawn6.x) {
-				if (spawn6FlyEnemicTimer >= 200) {
-					if (storage1->data->enemicType == 0) {
+				if (storage1->data->enemicType == 0) {
+
+					storage1->data->flyEnemicTimer += 1 * dt;
+					if (storage1->data->flyEnemicTimer >= 200) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 30, 6));
-						spawn6FlyEnemicTimer = 0;
+						storage1->data->flyEnemicTimer = 0;
 					}
 
 				}
@@ -951,10 +960,12 @@ bool Scene::Update(float dt)
 		if (storage1->data->spawnPlace == 7) {
 
 			if (app->scene->player.x > sensorSpawn7.x && app->scene->player.x < sensorSpawn7.w + sensorSpawn7.x) {
-				if (spawn7FlyEnemicTimer >= 200) {
-					if (storage1->data->enemicType == 0) {
+				if (storage1->data->enemicType == 0) {
+
+					storage1->data->flyEnemicTimer += 1 * dt;
+					if (storage1->data->flyEnemicTimer >= 200) {
 						app->moduleEnemy->meleEnemic1List.add(app->moduleEnemy->flyEnemicCreator(storage1->data->x, storage1->data->y - 30, 7));
-						spawn7FlyEnemicTimer = 0;
+						storage1->data->flyEnemicTimer = 0;
 					}
 
 				}
