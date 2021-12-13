@@ -186,9 +186,9 @@ bool Scene::Update(float dt)
 		obelisk5Up = true;
 		app->SaveGameRequest();
 	}
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
+	/*if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		player.actualPlayerHp = 0;
-	}
+	}*/
 	idleRAnim.speed = 0.045f * dt;
 	idleLAnim.speed = 0.045f * dt;
 	jumpRAnim.speed = 0.09f * dt;
@@ -1028,25 +1028,19 @@ bool Scene::Update(float dt)
 	app->render->DrawRectangle(hpRect, 143, 40, 108);
 	app->render->DrawTexture(hpBar2, -app->render->camera.x, -app->render->camera.y);
 
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+	/*if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
 		app->modulescore->HpCreate(player.x+80,player.y,app->modulescore->hpUp);
 
-	}
+	}*/
 
 	if (player.actualPlayerHp <= 0)
 	{
 		active = false;
 		app->scene_end->active = true;
 		app->moduleEnemy->CleanUp();
+		app->modulescore->CleanUp();
 		loadPlayerData = true;
 		player.dead = true;
-		 spawn1FlyEnemicTimer = 1500;
-		 spawn2FlyEnemicTimer = 1500;
-		 spawn3FlyEnemicTimer = 1500;
-		 spawn4FlyEnemicTimer = 1500;
-		 spawn5FlyEnemicTimer = 1500;
-		 spawn6FlyEnemicTimer = 1500;
-		 spawn7FlyEnemicTimer = 1500;
 		 spawnTimer1 = 3000;
 		 spawnTimer2 = 3000;
 		 spawnTimer3 = 3000;

@@ -71,6 +71,18 @@ bool ModuleScore::PostUpdate()
 bool ModuleScore::CleanUp()
 {
 	LOG("Freeing scene");
+	
+	p2List_item<PickUp*>* current_pickUp = pickUpList.getFirst();
+	while (current_pickUp != NULL) {
+		switch (current_pickUp->data->pickUpType) {
+		case PickUp::PickUpType::HP:
+			pickUpList.del(current_pickUp);
+			break;
+		case PickUp::PickUpType::COIN:
+			break;
+		}
+		current_pickUp = current_pickUp->next;
+	}
 
 	return true;
 }
