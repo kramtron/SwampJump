@@ -1028,10 +1028,10 @@ bool Scene::Update(float dt)
 	app->render->DrawRectangle(hpRect, 143, 40, 108);
 	app->render->DrawTexture(hpBar2, -app->render->camera.x, -app->render->camera.y);
 
-	/*if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
 		app->modulescore->HpCreate(player.x+80,player.y,app->modulescore->hpUp);
 
-	}*/
+	}
 
 	if (player.actualPlayerHp <= 0)
 	{
@@ -1050,10 +1050,13 @@ bool Scene::Update(float dt)
 		 spawnTimer7 = 3000;
 
 	}
-
+	
+	
 	//LOG("Player x: %f Player y: %f", player.x, player.y);
 	LOG("Player Hp: %.2f", player.actualPlayerHp);
 	LOG("Player Points: %.2f", player.actualPoints);
+	app->input->GetMousePosition(mouse.x, mouse.y);
+	LOG("Mouse x: %d \n Mouse y: %d", mouse.x, mouse.y);
 	return true;
 }
 
@@ -1315,7 +1318,31 @@ void Scene::ObeliskMenuController() {
 				menuPlace--;
 			}
 		}
+		app->input->GetMousePosition(mouse.x,mouse.y);
+		SDL_Rect zone1 = { 612,157,329,90 };
+		SDL_Rect zone2 = { 612,284,329,90 };
+		SDL_Rect zone3 = { 612,410,329,90 };
+		SDL_Rect zone4 = { 612,536,329,90 };
+		SDL_Rect zone5 = {612,663,329,90};
+		if (mouse.x>zone1.x&&mouse.x<(zone1.x+zone1.w)&&mouse.y>zone1.y&&mouse.y<(zone1.y+zone1.h)) {//Falta implementar la colision del mouse con el boton
+			menuPlace = 1;
+		}
+		
+		else if (mouse.x > zone2.x && mouse.x<(zone2.x + zone2.w) && mouse.y>zone2.y && mouse.y < (zone2.y + zone2.h)) {
+			menuPlace = 2;
 
+		}
+		else if (mouse.x > zone3.x && mouse.x<(zone3.x + zone3.w) && mouse.y>zone3.y && mouse.y < (zone3.y + zone3.h)) {
+			menuPlace = 3;
+		}
+		else if (mouse.x > zone4.x && mouse.x<(zone4.x + zone4.w) && mouse.y>zone4.y && mouse.y < (zone4.y + zone4.h)) {
+			menuPlace = 4;
+
+		}
+		else if (mouse.x > zone5.x && mouse.x<(zone5.x + zone5.w) && mouse.y>zone5.y && mouse.y < (zone5.y + zone5.h)) {
+			menuPlace = 5;
+
+		}
 		switch (menuPlace)
 		{
 		case 1:
@@ -1342,7 +1369,7 @@ void Scene::ObeliskMenuController() {
 		
 		//Imprimir sprite del menu para seleccionar el sitio donde te quieras tepear
 
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN||app->input->GetMouseButtonDown(mouse.left)==KEY_DOWN) {
 			obeliskTp = true;
 			app->audio->PlayFx(audio_tp);
 		}

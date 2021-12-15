@@ -50,9 +50,17 @@ bool Scene_Intro::PreUpdate()
 bool Scene_Intro::Update(float dt)
 {
 	bool ret = true;
+	int x, y, left = 1;
+	app->input->GetMousePosition(x, y);
+	SDL_Rect zone1 = { 26,801,197,78 };
+	SDL_Rect zone2 = { 1318,801,181,78 };
 
-	
-	
+	if (x > zone1.x && x<(zone1.x + zone1.w) && y>zone1.y && y < (zone1.y + zone1.h)) {
+		opcion = 0;
+	}
+	else if (x > zone2.x && x<(zone2.x + zone2.w) && y>zone2.y && y < (zone2.y + zone2.h)) {
+		opcion = 1;
+	}
 		//acceptar opció
 		if (opcion == 0)
 		{
@@ -62,7 +70,7 @@ bool Scene_Intro::Update(float dt)
 			app->render->DrawTexture(startPress, 0,0, NULL, 1);
 			
 
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 				active = false;
 				app->scene->active = true;
@@ -74,7 +82,7 @@ bool Scene_Intro::Update(float dt)
 			app->render->camera.y = 0;
 
 			app->render->DrawTexture(exitPress, 0,0, NULL, 1);
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 				ret = false;
 			}
@@ -85,6 +93,7 @@ bool Scene_Intro::Update(float dt)
 			opcion--;
 		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && opcion != 1)
 			opcion++;
+		
 
 	return ret;
 }

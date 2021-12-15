@@ -148,6 +148,12 @@ public:
 	
 	int menuPlace=1;
 
+	struct Mouse {
+		int x, y;
+		int left=1;
+
+	}mouse;
+
 private:
 	uint audio_hurt;
 	uint audio_tp;

@@ -55,7 +55,8 @@ bool ModuleScore::Update(float dt)
 {
 	bool ret = true;
 	CollidePickUps();
-
+	LOG("HP: %.2f", app->scene->player.actualPlayerHp);
+	
 	return ret;
 }
 
@@ -146,10 +147,16 @@ void ModuleScore::CollidePickUps() {
 			
 			switch (current_pickUp->data->pickUpType) {
 			case PickUp::PickUpType::HP:	//HP effect
-				if(app->scene->player.actualPlayerHp < app->scene->player.playerHp)
+				if (app->scene->player.actualPlayerHp < app->scene->player.playerHp) {
 					app->scene->player.actualPlayerHp += current_pickUp->data->value;
-				if (app->scene->player.actualPlayerHp >= 50)
-					app->scene->player.actualPlayerHp == 50;
+					if (app->scene->player.actualPlayerHp >= 50) {
+						app->scene->player.actualPlayerHp = 50;
+					}
+				}
+				if (app->scene->player.actualPlayerHp >= 50) {
+					app->scene->player.actualPlayerHp = 50;
+					
+				}
 
 				app->audio->PlayFx(audio_potion);
 				pickUpList.del(current_pickUp);
