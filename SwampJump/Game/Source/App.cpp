@@ -146,12 +146,14 @@ bool App::Update()
 		if (ret == true)
 			ret = PreUpdate();
 
+		if (pause == false)
+		{
 		if (ret == true)
 			ret = DoUpdate();
-
+		
 		if (ret == true)
 			ret = PostUpdate();
-
+		}
 		FinishUpdate();
 
 
@@ -233,8 +235,6 @@ bool App::DoUpdate()
 	item = modules.start;
 	Module* pModule = NULL;
 
-	if (pause == false)
-	{
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{
 		pModule = item->data;
@@ -244,7 +244,6 @@ bool App::DoUpdate()
 		}
 
 		ret = item->data->Update(dt);
-	}
 	}
 
 	return ret;
