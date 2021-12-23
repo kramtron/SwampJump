@@ -104,6 +104,8 @@ public:
 	Scene_END* scene_end;
 	Map* map;
 
+	bool pause = false;
+
 private:
 
 	int argc;

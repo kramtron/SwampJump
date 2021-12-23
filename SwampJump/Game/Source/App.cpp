@@ -143,18 +143,18 @@ bool App::Update()
 	if(input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 
-	if(ret == true)
-		ret = PreUpdate();
+		if (ret == true)
+			ret = PreUpdate();
 
-	if(ret == true)
-		ret = DoUpdate();
+		if (ret == true)
+			ret = DoUpdate();
 
-	if(ret == true)
-		ret = PostUpdate();
+		if (ret == true)
+			ret = PostUpdate();
 
-	
+		FinishUpdate();
 
-	FinishUpdate();
+
 	return ret;
 }
 
@@ -233,6 +233,8 @@ bool App::DoUpdate()
 	item = modules.start;
 	Module* pModule = NULL;
 
+	if (pause == false)
+	{
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{
 		pModule = item->data;
@@ -242,6 +244,7 @@ bool App::DoUpdate()
 		}
 
 		ret = item->data->Update(dt);
+	}
 	}
 
 	return ret;
