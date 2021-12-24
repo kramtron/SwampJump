@@ -61,54 +61,59 @@ bool Scene_Intro::Update(float dt)
 	else if (x > zone2.x && x<(zone2.x + zone2.w) && y>zone2.y && y < (zone2.y + zone2.h)) {
 		opcion = 1;
 	}
-		//acceptar opció
+	switch (opcion)
+	{
 		//Play current saved game
-		if (opcion == 0)
+	case 0:
+		app->render->camera.y = 0;
+
+		app->render->DrawTexture(startPress, 0, 0, NULL, 1);
+
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 		{
-
-			app->render->camera.y = 0;
-
-			app->render->DrawTexture(startPress, 0,0, NULL, 1);
-			
-
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
-			{
-				active = false;
-				app->scene->active = true;
-			}
+			active = false;
+			app->scene->active = true;
 		}
+		break;
+
 		//Exit
-		else if (opcion == 1)
+	case 1:
+		app->render->camera.y = 0;
+
+		app->render->DrawTexture(exitPress, 0, 0, NULL, 1);
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 		{
-			app->render->camera.y = 0;
-
-			app->render->DrawTexture(exitPress, 0,0, NULL, 1);
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
-			{
-				ret = false;
-			}
+			ret = false;
 		}
+		break;
 		//New Game
-		else if (opcion == 2) {
-
-			app->render->camera.y = 0;
-			//Falta colocar el render
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
-				app->scene->player.playedBefore = false;
-				active = false;
-				app->scene->active = true;
-			}
-
+	case 2:
+		app->render->camera.y = 0;
+		//Falta colocar el render
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
+			app->scene->player.playedBefore = false;
+			active = false;
+			app->scene->active = true;
 		}
+		break;
+	case 3:
+		//Menu de ajustes
+		/**
+		app->win->fullscreen_window;
+		app->win->fullscreen;
+		break;*/
+	}
+
 
 		//seleccionar opció
 		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
-			if (opcion >= 0 && opcion < 3) {
+			if (opcion >= 0 && opcion < 4) {
 				opcion++;
 			}
 		}
 		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
-			if (opcion > 0 && opcion <= 3) {
+			if (opcion > 0 && opcion <= 4) {
 				opcion--;
 			}
 		}
