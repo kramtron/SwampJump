@@ -62,6 +62,7 @@ bool Scene_Intro::Update(float dt)
 		opcion = 1;
 	}
 		//acceptar opció
+		//Play current saved game
 		if (opcion == 0)
 		{
 
@@ -76,7 +77,7 @@ bool Scene_Intro::Update(float dt)
 				app->scene->active = true;
 			}
 		}
-
+		//Exit
 		else if (opcion == 1)
 		{
 			app->render->camera.y = 0;
@@ -87,12 +88,30 @@ bool Scene_Intro::Update(float dt)
 				ret = false;
 			}
 		}
+		//New Game
+		else if (opcion == 2) {
+
+			app->render->camera.y = 0;
+			//Falta colocar el render
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
+				app->scene->player.playedBefore = false;
+				active = false;
+				app->scene->active = true;
+			}
+
+		}
 
 		//seleccionar opció
-		if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && opcion != 0)
-			opcion--;
-		if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && opcion != 1)
-			opcion++;
+		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
+			if (opcion >= 0 && opcion < 3) {
+				opcion++;
+			}
+		}
+		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
+			if (opcion > 0 && opcion <= 3) {
+				opcion--;
+			}
+		}
 		
 
 	return ret;
