@@ -101,6 +101,7 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 		else
 		{
 			Mix_HaltMusic();
+			Mix_VolumeMusic(volume_mix_max_music / 2);
 		}
 
 		// this call blocks until fade out is done
@@ -172,7 +173,7 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	if(id > 0 && id <= fx.count())
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
-		Mix_Volume(-1, volume_mix_max /2);
+		Mix_Volume(-1, volume_mix_max_wav / 2);
 	}
 
 	return ret;

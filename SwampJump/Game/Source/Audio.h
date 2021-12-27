@@ -32,7 +32,8 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
-	int volume_mix_max = 128;
+	int volume_mix_max_wav = 128;
+	int volume_mix_max_music = 128;
 
 private:
 

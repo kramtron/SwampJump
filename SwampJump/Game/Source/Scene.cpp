@@ -166,16 +166,17 @@ bool Scene::PreUpdate()
 
 	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 	{
-		if (app->audio->volume_mix_max <= 0)
+		if (app->audio->volume_mix_max_wav <= 0)
 		{
-			app->audio->volume_mix_max = 128;
+			app->audio->volume_mix_max_wav = 128;
+			app->audio->volume_mix_max_music = 128;
 		}
 		else
 		{
-			app->audio->volume_mix_max -= 20;
+			app->audio->volume_mix_max_wav -= 20;
+			app->audio->volume_mix_max_music -= 20;
 		}
 	}
-	LOG("volumen: %d", app->audio->volume_mix_max);
 
 	return true;
 }
