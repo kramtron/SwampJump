@@ -201,10 +201,6 @@ bool Scene::Update(float dt)
 		obelisk5Up = true;
 		app->SaveGameRequest();
 	}
-	if (player.playedBefore&&startingGame) {
-		app->render->camera.x = player.x;
-		startingGame = false;
-	}
 	/*if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		player.actualPlayerHp = 0;
 	}*/
@@ -1074,6 +1070,10 @@ bool Scene::Update(float dt)
 	SDL_Rect cameraRect = { -app->render->camera.x + 300,app->render->camera.y + 200,app->render->camera.w - 600,app->render->camera.h - 100 };
 	app->render->DrawRectangle(cameraRect,0,0,255,20);
 	app->render->camera.y = -50;
+	if (startingGame && (player.x < cameraRect.x || player.x>cameraRect.x + cameraRect.w)) {
+		app->render->camera.x = player.x;
+		startingGame = false;
+	}
 
 	if (player.x<cameraRect.x) {
 		app->render->camera.x+=8*dt;
@@ -1081,7 +1081,8 @@ bool Scene::Update(float dt)
 	app->render->camera.y = -50;*/
 	}
 	else if (player.x+player.w > cameraRect.x+cameraRect.w) {
-		app->render->camera.x-=8*dt;
+		app->render->camera.x=(int)player.x-cameraRect.w;
+		LOG("True camera pos x: %d", (int)player.x-cameraRect.w);
 	}
 	/*if (player.y > cameraRect.y) {
 		app->render->camera.y -= 8 * dt;
