@@ -146,6 +146,8 @@ public:
 	bool insideObelisk5;
 	bool enterMenu=false;
 	
+
+	bool startingGame = true;
 	int menuPlace=1;
 
 	struct Mouse {

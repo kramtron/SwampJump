@@ -98,11 +98,12 @@ bool Scene_Intro::Update(float dt)
 		}
 		break;
 	case 3:
+
 		//Menu de ajustes
-		/**
+		/*
 		app->win->fullscreen_window;
-		app->win->fullscreen;
-		break;*/
+		app->win->fullscreen;*/
+		break;
 	}
 
 

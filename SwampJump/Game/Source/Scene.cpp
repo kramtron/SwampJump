@@ -186,6 +186,10 @@ bool Scene::Update(float dt)
 		obelisk5Up = true;
 		app->SaveGameRequest();
 	}
+	if (player.playedBefore&&startingGame) {
+		app->render->camera.x = player.x;
+		startingGame = false;
+	}
 	/*if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) {
 		player.actualPlayerHp = 0;
 	}*/
@@ -423,8 +427,8 @@ bool Scene::Update(float dt)
 	//RENDER IMATGES
 	
 	//camera i límits de camera
-	app->render->camera.x = 300 - player.x;
-	app->render->camera.y = -50;			//350 - player.y		//-50
+	/*app->render->camera.x = 300 - player.x;
+	app->render->camera.y = -50;*/	//350 - player.y		//-50
 
 	if (app->render->camera.x > 0) {
 		app->render->camera.x = 0;
@@ -1051,7 +1055,26 @@ bool Scene::Update(float dt)
 
 	}
 	
-	
+	//Control mejorado de la camara 
+	SDL_Rect cameraRect = { -app->render->camera.x + 300,app->render->camera.y + 200,app->render->camera.w - 600,app->render->camera.h - 100 };
+	app->render->DrawRectangle(cameraRect,0,0,255,20);
+	app->render->camera.y = -50;
+
+	if (player.x<cameraRect.x) {
+		app->render->camera.x+=8*dt;
+		/*app->render->camera.x = 300 - player.x;
+	app->render->camera.y = -50;*/
+	}
+	else if (player.x+player.w > cameraRect.x+cameraRect.w) {
+		app->render->camera.x-=8*dt;
+	}
+	/*if (player.y > cameraRect.y) {
+		app->render->camera.y -= 8 * dt;
+	}*/
+	/*else {
+		app->render->camera.y = -50;
+
+	}*/
 	//LOG("Player x: %f Player y: %f", player.x, player.y);
 	LOG("Player Hp: %.2f", player.actualPlayerHp);
 	LOG("Player Points: %.2f", player.actualPoints);
