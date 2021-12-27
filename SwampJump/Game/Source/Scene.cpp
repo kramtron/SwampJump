@@ -323,7 +323,7 @@ bool Scene::Update(float dt)
 		if (player.vy == 0) {
 			player.vy = 1;
 		}
-
+		
 		//Salt
 		if (tocant_terra) { //Si estic al terra
 			doblesalt = false;
@@ -438,8 +438,27 @@ bool Scene::Update(float dt)
 	//RENDER IMATGES
 	
 	//camera i límits de camera
-	/*app->render->camera.x = 300 - player.x;
-	app->render->camera.y = -50;*/	//350 - player.y		//-50
+	SDL_Rect cameraRect = { -app->render->camera.x + 450, app->render->camera.y + 350,app->render->camera.w - 1000,600 };
+	if (startingGame) {
+		app->render->camera.x = 500 - player.x;
+		app->render->camera.y = -50;
+		startingGame = false;
+	}
+	if (player.x < cameraRect.x) {
+		app->render->camera.x = 450 - player.x;
+	}
+	else if (player.x + player.w > cameraRect.x + cameraRect.w) {
+		app->render->camera.x = (450 + cameraRect.w) - (player.x + player.w);
+	}
+	if (player.y < cameraRect.y) {
+		app->render->camera.y = 260- player.y;
+
+	}
+	else if (player.y + player.h > cameraRect.y + cameraRect.h) {
+		app->render->camera.y = (260 + cameraRect.h) - (player.y+player.h);
+	}
+	
+		//350 - player.y		//-50
 
 	if (app->render->camera.x > 0) {
 		app->render->camera.x = 0;
@@ -1067,23 +1086,21 @@ bool Scene::Update(float dt)
 	}
 	
 	//Control mejorado de la camara 
-	SDL_Rect cameraRect = { -app->render->camera.x + 300,app->render->camera.y + 200,app->render->camera.w - 600,app->render->camera.h - 100 };
-	app->render->DrawRectangle(cameraRect,0,0,255,20);
-	app->render->camera.y = -50;
-	if (startingGame && (player.x < cameraRect.x || player.x>cameraRect.x + cameraRect.w)) {
+
+	/*if (startingGame && (player.x < cameraRect.x || player.x>cameraRect.x + cameraRect.w)) {
 		app->render->camera.x = player.x;
 		startingGame = false;
 	}
-
+	
 	if (player.x<cameraRect.x) {
 		app->render->camera.x+=8*dt;
 		/*app->render->camera.x = 300 - player.x;
-	app->render->camera.y = -50;*/
+	app->render->camera.y = -50;
 	}
 	else if (player.x+player.w > cameraRect.x+cameraRect.w) {
-		app->render->camera.x=(int)player.x-cameraRect.w;
+		app->render->camera.x = (int)player.x - cameraRect.w;
 		LOG("True camera pos x: %d", (int)player.x-cameraRect.w);
-	}
+	}*/
 	/*if (player.y > cameraRect.y) {
 		app->render->camera.y -= 8 * dt;
 	}*/
@@ -1319,6 +1336,9 @@ void Scene::DebugDraw()
 	app->map->DrawPath();
 
 	app->modulescore->DebugDraw();
+
+	SDL_Rect cameraRect = { -app->render->camera.x + 450,app->render->camera.y + 350,app->render->camera.w - 1000,600 };
+	app->render->DrawRectangle(cameraRect, 0, 0, 255, 40);
 }
 
 void Scene::DrawDecorations() {
