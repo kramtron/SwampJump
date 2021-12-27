@@ -163,6 +163,20 @@ bool Scene::Start()
 // Called each loop iteration
 bool Scene::PreUpdate()
 {
+
+	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	{
+		if (app->audio->volume_mix_max <= 0)
+		{
+			app->audio->volume_mix_max = 128;
+		}
+		else
+		{
+			app->audio->volume_mix_max -= 20;
+		}
+	}
+	LOG("volumen: %d", app->audio->volume_mix_max);
+
 	return true;
 }
 

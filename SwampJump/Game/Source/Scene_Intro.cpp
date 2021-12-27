@@ -44,17 +44,7 @@ bool Scene_Intro::Start()
 bool Scene_Intro::PreUpdate()
 {
 
-	/*if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-	{
-		if (app->audio->volume_mix_max == 0)
-		{
-			app->audio->volume_mix_max = 128;
-		}
-		else
-		{
-			app->audio->volume_mix_max -= 20;
-		}
-	}*/
+
 
 	return true;
 }
