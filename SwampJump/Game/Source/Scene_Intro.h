@@ -37,8 +37,13 @@ public:
 	int opcion = 0;
 private:
 
-	SDL_Texture* startPress;
-	SDL_Texture* exitPress;
+	//Menu
+	
+	SDL_Texture* mainMenuScreen = nullptr;
+	SDL_Texture* playSelected = nullptr;
+	SDL_Texture* newGameSelected = nullptr;
+	SDL_Texture* settingsSelected = nullptr;
+	SDL_Texture* exitSelected = nullptr;
 
 	SDL_Rect RectMenu1;
 	SDL_Rect RectMenu2;

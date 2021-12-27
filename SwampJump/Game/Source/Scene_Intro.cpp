@@ -33,8 +33,11 @@ bool Scene_Intro::Awake()
 bool Scene_Intro::Start()
 {
 	active = false;
-	startPress = app->tex->Load("Assets/Menu/gameMenuStart.png");
-	exitPress = app->tex->Load("Assets/Menu/gameMenuExit.png");
+	mainMenuScreen = app->tex->Load("Assets/NewGlobalMenu/MainMenuNoSelected.png");
+	playSelected = app->tex->Load("Assets/NewGlobalMenu/StartSelected.png");
+	newGameSelected = app->tex->Load("Assets/NewGlobalMenu/NewGameSelected.png");
+	settingsSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsSelected.png");
+	exitSelected = app->tex->Load("Assets/NewGlobalMenu/ExitSelected.png");
 
 
 	return true;
@@ -53,6 +56,7 @@ bool Scene_Intro::PreUpdate()
 bool Scene_Intro::Update(float dt)
 {
 	bool ret = true;
+	app->render->DrawTexture(mainMenuScreen, 0, 0,NULL,1);
 	int x, y, left = 1;
 	app->input->GetMousePosition(x, y);
 	SDL_Rect zone1 = { 26,801,197,78 };
@@ -70,7 +74,7 @@ bool Scene_Intro::Update(float dt)
 	case 0:
 		app->render->camera.y = 0;
 
-		app->render->DrawTexture(startPress, 0, 0, NULL, 1);
+		app->render->DrawTexture(playSelected, 0, 0, NULL, 1);
 
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
@@ -80,44 +84,49 @@ bool Scene_Intro::Update(float dt)
 		}
 		break;
 
-		//Exit
+		//NewGame
 	case 1:
 		app->render->camera.y = 0;
-
-		app->render->DrawTexture(exitPress, 0, 0, NULL, 1);
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
-		{
-			ret = false;
-		}
-		break;
-		//New Game
-	case 2:
-		app->render->camera.y = 0;
 		//Falta colocar el render
+		app->render->DrawTexture(newGameSelected, 0, 0, NULL, 1);
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
 			app->scene->player.playedBefore = false;
 			active = false;
 			app->scene->active = true;
 		}
+		
 		break;
-	case 3:
-
+		//Settings
+	case 2:
+		app->render->DrawTexture(settingsSelected, 0, 0, NULL, 1);
 		//Menu de ajustes
 		/*
 		app->win->fullscreen_window;
 		app->win->fullscreen;*/
 		break;
+		//Exit
+	case 3:
+		
+		
+		app->render->camera.y = 0;
+
+		app->render->DrawTexture(exitSelected, 0, 0, NULL, 1);
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+		{
+			ret = false;
+		}
+		break;
 	}
 
 
 		//seleccionar opció
-		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
-			if (opcion >= 0 && opcion < 4) {
+		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
+			if (opcion >= 0 && opcion < 3) {
 				opcion++;
 			}
 		}
-		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
-			if (opcion > 0 && opcion <= 4) {
+		if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
+			if (opcion > 0 && opcion <= 3) {
 				opcion--;
 			}
 		}

@@ -189,6 +189,8 @@ private:
 	SDL_Texture* bush3 = nullptr;
 	SDL_Texture* bush8 = nullptr;
 
+	
+
 	float obeliskFluctuationAngle = 0, obeliskFluctuation = 0;
 
 	float parallax1 = 0;
