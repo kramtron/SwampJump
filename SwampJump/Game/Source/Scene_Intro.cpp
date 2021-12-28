@@ -59,14 +59,23 @@ bool Scene_Intro::Update(float dt)
 	app->render->DrawTexture(mainMenuScreen, 0, 0,NULL,1);
 	int x, y, left = 1;
 	app->input->GetMousePosition(x, y);
-	SDL_Rect zone1 = { 26,801,197,78 };
-	SDL_Rect zone2 = { 1318,801,181,78 };
+	LOG("Mouse x: %d, Mouse y: %d",x,y);
+	SDL_Rect play = { 1053,170,231,70 };
+	SDL_Rect newGame = { 1053,315,465,70 };
+	SDL_Rect settings = { 1050,462,410,70 };
+	SDL_Rect exit = { 1050,610,215,70 };
 
-	if (x > zone1.x && x<(zone1.x + zone1.w) && y>zone1.y && y < (zone1.y + zone1.h)) {
+	if (x > play.x && x<(play.x + play.w) && y>play.y && y < (play.y + play.h)) {
 		opcion = 0;
 	}
-	else if (x > zone2.x && x<(zone2.x + zone2.w) && y>zone2.y && y < (zone2.y + zone2.h)) {
+	else if (x > newGame.x && x<(newGame.x + newGame.w) && y>newGame.y && y < (newGame.y + newGame.h)) {
 		opcion = 1;
+	}
+	else if (x > settings.x && x<(settings.x + settings.w) && y>settings.y && y < (settings.y + settings.h)) {
+		opcion = 2;
+	}
+	else if (x > exit.x && x<(exit.x + exit.w) && y>exit.y && y < (exit.y + exit.h)) {
+		opcion = 3;
 	}
 	switch (opcion)
 	{

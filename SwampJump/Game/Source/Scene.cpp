@@ -1112,7 +1112,7 @@ bool Scene::Update(float dt)
 	LOG("Player Hp: %.2f", player.actualPlayerHp);
 	LOG("Player Points: %.2f", player.actualPoints);
 	app->input->GetMousePosition(mouse.x, mouse.y);
-	LOG("Mouse x: %d \n Mouse y: %d", mouse.x, mouse.y);
+	LOG("Mouse x: %d Mouse y: %d", mouse.x, mouse.y);
 	return true;
 }
 
