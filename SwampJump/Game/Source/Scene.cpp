@@ -50,6 +50,9 @@ bool Scene::Start()
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
 	audio_tp = app->audio->LoadFx("Assets/audio/fx/TP.wav");
 
+	points = app->tex->Load("Assets/Textures/apple.png");
+
+	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
 	hpBar1 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion1.png");
 	hpBar2 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion3.png");
@@ -1054,6 +1057,17 @@ bool Scene::Update(float dt)
 
 		}
 	}
+
+
+	//Draw timer
+
+	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
+
+
+	//Draw points
+
+	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 3);
+
 	
 	//Hp draw
 

@@ -160,6 +160,9 @@ private:
 	uint audio_hurt;
 	uint audio_tp;
 
+	SDL_Texture* points = nullptr;
+	SDL_Texture* timer = nullptr;
+
 	SDL_Texture* hpBar1 = nullptr;
 	SDL_Texture* hpBar2 = nullptr;
 
