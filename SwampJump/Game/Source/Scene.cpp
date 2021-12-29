@@ -1063,15 +1063,15 @@ bool Scene::Update(float dt)
 	//Draw timer
 
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
+	FontDraw(app->scene->player.actualPoints, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
 
 	//Draw points
 
 	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 3);
-	FontDraw(app->scene->player.actualPoints, 3, -app->render->camera.x + 150, -app->render->camera.y + 30, 35, 1);
+	FontDraw(app->scene->player.actualPoints, 3, -app->render->camera.x + 150, -app->render->camera.y + 35, 35, 1);
 
 
-	
 	//Hp draw
 
 	app->render->DrawTexture(hpBar1, -app->render->camera.x, -app->render->camera.y);
