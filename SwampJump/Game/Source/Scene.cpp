@@ -51,7 +51,7 @@ bool Scene::Start()
 	audio_tp = app->audio->LoadFx("Assets/audio/fx/TP.wav");
 
 	points = app->tex->Load("Assets/Textures/apple.png");
-	nombres = app->tex->Load("Assets/numeros.png");
+	nombres = app->tex->Load("Assets/Textures/numeros.png");
 
 	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
@@ -1068,7 +1068,8 @@ bool Scene::Update(float dt)
 	//Draw points
 
 	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 3);
-	FontDraw(app->scene->player.actualPoints, 3, -app->render->camera.x + 60, -app->render->camera.y + 30, 16, 5);
+	FontDraw(app->scene->player.actualPoints, 3, -app->render->camera.x + 150, -app->render->camera.y + 30, 35, 1);
+
 
 	
 	//Hp draw
