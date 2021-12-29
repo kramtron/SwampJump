@@ -51,6 +51,7 @@ bool Scene::Start()
 	audio_tp = app->audio->LoadFx("Assets/audio/fx/TP.wav");
 
 	points = app->tex->Load("Assets/Textures/apple.png");
+	nombres = app->tex->Load("Assets/numeros.png");
 
 	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
@@ -1067,6 +1068,7 @@ bool Scene::Update(float dt)
 	//Draw points
 
 	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 3);
+	FontDraw(app->scene->player.actualPoints, 3, -app->render->camera.x + 60, -app->render->camera.y + 30, 16, 5);
 
 	
 	//Hp draw
@@ -1522,4 +1524,74 @@ void Scene::ObeliskMenuController() {
 
 	LOG("Menu Place: %d ", menuPlace);
 
+}
+
+
+void Scene::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
+	bool positive = true;
+	if (score < 0) {
+		positive = false;
+		score = -score;
+	}
+
+	int scoreCopia = score;
+	int scoreArray[10];	//max numbers
+	for (int j = 0; j < n; ++j) {
+		scoreArray[j] = scoreCopia % 10;
+		scoreCopia /= 10;
+	}
+
+	SDL_Rect rect0 = { 259, 65, 33, 40 };
+	SDL_Rect rect1 = { 25, 11, 20, 38 };
+	SDL_Rect rect2 = { 80, 10, 29, 40 };
+	SDL_Rect rect3 = { 141, 10, 30, 40 };
+	SDL_Rect rect4 = { 200, 11, 31, 38 };
+	SDL_Rect rect5 = { 261, 10, 29, 40 };
+	SDL_Rect rect6 = { 19, 65, 32, 40 };
+	SDL_Rect rect7 = { 82, 65, 26, 40 };
+	SDL_Rect rect8 = { 140, 65, 31, 40 };
+	SDL_Rect rect9 = { 199, 65, 32, 40 };
+	SDL_Rect rect_ = { 0, 113, 31, 11 };
+
+	for (int k = 0; k < n; ++k) {
+
+		switch (scoreArray[k]) {
+		case 0:
+			app->render->DrawTexture(nombres, posX, posY, &rect0, scale);
+			break;
+		case 1:
+			app->render->DrawTexture(nombres, posX, posY, &rect1, scale);
+			break;
+		case 2:
+			app->render->DrawTexture(nombres, posX, posY, &rect2, scale);
+			break;
+		case 3:
+			app->render->DrawTexture(nombres, posX, posY, &rect3, scale);
+			break;
+		case 4:
+			app->render->DrawTexture(nombres, posX, posY, &rect4, scale);
+			break;
+		case 5:
+			app->render->DrawTexture(nombres, posX, posY, &rect5, scale);
+			break;
+		case 6:
+			app->render->DrawTexture(nombres, posX, posY, &rect6, scale);
+			break;
+		case 7:
+			app->render->DrawTexture(nombres, posX, posY, &rect7, scale);
+			break;
+		case 8:
+			app->render->DrawTexture(nombres, posX, posY, &rect8, scale);
+			break;
+		case 9:
+			app->render->DrawTexture(nombres, posX, posY, &rect9, scale);
+			break;
+		}
+
+		posX -= separacio; //Separació entre nombres
+	}
+
+	if (!positive) {
+		app->render->DrawTexture(nombres, posX, posY + 10, &rect_, scale);
+	}
 }
