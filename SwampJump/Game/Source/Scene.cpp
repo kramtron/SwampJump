@@ -1063,8 +1063,8 @@ bool Scene::Update(float dt)
 	//Draw timer
 
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
-	FontDraw(app->scene->player.actualPoints, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
-
+	FontDraw(dt, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
+	LOG("deltaTime: ", dt);
 
 	//Draw points
 
