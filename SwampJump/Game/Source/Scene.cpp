@@ -198,6 +198,7 @@ bool Scene::Update(float dt)
 		player.y = player.startingY;
 		player.actualPlayerHp = player.playerHp;
 		player.playedBefore = true;
+		player.actualPoints = 0;
 		obelisk1Up = true;
 		obelisk2Up = true;
 		obelisk3Up = true;
