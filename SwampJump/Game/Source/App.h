@@ -21,6 +21,7 @@ class ModuleEnemy;
 class ModuleScore;
 class Scene;
 class Scene_END;
+class Scene_Win;
 class Map;
 
 class App
@@ -102,6 +103,7 @@ public:
 	Scene_Intro* scene_intro;
 	Scene* scene;
 	Scene_END* scene_end;
+	Scene_Win* scene_win;
 	Map* map;
 
 	bool pause = false;

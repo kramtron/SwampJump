@@ -21,6 +21,7 @@
     <ClCompile Include="Source\Scene_END.cpp" />
     <ClCompile Include="Source\ModuleEnemy.cpp" />
     <ClCompile Include="Source\ModuleScore.cpp" />
+    <ClCompile Include="Source\Scene_Win.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="Source\DynArray.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene_Win.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

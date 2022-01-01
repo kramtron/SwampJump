@@ -101,6 +101,7 @@
     <ClCompile Include="Source\Scene_END.cpp" />
     <ClCompile Include="Source\Scene_Intro.cpp" />
     <ClCompile Include="Source\Scene_Logo.cpp" />
+    <ClCompile Include="Source\Scene_Win.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Source\Scene_END.h" />
     <ClInclude Include="Source\Scene_Intro.h" />
     <ClInclude Include="Source\Scene_Logo.h" />
+    <ClInclude Include="Source\Scene_Win.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Window.h" />
     <ClInclude Include="Source\Defs.h" />

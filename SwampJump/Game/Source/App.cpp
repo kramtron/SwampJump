@@ -10,6 +10,7 @@
 #include "ModuleEnemy.h"
 #include "ModuleScore.h"
 #include "Scene_END.h"
+#include "Scene_Win.h"
 #include "Map.h"
 
 #include "Defs.h"
@@ -34,6 +35,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene_intro = new Scene_Intro();
 	scene = new Scene();
 	scene_end = new Scene_END();
+	scene_win = new Scene_Win();
 	map = new Map();
 
 	// Ordered for awake / Start / Update
@@ -48,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(modulescore);
 	AddModule(scene);
 	AddModule(scene_end);
+	AddModule(scene_win);
 	AddModule(map);
 
 	// Render last to swap buffer

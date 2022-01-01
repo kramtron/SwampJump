@@ -8,6 +8,7 @@
 #include "Scene_Intro.h"
 #include "Scene_Logo.h"
 #include "Scene_END.h"
+#include "Scene_Win.h"
 #include "Map.h"
 #include "Animation.h"
 #include "ModuleEnemy.h"
