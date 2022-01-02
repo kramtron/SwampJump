@@ -35,10 +35,20 @@ public:
 	void DebugDraw();
 
 	int opcion = 0;
+	float score = 0;
 private:
+
+	SDL_Texture* points = nullptr;
+	SDL_Texture* apples = nullptr;
+	SDL_Texture* timer = nullptr;
+	SDL_Texture* scoreTexture = nullptr;
+
+	SDL_Texture* nombres;
 
 	SDL_Texture* gameOverStart;
 	SDL_Texture* gameOverExit;
+
+	void FontDraw(int score, int n, int posX, int posY, int separacio, float scale);
 
 };
 
