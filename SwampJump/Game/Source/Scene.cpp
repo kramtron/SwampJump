@@ -190,8 +190,10 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	cont_frames++;
+	cont_frames = cont_frames* dt;
+	LOG("cont_frames: %.4f", cont_frames);
 
-	if (cont_frames * dt == 16)
+	if (cont_frames == 16)
 	{
 		reloj++;
 	}
