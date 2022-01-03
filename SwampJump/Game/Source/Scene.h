@@ -161,6 +161,9 @@ public:
 
 	SDL_Texture* nombres;
 
+	float cont_frames = 0;
+
+	int reloj = 0;
 
 private:
 	uint audio_hurt;

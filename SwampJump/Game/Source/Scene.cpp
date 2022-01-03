@@ -189,6 +189,12 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	cont_frames++;
+
+	if (cont_frames * dt == 16)
+	{
+		reloj++;
+	}
 
 	if (player.dead) {
 		player.actualPlayerHp = player.playerHp;
@@ -1065,8 +1071,8 @@ bool Scene::Update(float dt)
 	//Draw timer
 
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
-	FontDraw(dt, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
-	LOG("deltaTime: ", dt);
+	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
+	LOG("Reloj: ", reloj);
 
 	//Draw points
 

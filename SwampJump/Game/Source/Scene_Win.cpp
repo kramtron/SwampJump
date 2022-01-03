@@ -58,7 +58,7 @@ bool Scene_Win::Update(float dt)
 {
 	bool ret = true;
 
-	//Draw the apple
+	/*//Draw the apple
 	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 3);
 	FontDraw(app->scene->player.actualPoints, 3, -app->render->camera.x + 150, -app->render->camera.y + 35, 35, 1);
 
@@ -70,7 +70,7 @@ bool Scene_Win::Update(float dt)
 	//Draw the score
 
 	score += (app->scene->player.actualPoints * 33); //33 per posar algo
-	score -= (dt * 0.55); // 0.55 per posar un numero
+	score -= (dt * 0.55); // 0.55 per posar un numero*/
 	
 	//app->render->DrawTexture(scoreTexture, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
 	//FontDraw(score, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
@@ -137,7 +137,7 @@ void Scene_Win::DebugDraw()
 
 }
 
-void Scene::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
+void Scene_Win::FontDraw(int score, int n, int posX, int posY, int separacio, float scale) {
 	bool positive = true;
 	if (score < 0) {
 		positive = false;
