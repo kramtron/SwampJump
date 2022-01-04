@@ -262,7 +262,7 @@ bool Scene_Intro::Update(float dt)
 				{
 					musicCircle_X = app->input->mouseX - 40;
 				}
-				app->audio->volume_mix_max_music;
+				app->audio->volume_mix_max_music = ((musicCircle_X / 470) - 1.7446808851) * 128;
 
 				break;
 			case 1:
@@ -274,7 +274,8 @@ bool Scene_Intro::Update(float dt)
 				{
 					fxCircle_X = app->input->mouseX - 40;
 				}
-				app->audio->volume_mix_max_wav;
+
+				app->audio->volume_mix_max_wav = ((fxCircle_X / 470) -1.7446808851) * 128;
 
 				break;
 			}
