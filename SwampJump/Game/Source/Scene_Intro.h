@@ -62,6 +62,9 @@ private:
 	SDL_Texture* fxCircle = nullptr;
 	SDL_Texture* musicCircle = nullptr;
 
+	float fxCircle_X = 1000;
+	float musicCircle_X = 1000;
+
 
 	SDL_Rect RectMenu1;
 	SDL_Rect RectMenu2;

@@ -191,8 +191,6 @@ bool Scene::Update(float dt)
 {
 	cont_frames+=1*dt;
 
-	//LOG("cont_frames: %.4f", cont_frames);
-
 	if (cont_frames >= 32)//Se tiene que implementar con un clock
 	{
 		reloj++;

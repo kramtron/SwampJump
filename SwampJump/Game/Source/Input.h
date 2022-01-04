@@ -65,14 +65,15 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 
+	int mouseX;
+	int mouseY;
+
 private:
 	bool windowEvents[WE_COUNT];
 	KeyState*	keyboard;
 	KeyState mouseButtons[NUM_MOUSE_BUTTONS];
 	int	mouseMotionX;
 	int mouseMotionY;
-	int mouseX;
-	int mouseY;
 };
 
 #endif // __INPUT_H__

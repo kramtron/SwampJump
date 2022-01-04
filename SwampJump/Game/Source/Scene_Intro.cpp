@@ -195,12 +195,16 @@ bool Scene_Intro::Update(float dt)
 			app->render->DrawTexture(audioSelected, 0, 0, NULL, 1);
 			app->render->DrawTexture(fxBar, 0, 0, NULL, 1);
 			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxCircle, 1003, 393, NULL, 1);
+			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
+			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
+
 				audioMenu = true;;
 			}
+
+
 			break;
 		case 1:
 			app->render->DrawTexture(audioSelected, 0, 0, NULL, 1);
@@ -223,7 +227,8 @@ bool Scene_Intro::Update(float dt)
 			app->render->DrawTexture(audioSelected, 0, 0, NULL, 1);
 			app->render->DrawTexture(fxBar, 0, 0, NULL, 1);
 			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxCircle, 1003, 393, NULL, 1);
+			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
+			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
 
 			SDL_Rect musicZone = { 535,223,855,104 };
 			SDL_Rect fxZone = { 535,376,855,104 };
@@ -253,10 +258,24 @@ bool Scene_Intro::Update(float dt)
 			case 0:
 				app->render->DrawTexture(musicSelectedZone, 0, 0, NULL, 1);
 
+				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 244 && app->input->mouseY <= 304)
+				{
+					musicCircle_X = app->input->mouseX - 40;
+				}
+				app->audio->volume_mix_max_music;
+
 				break;
 			case 1:
 				
 				app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
+
+
+				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 400 && app->input->mouseY <= 460)
+				{
+					fxCircle_X = app->input->mouseX - 40;
+				}
+				app->audio->volume_mix_max_wav;
+
 				break;
 			}
 			
