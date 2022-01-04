@@ -290,6 +290,13 @@ bool Scene_Intro::Update(float dt)
 
 				app->audio->volume_mix_max_wav = ((fxCircle_X / 470) -1.7446808851) * 128;
 
+				if (app->audio->volume_mix_max_wav < 0)
+				{
+					app->audio->volume_mix_max_wav = 0;
+				}
+
+				LOG("fxSound: %0.4f", app->audio->volume_mix_max_wav);
+
 				break;
 			}
 			
