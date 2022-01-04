@@ -201,6 +201,10 @@ private:
 	SDL_Texture* bush3 = nullptr;
 	SDL_Texture* bush8 = nullptr;
 
+
+	SDL_Texture* defaultSettingsMenu = nullptr;
+
+
 	
 
 	float obeliskFluctuationAngle = 0, obeliskFluctuation = 0;

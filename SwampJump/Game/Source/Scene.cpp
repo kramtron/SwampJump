@@ -189,13 +189,14 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	cont_frames++;
-	cont_frames = cont_frames* dt;
-	LOG("cont_frames: %.4f", cont_frames);
+	cont_frames+=1*dt;
 
-	if (cont_frames == 16)
+	//LOG("cont_frames: %.4f", cont_frames);
+
+	if (cont_frames >= 32)//Se tiene que implementar con un clock
 	{
 		reloj++;
+		cont_frames = 0;
 	}
 
 	if (player.dead) {

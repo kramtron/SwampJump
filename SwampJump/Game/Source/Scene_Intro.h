@@ -35,6 +35,13 @@ public:
 	void DebugDraw();
 
 	int opcion = 0;
+
+	bool settingsMenu = false;
+	bool audioMenu = false;
+	bool screenMenu = false;
+	bool creditsMenu = false;
+	int settingsOption=0;
+	int volumeOption=1;
 private:
 
 	//Menu
@@ -44,6 +51,17 @@ private:
 	SDL_Texture* newGameSelected = nullptr;
 	SDL_Texture* settingsSelected = nullptr;
 	SDL_Texture* exitSelected = nullptr;
+
+	SDL_Texture* defaultSettingsMenu = nullptr;
+
+	SDL_Texture* audioSelected = nullptr;
+	SDL_Texture* fxBar = nullptr;
+	SDL_Texture* musicBar = nullptr;
+	SDL_Texture* fxSelectedZone = nullptr;
+	SDL_Texture* musicSelectedZone = nullptr;
+	SDL_Texture* fxCircle = nullptr;
+	SDL_Texture* musicCircle = nullptr;
+
 
 	SDL_Rect RectMenu1;
 	SDL_Rect RectMenu2;
