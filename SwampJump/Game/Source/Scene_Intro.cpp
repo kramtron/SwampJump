@@ -41,6 +41,8 @@ bool Scene_Intro::Start()
 
 	//Default settings Screen
 	defaultSettingsMenu = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/defaultSettingsMenu.png");
+	xCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircle.png");
+	xCircleSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircleSelected.png");
 
 	//AudioSettingsTextures
 	audioSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/audioSettings.png");
@@ -164,6 +166,7 @@ bool Scene_Intro::Update(float dt)
 	}
 	else if (settingsMenu) {
 		//seleccionar opció
+
 		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
 			if (opcion >= 0 && opcion < 2) {
 				settingsOption++;
@@ -188,7 +191,17 @@ bool Scene_Intro::Update(float dt)
 
 		}
 		app->render->DrawTexture(defaultSettingsMenu, 0, 0, NULL, 1);
+		app->render->DrawTexture(xCircle, 0, 0, NULL, 1);
+		SDL_Rect xCircleRect = {1293,138,71,67};
+		if (x > xCircleRect.x && x<(xCircleRect.x + xCircleRect.w) && y>xCircleRect.y && y < (xCircleRect.y + xCircleRect.h)) {
+			app->render->DrawTexture(xCircleSelected, 0, 0, NULL, 1);
 
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			{
+				settingsMenu = false;
+			}
+
+		}
 		switch (settingsOption)
 		{
 		case 0:

@@ -53,6 +53,8 @@ private:
 	SDL_Texture* exitSelected = nullptr;
 
 	SDL_Texture* defaultSettingsMenu = nullptr;
+	SDL_Texture* xCircle = nullptr;
+	SDL_Texture* xCircleSelected = nullptr;
 
 	SDL_Texture* audioSelected = nullptr;
 	SDL_Texture* fxBar = nullptr;
