@@ -132,6 +132,7 @@ bool Scene_Intro::Update(float dt)
 			app->render->DrawTexture(newGameSelected, 0, 0, NULL, 1);
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
 				app->scene->player.playedBefore = false;
+				app->scene->reloj = 0;
 				active = false;
 				app->scene->active = true;
 			}

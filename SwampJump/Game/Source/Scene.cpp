@@ -1073,7 +1073,6 @@ bool Scene::Update(float dt)
 
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
-	LOG("Reloj: ", reloj);
 
 	//Draw points
 
