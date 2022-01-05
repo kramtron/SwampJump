@@ -204,6 +204,8 @@ private:
 
 	SDL_Texture* defaultSettingsMenu = nullptr;
 
+	SDL_Texture* pauseMenu = nullptr;
+
 
 	
 

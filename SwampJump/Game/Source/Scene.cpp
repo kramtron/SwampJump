@@ -56,6 +56,8 @@ bool Scene::Start()
 
 	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
+	pauseMenu = app->tex->Load("Assets/Textures/defaultSettingsMenu.png");
+
 	hpBar1 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion1.png");
 	hpBar2 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion3.png");
 
@@ -169,15 +171,16 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 
-	if(app->pause == true){
-	SDL_Rect resume = { 500, 233, 100, 100 };
-	app->render->DrawRectangle(resume, 255, 255, 255);
-	if (app->input->mouseX > resume.x && app->input->mouseX < (resume.x + resume.w) && app->input->mouseY > resume.y && app->input->mouseY < (resume.y + resume.h))
-	{
-		app->render->DrawRectangle(resume, 0, 0, 0);
-		app->pause = false;
-	}
-	}
+	//if(app->pause == true){
+	//SDL_Rect resume = { 0, 0, 1, 1 };
+	//////app->render->DrawTexture(defaultSettingsMenu, 0, 0, NULL, 1);
+	//app->render->DrawRectangle(resume, 255, 255, 255);
+	//if (app->input->mouseX > resume.x && app->input->mouseX < (resume.x + resume.w) && app->input->mouseY > resume.y && app->input->mouseY < (resume.y + resume.h))
+	//{
+	//	app->render->DrawRectangle(resume, 0, 0, 0);
+	//	app->pause = false;
+	//}
+	//}
 
 	return true;
 }
@@ -185,6 +188,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	if (app->pause == false)
+	{
 	cont_frames+=1*dt;
 
 	if (cont_frames >= 32)//Se tiene que implementar con un clock
@@ -1070,6 +1075,10 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
+
+	//app->render->DrawTexture(pauseMenu, -app->render->camera.x + 20, -app->render->camera.y + 50);
+
+
 	//Draw points
 
 	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 3);
@@ -1134,6 +1143,9 @@ bool Scene::Update(float dt)
 	LOG("Player Points: %.2f", player.actualPoints);
 	app->input->GetMousePosition(mouse.x, mouse.y);
 	LOG("Mouse x: %d Mouse y: %d", mouse.x, mouse.y);
+}
+
+
 	return true;
 }
 

@@ -149,11 +149,10 @@ bool App::Update()
 		if (ret == true)
 			ret = PreUpdate();
 
-		if (pause == false)
-		{
+
 		if (ret == true)
 			ret = DoUpdate();
-		}		
+				
 		if (ret == true)
 			ret = PostUpdate();
 
