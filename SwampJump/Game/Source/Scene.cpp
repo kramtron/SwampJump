@@ -169,18 +169,14 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	if(app->pause == true){
+	SDL_Rect resume = { 500, 233, 100, 100 };
+	app->render->DrawRectangle(resume, 255, 255, 255);
+	if (app->input->mouseX > resume.x && app->input->mouseX < (resume.x + resume.w) && app->input->mouseY > resume.y && app->input->mouseY < (resume.y + resume.h))
 	{
-		if (app->audio->volume_mix_max_wav <= 0)
-		{
-			app->audio->volume_mix_max_wav = 128;
-			app->audio->volume_mix_max_music = 128;
-		}
-		else
-		{
-			app->audio->volume_mix_max_wav -= 20;
-			app->audio->volume_mix_max_music -= 20;
-		}
+		app->render->DrawRectangle(resume, 0, 0, 0);
+		app->pause = false;
+	}
 	}
 
 	return true;
@@ -1109,7 +1105,7 @@ bool Scene::Update(float dt)
 		 spawnTimer7 = 3000;
 
 	}
-	
+
 	//Control mejorado de la camara 
 
 	/*if (startingGame && (player.x < cameraRect.x || player.x>cameraRect.x + cameraRect.w)) {
