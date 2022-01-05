@@ -277,6 +277,13 @@ bool Scene_Intro::Update(float dt)
 				}
 				app->audio->volume_mix_max_music = ((musicCircle_X / 470) - 1.7446808851) * 128;
 
+				app->audio->volume_mix_max_music = app->audio->volume_mix_max_music + 10;
+
+				if (app->audio->volume_mix_max_music < 0)
+				{
+					app->audio->volume_mix_max_music = 0;
+				}
+
 				break;
 			case 1:
 				
@@ -289,6 +296,8 @@ bool Scene_Intro::Update(float dt)
 				}
 
 				app->audio->volume_mix_max_wav = ((fxCircle_X / 470) -1.7446808851) * 128;
+
+				app->audio->volume_mix_max_wav = app->audio->volume_mix_max_wav + 10;
 
 				if (app->audio->volume_mix_max_wav < 0)
 				{
