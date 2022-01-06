@@ -358,7 +358,7 @@ bool Scene_Intro::LoadGameConfig(pugi::xml_node& configAudio, pugi::xml_node& co
 	fxCircle_X = configAudio.child("volume").attribute("fx").as_float();
 
 	//Screen Load
-	app->win
+	app->win->fullscreen = configScreen.child("window").attribute("fullscreen").as_bool();
 	//Vsync Load
 
 }
