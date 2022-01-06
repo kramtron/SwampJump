@@ -360,5 +360,5 @@ bool Scene_Intro::LoadGameConfig(pugi::xml_node& configAudio, pugi::xml_node& co
 	//Screen Load
 	app->win->fullscreen = configScreen.child("window").attribute("fullscreen").as_bool();
 	//Vsync Load
-
+	return true;
 }
