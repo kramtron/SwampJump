@@ -45,7 +45,7 @@ public:
 
 	
 
-	bool loadPreConfig = false;
+	bool loadPreConfig = true;
 
 	bool LoadGameConfig(pugi::xml_node&, pugi::xml_node&, pugi::xml_node&);
 private:
