@@ -126,6 +126,7 @@ private:
 	pugi::xml_node configApp;
 	pugi::xml_node configAudio;
 	pugi::xml_node configScreen;
+	pugi::xml_node configVsync;
 
 
 	pugi::xml_document configSaveGame;

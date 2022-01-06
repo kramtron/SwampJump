@@ -351,3 +351,14 @@ void Scene_Intro::DebugDraw()
 {
 	
 }
+bool Scene_Intro::LoadGameConfig(pugi::xml_node& configAudio, pugi::xml_node& configScreen, pugi::xml_node& configVsync) {
+
+	//Audio Load
+	musicCircle_X = configAudio.child("volume").attribute("music").as_float();
+	fxCircle_X = configAudio.child("volume").attribute("fx").as_float();
+
+	//Screen Load
+	app->win
+	//Vsync Load
+
+}

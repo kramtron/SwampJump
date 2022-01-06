@@ -403,6 +403,8 @@ bool App::LoadGame()
 		if (app->scene_intro->loadPreConfig) {
 			configAudio = loadConfig.child("audio");
 			configScreen = loadConfig.child("window");
+			configVsync = loadConfig.child("renderer");
+			app->scene_intro->LoadGameConfig(configAudio, configScreen, configVsync);
 		}
 	}
 

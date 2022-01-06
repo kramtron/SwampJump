@@ -43,7 +43,11 @@ public:
 	int settingsOption=0;
 	int volumeOption=1;
 
+	
+
 	bool loadPreConfig = false;
+
+	bool LoadGameConfig(pugi::xml_node&, pugi::xml_node&, pugi::xml_node&);
 private:
 
 	//Menu
