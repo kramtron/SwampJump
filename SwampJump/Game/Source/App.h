@@ -120,8 +120,12 @@ private:
 	// L01: DONE 2: Create new variables from pugui namespace
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables
 	pugi::xml_document configFile;
+	pugi::xml_document configFile2;
 	pugi::xml_node config;
+	pugi::xml_node loadConfig;
 	pugi::xml_node configApp;
+	pugi::xml_node configAudio;
+	pugi::xml_node configScreen;
 
 
 	pugi::xml_document configSaveGame;

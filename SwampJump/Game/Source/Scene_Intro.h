@@ -42,6 +42,8 @@ public:
 	bool creditsMenu = false;
 	int settingsOption=0;
 	int volumeOption=1;
+
+	bool loadPreConfig = false;
 private:
 
 	//Menu

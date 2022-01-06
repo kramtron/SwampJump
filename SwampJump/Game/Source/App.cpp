@@ -339,6 +339,7 @@ bool App::LoadGame()
 	bool ret = false;
 
 	configSaveLoad = LoadGame_Data(configSaveGame);
+	loadConfig = LoadConfig(configFile2);
 
 	if (configSaveLoad.empty() == false) {
 
@@ -398,6 +399,10 @@ bool App::LoadGame()
 			app->modulescore->LoadHpData(configHpData);
 			app->modulescore->loadHpData = false;
 
+		}
+		if (app->scene_intro->loadPreConfig) {
+			configAudio = loadConfig.child("audio");
+			configScreen = loadConfig.child("window");
 		}
 	}
 

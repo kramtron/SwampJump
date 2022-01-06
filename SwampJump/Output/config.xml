@@ -17,6 +17,10 @@
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+	
+  <audio>
+	  <volume music="0" fx="0"/>
+	</audio>
 
   <!-- L03: Added maps folder as config option -->
   <map>
