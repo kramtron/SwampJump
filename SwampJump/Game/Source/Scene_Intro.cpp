@@ -362,3 +362,17 @@ bool Scene_Intro::LoadGameConfig(pugi::xml_node& configAudio, pugi::xml_node& co
 	//Vsync Load
 	return true;
 }
+
+bool Scene_Intro::SaveGameConfig(pugi::xml_node& configAudio, pugi::xml_node& configScreen, pugi::xml_node& configVsync) const{
+
+	//Audio Save
+	configAudio.child("volume").attribute("music").set_value(musicCircle_X);
+	configAudio.child("volume").attribute("fx").set_value(fxCircle_X);
+
+	//Screen Save
+	configScreen.child("window").attribute("fullscreen").set_value(app->win->fullscreen);
+
+	//Vsync Save
+
+	return true;
+}
