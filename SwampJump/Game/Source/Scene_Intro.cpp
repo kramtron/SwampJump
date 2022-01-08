@@ -39,7 +39,7 @@ bool Scene_Intro::Start()
 	settingsSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsSelected.png");
 	exitSelected = app->tex->Load("Assets/NewGlobalMenu/ExitSelected.png");
 
-	//Default settings Screen
+	//Default settings 
 	defaultSettingsMenu = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/defaultSettingsMenu.png");
 	xCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircle.png");
 	xCircleSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/xCircleSelected.png");
@@ -52,7 +52,10 @@ bool Scene_Intro::Start()
 	musicSelectedZone = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/mouseInMusicZone.png");
 	fxCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
 	musicCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
+	//Screen Menu Textures
+	screenSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/defaultScreenMenu.png");
 
+	//Credits Menu Textures
 
 	return true;
 }
@@ -203,6 +206,8 @@ bool Scene_Intro::Update(float dt)
 			}
 
 		}
+		SDL_Rect musicZone = { 535,223,855,104 };
+		SDL_Rect fxZone = { 535,376,855,104 };
 		switch (settingsOption)
 		{
 		case 0:
@@ -211,6 +216,71 @@ bool Scene_Intro::Update(float dt)
 			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
 			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
 			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
+
+		
+			if (x > fxZone.x && x<(fxZone.x + fxZone.w) && y>fxZone.y && y < (fxZone.y + fxZone.h)) {
+				volumeOption = 1;
+
+			}
+			else if (x > musicZone.x && x<(musicZone.x + musicZone.w) && y>musicZone.y && y < (musicZone.y + musicZone.h)) {
+				volumeOption = 0;
+
+			}
+			if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
+				if (opcion >= 0 && opcion < 1) {
+					volumeOption++;
+				}
+			}
+			if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
+				if (opcion > 0 && opcion <= 1) {
+					volumeOption--;
+
+				}
+			}
+
+			switch (volumeOption)
+			{
+			case 0:
+				app->render->DrawTexture(musicSelectedZone, 0, 0, NULL, 1);
+
+				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 244 && app->input->mouseY <= 304)
+				{
+					musicCircle_X = app->input->mouseX - 40;
+				}
+				app->audio->volume_mix_max_music = ((musicCircle_X / 470) - 1.7446808851) * 128;
+
+				app->audio->volume_mix_max_music = app->audio->volume_mix_max_music + 10;
+
+				if (app->audio->volume_mix_max_music < 0)
+				{
+					app->audio->volume_mix_max_music = 0;
+				}
+
+				break;
+			case 1:
+
+				app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
+
+
+				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 400 && app->input->mouseY <= 460)
+				{
+					fxCircle_X = app->input->mouseX - 40;
+				}
+
+				app->audio->volume_mix_max_wav = ((fxCircle_X / 470) - 1.7446808851) * 128;
+
+				app->audio->volume_mix_max_wav = app->audio->volume_mix_max_wav + 10;
+
+				if (app->audio->volume_mix_max_wav < 0)
+				{
+					app->audio->volume_mix_max_wav = 0;
+				}
+
+				LOG("fxSound: %0.4f", app->audio->volume_mix_max_wav);
+
+				break;
+			}
+
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
@@ -237,88 +307,7 @@ bool Scene_Intro::Update(float dt)
 			}
 			break;
 		}
-		if (audioMenu) {
-			app->render->DrawTexture(audioSelected, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
-			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
-
-			SDL_Rect musicZone = { 535,223,855,104 };
-			SDL_Rect fxZone = { 535,376,855,104 };
-			if (x > fxZone.x && x<(fxZone.x + fxZone.w) && y>fxZone.y && y < (fxZone.y + fxZone.h)) {
-				volumeOption = 1;
-
-			}
-			else if (x > musicZone.x && x<(musicZone.x + musicZone.w) && y>musicZone.y && y < (musicZone.y + musicZone.h)) {
-				volumeOption = 0;
-
-			}
-			if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
-				if (opcion >= 0 && opcion < 1) {
-					volumeOption++;
-				}
-			}
-			if ((app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)) {
-				if (opcion > 0 && opcion <= 1) {
-					volumeOption--;
-
-				}
-			}
-			
-
-			switch (volumeOption)
-			{
-			case 0:
-				app->render->DrawTexture(musicSelectedZone, 0, 0, NULL, 1);
-
-				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 244 && app->input->mouseY <= 304)
-				{
-					musicCircle_X = app->input->mouseX - 40;
-				}
-				app->audio->volume_mix_max_music = ((musicCircle_X / 470) - 1.7446808851) * 128;
-
-				app->audio->volume_mix_max_music = app->audio->volume_mix_max_music + 10;
-
-				if (app->audio->volume_mix_max_music < 0)
-				{
-					app->audio->volume_mix_max_music = 0;
-				}
-
-				break;
-			case 1:
-				
-				app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
-
-
-				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 400 && app->input->mouseY <= 460)
-				{
-					fxCircle_X = app->input->mouseX - 40;
-				}
-
-				app->audio->volume_mix_max_wav = ((fxCircle_X / 470) -1.7446808851) * 128;
-
-				app->audio->volume_mix_max_wav = app->audio->volume_mix_max_wav + 10;
-
-				if (app->audio->volume_mix_max_wav < 0)
-				{
-					app->audio->volume_mix_max_wav = 0;
-				}
-
-				LOG("fxSound: %0.4f", app->audio->volume_mix_max_wav);
-
-				break;
-			}
-			
-
-			
-		}
-		else if (screenMenu) {
-
-		}
-		else if (creditsMenu) {
-
-		}
+		
 	}
 
 		

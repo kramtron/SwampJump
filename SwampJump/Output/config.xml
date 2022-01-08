@@ -19,7 +19,7 @@
   </window>
 	
   <audio>
-	  <volume music="0" fx="0"/>
+	  <volume music="790" fx="790"/>
 	</audio>
 
   <!-- L03: Added maps folder as config option -->

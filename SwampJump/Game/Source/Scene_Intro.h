@@ -65,6 +65,8 @@ private:
 	SDL_Texture* xCircle = nullptr;
 	SDL_Texture* xCircleSelected = nullptr;
 
+
+	//Audio Menu
 	SDL_Texture* audioSelected = nullptr;
 	SDL_Texture* fxBar = nullptr;
 	SDL_Texture* musicBar = nullptr;
@@ -72,6 +74,17 @@ private:
 	SDL_Texture* musicSelectedZone = nullptr;
 	SDL_Texture* fxCircle = nullptr;
 	SDL_Texture* musicCircle = nullptr;
+
+	//Screen Menu
+	SDL_Texture* screenSelected = nullptr;
+	SDL_Texture* fullScreenTrue = nullptr;
+	SDL_Texture* vSyncTrue = nullptr;
+	SDL_Texture* fullScreenSelected = nullptr;
+	SDL_Texture* vSyncSelected = nullptr;
+
+	//Credits Menu
+	SDL_Texture* creditsSelected = nullptr;
+
 
 	float fxCircle_X = 1000;
 	float musicCircle_X = 1000;
