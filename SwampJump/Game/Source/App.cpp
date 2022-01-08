@@ -418,6 +418,7 @@ bool App::SaveGame()
 	bool ret = true;
 
 	configSaveLoad = LoadGame_Data(configSaveGame);
+	loadConfig = LoadConfig(configFile2);
 
 	if (configSaveLoad.empty() == false) {
 		ret = true;
@@ -429,6 +430,10 @@ bool App::SaveGame()
 		configSaveGame.save_file(SAVE_STATE_FILENAME);
 
 
+	}
+	if (loadConfig.empty() == false) {
+		app->scene_intro->SaveGameConfig(configAudio, configScreen, configVsync);
+		configFile2.save_file(CONFIG_FILENAME);
 	}
 	saveGameRequested = false;
 

@@ -1,29 +1,23 @@
-<!-- Config file for the game -->
-<!-- L01: DONE 1: Create configuration file-->
+<?xml version="1.0"?>
 <config>
-  <app>
-    <title>Swamp Jump</title>
-    <organization>UPC</organization>
-  </app>
-
-  <renderer>
-    <vsync value="false"/>
-  </renderer>
-
-  <window>
-    <resolution width="1600" height="900" scale="1"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-  </window>
-	
-  <audio>
-	  <volume music="790" fx="790"/>
+	<app>
+		<title>Swamp Jump</title>
+		<organization>UPC</organization>
+	</app>
+	<renderer>
+		<vsync value="false" />
+	</renderer>
+	<window>
+		<resolution width="1600" height="900" scale="1" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<audio>
+		<volume music="790" fx="1250" />
 	</audio>
-
-  <!-- L03: Added maps folder as config option -->
-  <map>
-    <folder>Assets/maps/</folder>
-  </map>
+	<map>
+		<folder>Assets/maps/</folder>
+	</map>
 </config>

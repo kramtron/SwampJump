@@ -54,8 +54,14 @@ bool Scene_Intro::Start()
 	musicCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
 	//Screen Menu Textures
 	screenSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/defaultScreenMenu.png");
+	fullScreenTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/fullScreenTrue.png");
+	vSyncTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/vSyncTrue.png");
+	fullScreenSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/fullScreenSelected.png");
+	vSyncSelected= app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/vSyncSelected.png");
 
 	//Credits Menu Textures
+	creditsSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Credits/credits.png");
+
 
 	return true;
 }
@@ -203,11 +209,17 @@ bool Scene_Intro::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 				settingsMenu = false;
+				app->SaveGameRequest();
 			}
 
 		}
 		SDL_Rect musicZone = { 535,223,855,104 };
 		SDL_Rect fxZone = { 535,376,855,104 };
+		SDL_Rect fullScreenZone = { 1016,202,78,78 };
+		SDL_Rect vSyncZone = { 1016,372,78,78 };
+		SDL_Rect fullScreenMouseZone = { 529,195,861,97 };
+		SDL_Rect vSyncMouseZone = { 529,361,861,97};
+		Uint32 flags = SDL_WINDOW_SHOWN;
 		switch (settingsOption)
 		{
 		case 0:
@@ -291,15 +303,44 @@ bool Scene_Intro::Update(float dt)
 
 			break;
 		case 1:
-			app->render->DrawTexture(audioSelected, 0, 0, NULL, 1);
-
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+			app->render->DrawTexture(screenSelected, 0, 0, NULL, 1);
+			if (app->win->fullscreen) {
+				app->render->DrawTexture(fullScreenTrue, 0, 0, NULL, 1);
+			}
+			if (x > fullScreenMouseZone.x && x<(fullScreenMouseZone.x + fullScreenMouseZone.w) && y>fullScreenMouseZone.y && y < (fullScreenMouseZone.y + fullScreenMouseZone.h)) {
+				screenOption = 0;
+			}
+			else if (x > vSyncMouseZone.x && x<(vSyncMouseZone.x + vSyncMouseZone.w) && y>vSyncMouseZone.y && y < (vSyncMouseZone.y + vSyncMouseZone.h)) {
+				screenOption = 1;
+			}
+			switch (screenOption)
 			{
-				audioMenu = true;;
+			case 0:
+				if (x > fullScreenZone.x && x<(fullScreenZone.x + fullScreenZone.w) && y>fullScreenZone.y && y < (fullScreenZone.y + fullScreenZone.h)) {
+					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+					{
+						if (app->win->fullscreen) {
+							app->win->fullscreen = false;
+						}
+						else if (!app->win->fullscreen) {
+							app->win->fullscreen = true;
+						}
+						app->SaveGameRequest();
+						loadPreConfig = true;
+					}
+				}
+
+				
+				break;
+			case 1:
+				if (x > fullScreenZone.x && x<(fullScreenZone.x + fullScreenZone.w) && y>fullScreenZone.y && y < (fullScreenZone.y + fullScreenZone.h)) {
+				
+				}
+				break;
 			}
 			break;
 		case 2:
-			app->render->DrawTexture(audioSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(creditsSelected, 0, 0, NULL, 1);
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{

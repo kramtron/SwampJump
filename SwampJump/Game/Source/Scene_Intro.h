@@ -41,7 +41,9 @@ public:
 	bool screenMenu = false;
 	bool creditsMenu = false;
 	int settingsOption=0;
-	int volumeOption=1;
+	int volumeOption = 1;
+	int screenOption=1;
+
 
 	
 
