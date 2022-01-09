@@ -92,7 +92,7 @@ bool Scene_Intro::Update(float dt)
 	SDL_Rect audio = { 272,156,164,49 };
 	SDL_Rect screen = { 272,267,197,49 };
 	SDL_Rect credits = { 272,375,218,49 };
-
+	
 	if (!settingsMenu) {
 		//seleccionar opció
 		if ((app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)) {
@@ -210,6 +210,8 @@ bool Scene_Intro::Update(float dt)
 			{
 				settingsMenu = false;
 				app->SaveGameRequest();
+				loadPreConfig = true;
+				app->LoadGameRequest();
 			}
 
 		}
@@ -219,7 +221,7 @@ bool Scene_Intro::Update(float dt)
 		SDL_Rect vSyncZone = { 1016,372,78,78 };
 		SDL_Rect fullScreenMouseZone = { 529,195,861,97 };
 		SDL_Rect vSyncMouseZone = { 529,361,861,97};
-		Uint32 flags = SDL_WINDOW_SHOWN;
+		
 		switch (settingsOption)
 		{
 		case 0:
@@ -326,14 +328,16 @@ bool Scene_Intro::Update(float dt)
 							app->win->fullscreen = true;
 						}
 						app->SaveGameRequest();
-						loadPreConfig = true;
+
+						
+						
 					}
 				}
 
 				
 				break;
 			case 1:
-				if (x > fullScreenZone.x && x<(fullScreenZone.x + fullScreenZone.w) && y>fullScreenZone.y && y < (fullScreenZone.y + fullScreenZone.h)) {
+				if (x > vSyncZone.x && x<(vSyncZone.x + vSyncZone.w) && y>vSyncZone.y && y < (vSyncZone.y + vSyncZone.h)) {
 				
 				}
 				break;
@@ -388,19 +392,20 @@ bool Scene_Intro::LoadGameConfig(pugi::xml_node& configAudio, pugi::xml_node& co
 	fxCircle_X = configAudio.child("volume").attribute("fx").as_float();
 
 	//Screen Load
-	app->win->fullscreen = configScreen.child("window").attribute("fullscreen").as_bool();
+	app->win->fullscreen = configScreen.child("fullscreen").attribute("value").as_bool();
 	//Vsync Load
 	return true;
 }
 
 bool Scene_Intro::SaveGameConfig(pugi::xml_node& configAudio, pugi::xml_node& configScreen, pugi::xml_node& configVsync) const{
-
+	pugi::xml_node audioConfig = configAudio;
 	//Audio Save
 	configAudio.child("volume").attribute("music").set_value(musicCircle_X);
 	configAudio.child("volume").attribute("fx").set_value(fxCircle_X);
+	pugi::xml_node screenConfig = configScreen;
 
 	//Screen Save
-	configScreen.child("window").attribute("fullscreen").set_value(app->win->fullscreen);
+	configScreen.child("fullscreen").attribute("value").set_value(app->win->fullscreen);
 
 	//Vsync Save
 

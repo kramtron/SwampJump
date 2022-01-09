@@ -372,7 +372,7 @@ bool App::LoadGame()
 		if (app->scene->loadPlayerData) {
 
 			configPlayerData = configSaveLoad.child("player");
-			app->scene->LoadPlayerData(configPlayerData); 
+			app->scene->LoadPlayerData(configPlayerData);
 			app->scene->loadPlayerData = false;
 
 		}
@@ -400,13 +400,15 @@ bool App::LoadGame()
 			app->modulescore->loadHpData = false;
 
 		}
+	}
+	if(loadConfig.empty()==false)
 		if (app->scene_intro->loadPreConfig) {
 			configAudio = loadConfig.child("audio");
 			configScreen = loadConfig.child("window");
 			configVsync = loadConfig.child("renderer");
 			app->scene_intro->LoadGameConfig(configAudio, configScreen, configVsync);
 		}
-	}
+	
 
 
 	return ret;
