@@ -236,7 +236,7 @@ bool ModuleEnemy::Update(float dt)
 								&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
 								storage1->data->currentAnimation = &meleEnemy_AttackRAnim;
 
-								if (!app->scene->player.playerInmortal) {
+								if (!app->scene->player.playerInmortal && app->pause == false) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
 									app->audio->PlayFx(audio_hurt);
 								}
@@ -271,7 +271,7 @@ bool ModuleEnemy::Update(float dt)
 								storage1->data->currentAnimation = &meleEnemy_AttackLAnim;
 
 								storage1->data->meleRightAtackBool = false;
-								if (!app->scene->player.playerInmortal) {
+								if (!app->scene->player.playerInmortal && app->pause == false) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;
 									app->audio->PlayFx(audio_hurt);
 								}
@@ -421,7 +421,7 @@ bool ModuleEnemy::Update(float dt)
 								&& meleRightAtackRect.y < (app->scene->player.y + app->scene->player.h)) {
 								storage1->data->currentAnimation = &flyingEnemy_AttackRAnim;
 
-								if (!app->scene->player.playerInmortal) {
+								if (!app->scene->player.playerInmortal && app->pause == false) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;//Quita vida al jugador
 									app->audio->PlayFx(audio_hurt);
 								}
@@ -456,7 +456,7 @@ bool ModuleEnemy::Update(float dt)
 								storage1->data->currentAnimation = &flyingEnemy_AttackLAnim;
 
 								storage1->data->meleRightAtackBool = false;
-								if (!app->scene->player.playerInmortal) {
+								if (!app->scene->player.playerInmortal && app->pause == false) {
 									app->scene->player.actualPlayerHp -= storage1->data->damage;
 									app->audio->PlayFx(audio_hurt);
 								}

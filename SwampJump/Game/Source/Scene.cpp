@@ -171,16 +171,6 @@ bool Scene::Start()
 bool Scene::PreUpdate()
 {
 
-	//if(app->pause == true){
-	//SDL_Rect resume = { 0, 0, 1, 1 };
-	//////app->render->DrawTexture(defaultSettingsMenu, 0, 0, NULL, 1);
-	//app->render->DrawRectangle(resume, 255, 255, 255);
-	//if (app->input->mouseX > resume.x && app->input->mouseX < (resume.x + resume.w) && app->input->mouseY > resume.y && app->input->mouseY < (resume.y + resume.h))
-	//{
-	//	app->render->DrawRectangle(resume, 0, 0, 0);
-	//	app->pause = false;
-	//}
-	//}
 
 	return true;
 }
@@ -188,11 +178,9 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if (app->pause == false)
-	{
 	cont_frames+=1*dt;
 
-	if (cont_frames >= 32)//Se tiene que implementar con un clock
+	if (cont_frames >= 32 && app->pause == false)//Se tiene que implementar con un clock
 	{
 		reloj++;
 		cont_frames = 0;
@@ -255,7 +243,7 @@ bool Scene::Update(float dt)
 		app->SaveGameRequest();//Guardar Datos
 	}
 	
-	if (godMode) {
+	if (godMode && app->pause == false) {
 		LOG("GODMODE ON");
 		//PLAYER MOVE
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -291,7 +279,7 @@ bool Scene::Update(float dt)
 		}
 
 	}
-	else if (!godMode) {
+	else if (!godMode && app->pause == false) {
 		//LOG("GODMODE OFF");
 		LOG("DtScene: %.4f", dt);
 		//PLAYER MOVE
@@ -406,7 +394,7 @@ bool Scene::Update(float dt)
 	}
 	
 	//GESTOR ANIMACIONS
-	if (tocant_terra && (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
+	if (tocant_terra && (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->pause == false || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->pause == false)) {
 		if (sentit) { //walking right
 			if (currentFrogAnimation != &walkRAnim) {
 				walkRAnim.Reset();
@@ -738,7 +726,7 @@ bool Scene::Update(float dt)
 
 	//Disparo player
 	
-	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN && !boolDisparo) {
+	if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN && !boolDisparo && app->pause == false) {
 		boolDisparo = true;
 		if(sentit){
 			//disparo.x = player.x + 68;
@@ -1143,8 +1131,6 @@ bool Scene::Update(float dt)
 	LOG("Player Points: %.2f", player.actualPoints);
 	app->input->GetMousePosition(mouse.x, mouse.y);
 	LOG("Mouse x: %d Mouse y: %d", mouse.x, mouse.y);
-}
-
 
 	return true;
 }
@@ -1393,11 +1379,11 @@ void Scene::ObeliskMenuController() {
 	//Zona para controlar el menu de los obeliscos que se usaran para que el jugador se transporte entre ellos
 	//Primero imprimir sprite de pulsar E para entrar
 
-	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && app->pause == false) {
 		enterMenu = !enterMenu;
 	}
 	
-	if (enterMenu) {
+	if (enterMenu && app->pause == false) {
 		app->render->DrawTexture(normalMenuZone, -app->render->camera.x, -app->render->camera.y, NULL, 1, 1);
 
 		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
