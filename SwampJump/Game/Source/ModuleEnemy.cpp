@@ -192,7 +192,7 @@ bool ModuleEnemy::Update(float dt)
 
 
 		//Mele Enemic Move
-		if (storage1->data->enemicType == 0) {
+		if (storage1->data->enemicType == 0 && app->pause == false) {
 			//meleEnemicMove(storage1, dt);
 
 			SDL_Rect enemicMeleSensorRec = { storage1->data->x - 250,storage1->data->y - 130,500,300 };
@@ -326,7 +326,7 @@ bool ModuleEnemy::Update(float dt)
 			}
 		}
 		//Fly enemic Move
-		if (storage1->data->enemicType == 1) {
+		if (storage1->data->enemicType == 1 && app->pause == false) {
 			if (!storage1->data->enemicFlySensor) {
 				storage1->data->y += sin(angle);//Falta poner el dt
 				//Path predeterminado
@@ -534,6 +534,8 @@ bool ModuleEnemy::Update(float dt)
 		}
 	}
 
+	if(app->pause == false)
+	{ 
 	flyingEnemy_AttackLAnim.Update();
 	flyingEnemy_AttackRAnim.Update();
 	flyingEnemy_IdleLAnim.Update();
@@ -545,6 +547,7 @@ bool ModuleEnemy::Update(float dt)
 	meleEnemy_AttackRAnim.Update();
 	meleEnemy_HurtLAnim.Update();
 	meleEnemy_HurtRAnim.Update();
+	}
 
 	return ret;
 }

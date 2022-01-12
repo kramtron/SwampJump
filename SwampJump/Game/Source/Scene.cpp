@@ -408,7 +408,7 @@ bool Scene::Update(float dt)
 			}
 		}
 	}
-	else if (tocant_terra) {
+	else if (tocant_terra && app->pause == false) {
 		if (sentit) { //idle right
 			if (currentFrogAnimation != &idleRAnim) {
 				idleRAnim.Reset();
@@ -424,13 +424,13 @@ bool Scene::Update(float dt)
 	}
 	else {//saltant
 		if (sentit) {
-			if (currentFrogAnimation != &jumpRAnim) {
+			if (currentFrogAnimation != &jumpRAnim && app->pause == false) {
 				//only resets in double jump
 				currentFrogAnimation = &jumpRAnim;
 			}
 		}
 		else {
-			if (currentFrogAnimation != &jumpLAnim) {
+			if (currentFrogAnimation != &jumpLAnim && app->pause == false) {
 				//only resets in double jump
 				currentFrogAnimation = &jumpLAnim;
 			}
@@ -556,7 +556,10 @@ bool Scene::Update(float dt)
 	}
 
 	//ObeliskDraw
+	if(app->pause == false)
 	obeliskFluctuationAngle += 0.03f*dt;
+
+
 	if (obeliskFluctuationAngle >= 360)
 		obeliskFluctuationAngle = 1;
 	obeliskFluctuation = (sin(obeliskFluctuationAngle) * 15.0f);
