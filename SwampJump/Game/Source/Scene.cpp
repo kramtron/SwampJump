@@ -56,7 +56,7 @@ bool Scene::Start()
 
 	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
-	pauseMenu = app->tex->Load("Assets/Textures/defaultSettingsMenu.png");
+	pauseMenu = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/defaultSettingsMenu.png");
 
 	hpBar1 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion1.png");
 	hpBar2 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion3.png");
@@ -1066,8 +1066,8 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
-
-	//app->render->DrawTexture(pauseMenu, -app->render->camera.x + 20, -app->render->camera.y + 50);
+	if(app->pause == true)
+	app->render->DrawTexture(pauseMenu, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
 
 
 	//Draw points
@@ -1143,8 +1143,8 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	/*if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;*/
 
 	if (debug)
 		DebugDraw();
