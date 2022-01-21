@@ -57,6 +57,7 @@ bool Scene::Start()
 	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
 	pauseMenu = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/defaultSettingsMenu.png");
+	pauseExit = app->tex->Load("Assets/NewGlobalMenu/ExitSelected.png");
 
 	hpBar1 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion1.png");
 	hpBar2 = app->tex->Load("Assets/Textures/MenuInGame/barraDeVidaSeccion3.png");
@@ -178,6 +179,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	bool ret = true;
 	cont_frames+=1*dt;
 
 	if (cont_frames >= 32 && app->pause == false)//Se tiene que implementar con un clock
@@ -1067,8 +1069,41 @@ bool Scene::Update(float dt)
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
 	if(app->pause == true)
-	app->render->DrawTexture(pauseMenu, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+	{ 
+		app->render->DrawTexture(pauseMenu, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+		//app->render->DrawTexture(pauseExit, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+		
+		//Resume button
+		app->render->DrawRectangle({ 300,200,100,50 }, 255, 255, 255);
+		if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 150 && mouse.y < 200))
+		{
+			if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
+				app->pause = !app->pause;
+		}
 
+
+
+
+		//Back to title button.
+		app->render->DrawRectangle({ 300,450,100,50 }, 255, 255, 255);
+		if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 400 && mouse.y < 450))
+		{
+			if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
+			{
+				app->pause = false;
+				active = false;
+				app->scene_intro->active = true;
+			}
+		}
+
+		//Exit button
+		app->render->DrawRectangle({ 300,550,100,50 }, 255, 255, 255);
+		if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 500 && mouse.y < 550))
+		{
+			if(app->input->GetMouseButtonDown(1) == KEY_DOWN)
+				ret = false;
+		}
+	}
 
 	//Draw points
 
@@ -1135,7 +1170,7 @@ bool Scene::Update(float dt)
 	app->input->GetMousePosition(mouse.x, mouse.y);
 	LOG("Mouse x: %d Mouse y: %d", mouse.x, mouse.y);
 
-	return true;
+	return ret;
 }
 
 // Called each loop iteration
