@@ -207,8 +207,16 @@ private:
 	SDL_Texture* pauseMenu = nullptr;
 	SDL_Texture* pauseExit = nullptr;
 
-
+	//Audio Menu
+	SDL_Texture* fxBar = nullptr;
+	SDL_Texture* musicBar = nullptr;
+	SDL_Texture* fxSelectedZone = nullptr;
+	SDL_Texture* musicSelectedZone = nullptr;
+	SDL_Texture* fxCircle = nullptr;
+	SDL_Texture* musicCircle = nullptr;
 	
+	float fxCircle_X = 1000;
+	float musicCircle_X = 1000;
 
 	float obeliskFluctuationAngle = 0, obeliskFluctuation = 0;
 

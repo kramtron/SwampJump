@@ -89,6 +89,13 @@ bool Scene::Start()
 	bush3 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/3.png");
 	bush8 = app->tex->Load("Assets/TilesAssets/assets2dPlatformer/3 Objects/Bushes/8.png");
 
+	//Auido pause
+	fxBar = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/fxBar.png");
+	musicBar = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/musicBar.png");
+	fxSelectedZone = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/mouseInFxZone.png");
+	musicSelectedZone = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/mouseInMusicZone.png");
+	fxCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
+	musicCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
 
 	
 	app->render->camera.x = 0;
@@ -1068,41 +1075,78 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
+
 	if(app->pause == true)
-	{ 
-		app->render->DrawTexture(pauseMenu, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
-		//app->render->DrawTexture(pauseExit, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+	{ 	
+			app->render->DrawTexture(pauseMenu, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+			//app->render->DrawTexture(pauseExit, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
 		
-		//Resume button
-		app->render->DrawRectangle({ 300,200,100,50 }, 255, 255, 255);
-		if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 150 && mouse.y < 200))
-		{
-			if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
-				app->pause = !app->pause;
-		}
-
-
-
-
-		//Back to title button.
-		app->render->DrawRectangle({ 300,450,100,50 }, 255, 255, 255);
-		if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 400 && mouse.y < 450))
-		{
-			if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
+			//Resume button
+			app->render->DrawRectangle({ 300,200,100,50 }, 255, 255, 255);
+			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 150 && mouse.y < 200))
 			{
-				app->pause = false;
-				active = false;
-				app->scene_intro->active = true;
+				if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
+					app->pause = !app->pause;
 			}
-		}
 
-		//Exit button
-		app->render->DrawRectangle({ 300,550,100,50 }, 255, 255, 255);
-		if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 500 && mouse.y < 550))
-		{
-			if(app->input->GetMouseButtonDown(1) == KEY_DOWN)
-				ret = false;
-		}
+			//Back to title button.
+			app->render->DrawRectangle({ 300,325,100,50 }, 255, 255, 255);
+			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 275 && mouse.y < 325))
+			{
+				if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
+				{
+					app->pause = false;
+					active = false;
+					app->scene_intro->active = true;
+				}
+			}
+
+			//Exit button
+			app->render->DrawRectangle({ 300,450,100,50 }, 255, 255, 255);
+			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 400 && mouse.y < 450))
+			{
+				if(app->input->GetMouseButtonDown(1) == KEY_DOWN)
+					ret = false;
+			}
+
+
+			app->render->DrawTexture(fxBar, 0, 0, NULL, 1);
+			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
+			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
+			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
+
+
+				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 190 && app->input->mouseY <= 255)
+				{
+					app->render->DrawTexture(musicSelectedZone, 0, 0, NULL, 1);
+					musicCircle_X = app->input->mouseX - 40;
+
+				}
+				app->audio->volume_mix_max_music = ((musicCircle_X / 470) - 1.7446808851) * 128;
+
+				app->audio->volume_mix_max_music = app->audio->volume_mix_max_music + 10;
+
+				if (app->audio->volume_mix_max_music < 0)
+				{
+					app->audio->volume_mix_max_music = 0;
+				}
+
+
+
+				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 346 && app->input->mouseY <= 411)
+				{
+					app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
+					fxCircle_X = app->input->mouseX - 40;
+				}
+
+				app->audio->volume_mix_max_wav = ((fxCircle_X / 470) - 1.7446808851) * 128;
+
+				app->audio->volume_mix_max_wav = app->audio->volume_mix_max_wav + 10;
+
+				if (app->audio->volume_mix_max_wav < 0)
+				{
+					app->audio->volume_mix_max_wav = 0;
+				}
 	}
 
 	//Draw points
