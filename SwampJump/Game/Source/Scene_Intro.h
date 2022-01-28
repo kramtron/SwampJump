@@ -83,6 +83,7 @@ private:
 	SDL_Texture* vSyncTrue = nullptr;
 	SDL_Texture* fullScreenSelected = nullptr;
 	SDL_Texture* vSyncSelected = nullptr;
+	bool vSyncMarc = false;
 
 	//Credits Menu
 	SDL_Texture* creditsSelected = nullptr;

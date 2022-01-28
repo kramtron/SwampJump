@@ -309,6 +309,9 @@ bool Scene_Intro::Update(float dt)
 			if (app->win->fullscreen) {
 				app->render->DrawTexture(fullScreenTrue, 0, 0, NULL, 1);
 			}
+			if (vSyncMarc == true) {
+				app->render->DrawTexture(vSyncTrue, 0, 0, NULL, 1);
+			}
 			if (x > fullScreenMouseZone.x && x<(fullScreenMouseZone.x + fullScreenMouseZone.w) && y>fullScreenMouseZone.y && y < (fullScreenMouseZone.y + fullScreenMouseZone.h)) {
 				screenOption = 0;
 			}
@@ -321,24 +324,19 @@ bool Scene_Intro::Update(float dt)
 				if (x > fullScreenZone.x && x<(fullScreenZone.x + fullScreenZone.w) && y>fullScreenZone.y && y < (fullScreenZone.y + fullScreenZone.h)) {
 					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 					{
-						if (app->win->fullscreen) {
-							app->win->fullscreen = false;
-						}
-						else if (!app->win->fullscreen) {
-							app->win->fullscreen = true;
-						}
-						app->SaveGameRequest();
-
-						
-						
+						app->win->fullscreen = !app->win->fullscreen;
+						app->SaveGameRequest();	
+						app->win->CleanUp();
 					}
 				}
-
-				
 				break;
 			case 1:
 				if (x > vSyncZone.x && x<(vSyncZone.x + vSyncZone.w) && y>vSyncZone.y && y < (vSyncZone.y + vSyncZone.h)) {
 				
+					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
+					{
+						vSyncMarc = !vSyncMarc;
+					}
 				}
 				break;
 			}
