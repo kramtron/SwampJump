@@ -309,7 +309,7 @@ bool Scene_Intro::Update(float dt)
 			if (app->win->fullscreen) {
 				app->render->DrawTexture(fullScreenTrue, 0, 0, NULL, 1);
 			}
-			if (vSyncMarc == true) {
+			if (app->render->vSync == true) {
 				app->render->DrawTexture(vSyncTrue, 0, 0, NULL, 1);
 			}
 			if (x > fullScreenMouseZone.x && x<(fullScreenMouseZone.x + fullScreenMouseZone.w) && y>fullScreenMouseZone.y && y < (fullScreenMouseZone.y + fullScreenMouseZone.h)) {
@@ -336,7 +336,10 @@ bool Scene_Intro::Update(float dt)
 				
 					if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 					{
-						vSyncMarc = !vSyncMarc;
+						app->render->vSync = !app->render->vSync;
+						app->SaveGameRequest();
+
+						//vSyncMarc = !vSyncMarc;
 					}
 				}
 				break;
@@ -392,6 +395,7 @@ bool Scene_Intro::LoadGameConfig(pugi::xml_node& configAudio, pugi::xml_node& co
 
 	//Screen Load
 	app->win->fullscreen = configScreen.child("fullscreen").attribute("value").as_bool();
+	app->render->vSync = configVsync.child("vsync").attribute("value").as_bool();
 	//Vsync Load
 	return true;
 }
@@ -405,7 +409,7 @@ bool Scene_Intro::SaveGameConfig(pugi::xml_node& configAudio, pugi::xml_node& co
 
 	//Screen Save
 	configScreen.child("fullscreen").attribute("value").set_value(app->win->fullscreen);
-
+	configVsync.child("vsync").attribute("value").set_value(app->render->vSync);
 	//Vsync Save
 
 	return true;
