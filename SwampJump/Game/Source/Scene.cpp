@@ -96,6 +96,9 @@ bool Scene::Start()
 	musicSelectedZone = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/mouseInMusicZone.png");
 	fxCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
 	musicCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
+	menuPauseIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/menuingame.png");
+	menuSettingIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/menuingam2.png");
+	menuSettingScreenIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/SreenMenuIG.png");
 
 	
 	app->render->camera.x = 0;
@@ -1078,20 +1081,19 @@ bool Scene::Update(float dt)
 
 	if(app->pause == true)
 	{ 	
-			app->render->DrawTexture(pauseMenu, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
-			//app->render->DrawTexture(pauseExit, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+			app->render->DrawTexture(menuPauseIG, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
 		
 			//Resume button
-			app->render->DrawRectangle({ 300,200,100,50 }, 255, 255, 255);
-			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 150 && mouse.y < 200))
+			//app->render->DrawRectangle({ 275,175,175,50 }, 255, 255, 255);
+			if ((mouse.x > 275 && mouse.x < 450) && (mouse.y > 175 && mouse.y < 225))
 			{
 				if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
 					app->pause = !app->pause;
 			}
 
 			//Back to title button.
-			app->render->DrawRectangle({ 300,325,100,50 }, 255, 255, 255);
-			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 275 && mouse.y < 325))
+			//app->render->DrawRectangle({ 275,325,225,100 }, 255, 255, 255);
+			if ((mouse.x > 275 && mouse.x < 500) && (mouse.y > 275 && mouse.y < 400))
 			{
 				if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
 				{
@@ -1102,8 +1104,8 @@ bool Scene::Update(float dt)
 			}
 
 			//Exit button
-			app->render->DrawRectangle({ 300,450,100,50 }, 255, 255, 255);
-			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 400 && mouse.y < 450))
+			//app->render->DrawRectangle({ 500,450,100,50 }, 255, 255, 255);
+			if ((mouse.x > 275 && mouse.x < 400) && (mouse.y > 450 && mouse.y < 500))
 			{
 				if(app->input->GetMouseButtonDown(1) == KEY_DOWN)
 					ret = false;
@@ -1114,6 +1116,7 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
 			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
 			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
+			app->render->DrawTexture(menuSettingScreenIG, 0, 350, NULL, 1);
 
 
 				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 190 && app->input->mouseY <= 255)
