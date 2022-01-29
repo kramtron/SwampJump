@@ -99,6 +99,7 @@ bool Scene::Start()
 	menuPauseIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/menuingame.png");
 	menuSettingIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/menuingam2.png");
 	menuSettingScreenIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/SreenMenuIG.png");
+	fullScreenTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/fullScreenTrue.png");
 
 	
 	app->render->camera.x = 0;
@@ -1082,6 +1083,7 @@ bool Scene::Update(float dt)
 	if(app->pause == true)
 	{ 	
 			app->render->DrawTexture(menuPauseIG, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+			app->render->DrawTexture(menuSettingIG, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
 		
 			//Resume button
 			//app->render->DrawRectangle({ 275,175,175,50 }, 255, 255, 255);
@@ -1116,7 +1118,7 @@ bool Scene::Update(float dt)
 			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
 			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
 			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
-			app->render->DrawTexture(menuSettingScreenIG, 0, 350, NULL, 1);
+			app->render->DrawTexture(menuSettingScreenIG, 0, 325, NULL, 1);
 
 
 				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 190 && app->input->mouseY <= 255)
@@ -1134,8 +1136,6 @@ bool Scene::Update(float dt)
 					app->audio->volume_mix_max_music = 0;
 				}
 
-
-
 				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 346 && app->input->mouseY <= 411)
 				{
 					app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
@@ -1149,6 +1149,24 @@ bool Scene::Update(float dt)
 				if (app->audio->volume_mix_max_wav < 0)
 				{
 					app->audio->volume_mix_max_wav = 0;
+				}
+
+
+				if (app->input->GetMouseButtonDown(1) == KEY_DOWN && app->input->mouseX <= 1090 && app->input->mouseX >= 1010 && app->input->mouseY >= 475 && app->input->mouseY <= 550)
+				{
+					app->win->fullscreen = !app->win->fullscreen;
+					app->SaveGameRequest();
+				}
+
+				if (app->input->GetMouseButtonDown(1) == KEY_DOWN && app->input->mouseX <= 1090 && app->input->mouseX >= 1010 && app->input->mouseY >= 645 && app->input->mouseY <= 725)
+				{
+					app->win->fullscreen = !app->win->fullscreen;
+					app->SaveGameRequest();
+				}
+
+				if (app->win->fullscreen) {
+					app->render->DrawTexture(fullScreenTrue, 0, 325, NULL, 1);
+					app->render->DrawTexture(fullScreenTrue, 0, 495, NULL, 1);
 				}
 	}
 
