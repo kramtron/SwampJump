@@ -1114,16 +1114,15 @@ bool Scene::Update(float dt)
 			}
 
 
-			app->render->DrawTexture(fxBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
-			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
-			app->render->DrawTexture(menuSettingScreenIG, 0, 325, NULL, 1);
-
+			app->render->DrawTexture(fxBar, -app->render->camera.x, -app->render->camera.y - 50, NULL, 1);
+			app->render->DrawTexture(musicBar, -app->render->camera.x, -app->render->camera.y - 50, NULL, 1);
+			app->render->DrawTexture(fxCircle, -app->render->camera.x + fxCircle_X, -app->render->camera.y + 393 - 50, NULL, 1);
+			app->render->DrawTexture(fxCircle, -app->render->camera.x + musicCircle_X, -app->render->camera.y + 237 - 50, NULL, 1);
+			app->render->DrawTexture(menuSettingScreenIG, -app->render->camera.x, -app->render->camera.y + 325 - 50, NULL, 1);
 
 				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 190 && app->input->mouseY <= 255)
 				{
-					app->render->DrawTexture(musicSelectedZone, 0, 0, NULL, 1);
+					app->render->DrawTexture(musicSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 					musicCircle_X = app->input->mouseX - 40;
 
 				}
@@ -1138,7 +1137,7 @@ bool Scene::Update(float dt)
 
 				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 346 && app->input->mouseY <= 411)
 				{
-					app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
+					app->render->DrawTexture(fxSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 					fxCircle_X = app->input->mouseX - 40;
 				}
 
@@ -1160,13 +1159,16 @@ bool Scene::Update(float dt)
 
 				if (app->input->GetMouseButtonDown(1) == KEY_DOWN && app->input->mouseX <= 1090 && app->input->mouseX >= 1010 && app->input->mouseY >= 645 && app->input->mouseY <= 725)
 				{
-					app->win->fullscreen = !app->win->fullscreen;
+					app->render->vSync = !app->render->vSync;
 					app->SaveGameRequest();
 				}
 
 				if (app->win->fullscreen) {
-					app->render->DrawTexture(fullScreenTrue, 0, 325, NULL, 1);
-					app->render->DrawTexture(fullScreenTrue, 0, 495, NULL, 1);
+					app->render->DrawTexture(fullScreenTrue, -app->render->camera.x, -app->render->camera.y + 330 - 50, NULL, 1);
+				}
+
+				if (app->render->vSync == true) {
+					app->render->DrawTexture(fullScreenTrue, -app->render->camera.x, -app->render->camera.y + 495 - 50, NULL, 1);
 				}
 	}
 
