@@ -36,6 +36,13 @@ public:
 
 	int opcion = 0;
 	float score = 0;
+
+	struct Mouse {
+		int x, y;
+		int left = 1;
+
+	}mouse;
+
 private:
 
 	SDL_Texture* points = nullptr;
@@ -46,7 +53,8 @@ private:
 	SDL_Texture* nombres;
 
 	SDL_Texture* gameOverStart;
-	SDL_Texture* gameOverExit;
+	SDL_Texture* exitSelect;
+	SDL_Texture* returnSelected;
 
 	void FontDraw(int score, int n, int posX, int posY, int separacio, float scale);
 

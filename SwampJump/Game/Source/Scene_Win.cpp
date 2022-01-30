@@ -38,8 +38,10 @@ bool Scene_Win::Start()
 	points = app->tex->Load("Assets/Textures/apple.png");
 	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
-	gameOverStart = app->tex->Load("Assets/Menu/gameOverPlay.png");
-	//gameOverExit = app->tex->Load("Assets/Menu/gameOverExit.png");
+	gameOverStart = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/winScene.png");
+
+	exitSelect = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/exitselected.png");
+	returnSelected = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/returnToTitleSelected.png");
 
 	nombres = app->tex->Load("Assets/Textures/numeros.png");
 
@@ -62,49 +64,31 @@ bool Scene_Win::Update(float dt)
 {
 	bool ret = true;
 
+	app->input->GetMousePosition(mouse.x, mouse.y);
+
 	app->render->camera.y = 0;
 	app->render->camera.x = 0;
 	app->render->DrawTexture(gameOverStart, 0, 0, NULL, 1);
 
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if ((mouse.x >= 950 && mouse.x <= 1150) && (mouse.y >= 500 && mouse.y <= 575))
 	{
-		active = false;
-		app->scene_intro->active = true;
+		app->render->DrawTexture(exitSelect, 0, 0, NULL, 1);
+		if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
+		{
+			ret = false;
+		}
 	}
 
-	//acceptar opció
-	/*if (opcion == 0)
+	if ((mouse.x >= 940 && mouse.x <= 1435) && (mouse.y >= 185 && mouse.y <= 400))
 	{
-		app->render->camera.y = 0;
-		app->render->camera.x = 0;
-		app->render->DrawTexture(gameOverStart, 0, 0, NULL, 1);
-
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		app->render->DrawTexture(returnSelected, 0, 0, NULL, 1);
+		if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
 		{
 			active = false;
 			app->scene_intro->active = true;
 		}
 	}
 
-	else if (opcion == 1)
-	{
-		app->render->camera.y = 0;
-		app->render->camera.x = 0;
-		app->render->DrawTexture(gameOverExit, 0, 0, NULL, 1);
-
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			ret = false;
-		}
-	}
-
-	//seleccionar opció
-	if ((app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) && opcion != 0)
-		opcion--;
-
-	if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && opcion != 1)
-		opcion++;
-	*/
 
 	//Draw the apple
 	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 15);
@@ -112,12 +96,12 @@ bool Scene_Win::Update(float dt)
 
 
 	//Draw the time
-	app->render->DrawTexture(timer, -app->render->camera.x + 1325, -app->render->camera.y + 27, 0, 1,0.5);
-	FontDraw(app->scene->reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 300, 35, 5);
+	app->render->DrawTexture(timer, -app->render->camera.x + 20, -app->render->camera.y + 400, 0, 1,0.5);
+	FontDraw(app->scene->reloj, 5, -app->render->camera.x + 200, -app->render->camera.y + 675, 35, 5);
 
 	//Draw the score
 	app->render->DrawTexture(scoreTexture, -app->render->camera.x + 750, -app->render->camera.y + 27, 0, 1, 0.5);
-	FontDraw(score, 5, -app->render->camera.x + 875, -app->render->camera.y + 775, 35, 5);
+	FontDraw(score, 5, -app->render->camera.x + 200, -app->render->camera.y + 800, 35, 5);
 
 	return ret;
 }
