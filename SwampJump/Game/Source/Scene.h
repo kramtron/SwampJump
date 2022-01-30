@@ -218,6 +218,7 @@ private:
 	SDL_Texture* menuSettingIG = nullptr;
 	SDL_Texture* menuSettingScreenIG = nullptr;
 	SDL_Texture* fullScreenTrue = nullptr;
+	SDL_Texture* winPortal = nullptr;
 	
 	float fxCircle_X = 1000;
 	float musicCircle_X = 1000;

@@ -100,6 +100,8 @@ bool Scene::Start()
 	menuSettingIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/menuingam2.png");
 	menuSettingScreenIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/SreenMenuIG.png");
 	fullScreenTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/fullScreenTrue.png");
+	//win
+	winPortal = app->tex->Load("Assets/textures/door/portalWin.png");
 
 	
 	app->render->camera.x = 0;
@@ -1080,8 +1082,9 @@ bool Scene::Update(float dt)
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
 	//Draw win
-	SDL_Rect winRect = { checkPont5.x + 165, checkPont5.y ,checkPont5.w, checkPont5.h };
-	app->render->DrawRectangle(winRect, 255, 255, 255);
+	//SDL_Rect winRect = { checkPont5.x + 165, checkPont5.y ,checkPont5.w, checkPont5.h };
+	//app->render->DrawRectangle(winRect, 255, 255, 255);
+	app->render->DrawTexture(winPortal, checkPont5.x + 130, checkPont5.y + 60, 0, 1, 6);
 
 	if ((player.x >= checkPont5.x + 165) && (player.x <= checkPont5.x + 165 + checkPont5.w))
 	{
