@@ -326,8 +326,10 @@ bool Scene_Intro::Update(float dt)
 					{
 						app->win->fullscreen = !app->win->fullscreen;
 						app->SaveGameRequest();	
-						app->win->CleanUp();
+						//app->win->CleanUp();
 						//app->win->Awake();
+						app->win->active = false;
+						app->win->active = true;
 					}
 				}
 				break;

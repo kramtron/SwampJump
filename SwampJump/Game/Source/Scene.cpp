@@ -1208,6 +1208,19 @@ bool Scene::Update(float dt)
 
 	}
 
+
+	//Draw win
+	SDL_Rect winRect = { checkPont5.x + 165, checkPont5.y ,checkPont5.w, checkPont5.h };
+	app->render->DrawRectangle(winRect, 255, 255, 255);
+
+	if ((player.x >= checkPont5.x + 165) && (player.x <= checkPont5.x + 165 + checkPont5.w))
+	{
+		app->scene_win->score += (reloj);
+		app->scene_win->score += (player.actualPoints * 37); //37 per posar algo
+		active = false;
+		app->scene_win->active = true;
+	}
+
 	//Control mejorado de la camara 
 
 	/*if (startingGame && (player.x < cameraRect.x || player.x>cameraRect.x + cameraRect.w)) {
