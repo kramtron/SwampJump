@@ -334,7 +334,6 @@ bool Scene_Intro::Update(float dt)
 						}
 						else {
 							SDL_SetWindowFullscreen(app->win->window, 0);
-
 						}
 					}
 				}
