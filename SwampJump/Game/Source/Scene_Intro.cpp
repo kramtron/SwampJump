@@ -329,6 +329,13 @@ bool Scene_Intro::Update(float dt)
 						//app->win->Awake();
 						app->win->active = false;
 						app->win->active = true;
+						if (app->win->fullscreen == true) {
+							SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+						}
+						else {
+							SDL_SetWindowFullscreen(app->win->window, 0);
+
+						}
 					}
 				}
 				break;
@@ -357,7 +364,7 @@ bool Scene_Intro::Update(float dt)
 		}
 		
 	}
-
+	
 		
 		
 
