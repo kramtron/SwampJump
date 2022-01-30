@@ -1079,6 +1079,17 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
+	//Draw win
+	SDL_Rect winRect = { checkPont5.x + 165, checkPont5.y ,checkPont5.w, checkPont5.h };
+	app->render->DrawRectangle(winRect, 255, 255, 255);
+
+	if ((player.x >= checkPont5.x + 165) && (player.x <= checkPont5.x + 165 + checkPont5.w))
+	{
+		app->scene_win->score += (reloj);
+		app->scene_win->score += (player.actualPoints * 37); //37 per posar algo
+		active = false;
+		app->scene_win->active = true;
+	}
 
 	if(app->pause == true)
 	{ 	
@@ -1206,19 +1217,6 @@ bool Scene::Update(float dt)
 		 spawnTimer6 = 3000;
 		 spawnTimer7 = 3000;
 
-	}
-
-
-	//Draw win
-	SDL_Rect winRect = { checkPont5.x + 165, checkPont5.y ,checkPont5.w, checkPont5.h };
-	app->render->DrawRectangle(winRect, 255, 255, 255);
-
-	if ((player.x >= checkPont5.x + 165) && (player.x <= checkPont5.x + 165 + checkPont5.w))
-	{
-		app->scene_win->score += (reloj);
-		app->scene_win->score += (player.actualPoints * 37); //37 per posar algo
-		active = false;
-		app->scene_win->active = true;
 	}
 
 	//Control mejorado de la camara 

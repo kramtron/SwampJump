@@ -79,7 +79,7 @@ bool Scene_Intro::PreUpdate()
 bool Scene_Intro::Update(float dt)
 {
 	bool ret = true;
-	app->render->DrawTexture(mainMenuScreen, 0, 0,NULL,1);
+	app->render->DrawTexture(mainMenuScreen, -app->render->camera.x, -app->render->camera.y,NULL,1);
 	int x, y, left = 1;
 	app->input->GetMousePosition(x, y);
 	LOG("Mouse x: %d, Mouse y: %d",x,y);
@@ -123,8 +123,7 @@ bool Scene_Intro::Update(float dt)
 			//Play current saved game
 		case 0:
 			app->render->camera.y = 0;
-
-			app->render->DrawTexture(playSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(playSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
@@ -138,7 +137,7 @@ bool Scene_Intro::Update(float dt)
 		case 1:
 			app->render->camera.y = 0;
 			//Falta colocar el render
-			app->render->DrawTexture(newGameSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(newGameSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
 				app->scene->player.playedBefore = false;
 				app->scene->reloj = 0;
@@ -149,7 +148,7 @@ bool Scene_Intro::Update(float dt)
 			break;
 			//Settings
 		case 2:
-			app->render->DrawTexture(settingsSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(settingsSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			//Menu de ajustes
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN) {
 				settingsMenu = true;
@@ -166,7 +165,7 @@ bool Scene_Intro::Update(float dt)
 
 			app->render->camera.y = 0;
 
-			app->render->DrawTexture(exitSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(exitSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
 				ret = false;
@@ -200,11 +199,11 @@ bool Scene_Intro::Update(float dt)
 			settingsOption = 2;
 
 		}
-		app->render->DrawTexture(defaultSettingsMenu, 0, 0, NULL, 1);
-		app->render->DrawTexture(xCircle, 0, 0, NULL, 1);
+		app->render->DrawTexture(defaultSettingsMenu, -app->render->camera.x, -app->render->camera.y, NULL, 1);
+		app->render->DrawTexture(xCircle, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 		SDL_Rect xCircleRect = {1293,138,71,67};
 		if (x > xCircleRect.x && x<(xCircleRect.x + xCircleRect.w) && y>xCircleRect.y && y < (xCircleRect.y + xCircleRect.h)) {
-			app->render->DrawTexture(xCircleSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(xCircleSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
@@ -225,11 +224,11 @@ bool Scene_Intro::Update(float dt)
 		switch (settingsOption)
 		{
 		case 0:
-			app->render->DrawTexture(audioSelected, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
-			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
+			app->render->DrawTexture(audioSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
+			app->render->DrawTexture(fxBar, -app->render->camera.x, -app->render->camera.y, NULL, 1);
+			app->render->DrawTexture(musicBar, -app->render->camera.x, -app->render->camera.y, NULL, 1);
+			app->render->DrawTexture(fxCircle, -app->render->camera.x + fxCircle_X, -app->render->camera.y + 393, NULL, 1);
+			app->render->DrawTexture(fxCircle, -app->render->camera.x + musicCircle_X, -app->render->camera.y + 237, NULL, 1);
 
 		
 			if (x > fxZone.x && x<(fxZone.x + fxZone.w) && y>fxZone.y && y < (fxZone.y + fxZone.h)) {
@@ -255,7 +254,7 @@ bool Scene_Intro::Update(float dt)
 			switch (volumeOption)
 			{
 			case 0:
-				app->render->DrawTexture(musicSelectedZone, 0, 0, NULL, 1);
+				app->render->DrawTexture(musicSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
 				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 244 && app->input->mouseY <= 304)
 				{
@@ -273,7 +272,7 @@ bool Scene_Intro::Update(float dt)
 				break;
 			case 1:
 
-				app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
+				app->render->DrawTexture(fxSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
 
 				if (app->input->GetMouseButtonDown(left) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 400 && app->input->mouseY <= 460)
@@ -305,12 +304,12 @@ bool Scene_Intro::Update(float dt)
 
 			break;
 		case 1:
-			app->render->DrawTexture(screenSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(screenSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			if (app->win->fullscreen) {
-				app->render->DrawTexture(fullScreenTrue, 0, 0, NULL, 1);
+				app->render->DrawTexture(fullScreenTrue, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			}
 			if (app->render->vSync == true) {
-				app->render->DrawTexture(vSyncTrue, 0, 0, NULL, 1);
+				app->render->DrawTexture(vSyncTrue, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 			}
 			if (x > fullScreenMouseZone.x && x<(fullScreenMouseZone.x + fullScreenMouseZone.w) && y>fullScreenMouseZone.y && y < (fullScreenMouseZone.y + fullScreenMouseZone.h)) {
 				screenOption = 0;
@@ -348,7 +347,7 @@ bool Scene_Intro::Update(float dt)
 			}
 			break;
 		case 2:
-			app->render->DrawTexture(creditsSelected, 0, 0, NULL, 1);
+			app->render->DrawTexture(creditsSelected, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || app->input->GetMouseButtonDown(left) == KEY_DOWN)
 			{
