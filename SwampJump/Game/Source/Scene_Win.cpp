@@ -39,7 +39,7 @@ bool Scene_Win::Start()
 	timer = app->tex->Load("Assets/Textures/cronografo.png");
 
 	gameOverStart = app->tex->Load("Assets/Menu/gameOverPlay.png");
-	gameOverExit = app->tex->Load("Assets/Menu/gameOverExit.png");
+	//gameOverExit = app->tex->Load("Assets/Menu/gameOverExit.png");
 
 	nombres = app->tex->Load("Assets/Textures/numeros.png");
 
@@ -62,11 +62,18 @@ bool Scene_Win::Update(float dt)
 {
 	bool ret = true;
 
+	app->render->camera.y = 0;
+	app->render->camera.x = 0;
+	app->render->DrawTexture(gameOverStart, 0, 0, NULL, 1);
 
-
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		active = false;
+		app->scene_intro->active = true;
+	}
 
 	//acceptar opció
-	if (opcion == 0)
+	/*if (opcion == 0)
 	{
 		app->render->camera.y = 0;
 		app->render->camera.x = 0;
@@ -97,7 +104,7 @@ bool Scene_Win::Update(float dt)
 
 	if ((app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) && opcion != 1)
 		opcion++;
-
+	*/
 
 	//Draw the apple
 	app->render->DrawTexture(points, -app->render->camera.x + 20, -app->render->camera.y + 30, 0, 1, 15);
