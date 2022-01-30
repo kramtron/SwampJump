@@ -96,6 +96,10 @@ bool Scene::Start()
 	musicSelectedZone = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/mouseInMusicZone.png");
 	fxCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
 	musicCircle = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/audio/volumeBotton.png");
+	menuPauseIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/menuingame.png");
+	menuSettingIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/menuingam2.png");
+	menuSettingScreenIG = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/SreenMenuIG.png");
+	fullScreenTrue = app->tex->Load("Assets/NewGlobalMenu/SettingsMenu/Screen/fullScreenTrue.png");
 
 	
 	app->render->camera.x = 0;
@@ -1075,23 +1079,34 @@ bool Scene::Update(float dt)
 	app->render->DrawTexture(timer, -app->render->camera.x + 1530, -app->render->camera.y + 27, 0, 1, 0.1);
 	FontDraw(reloj, 5, -app->render->camera.x + 1500, -app->render->camera.y + 35, 35, 1);
 
+	//Draw win
+	SDL_Rect winRect = { checkPont5.x + 165, checkPont5.y ,checkPont5.w, checkPont5.h };
+	app->render->DrawRectangle(winRect, 255, 255, 255);
+
+	if ((player.x >= checkPont5.x + 165) && (player.x <= checkPont5.x + 165 + checkPont5.w))
+	{
+		app->scene_win->score += (reloj);
+		app->scene_win->score += (player.actualPoints * 37); //37 per posar algo
+		active = false;
+		app->scene_win->active = true;
+	}
 
 	if(app->pause == true)
 	{ 	
-			app->render->DrawTexture(pauseMenu, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
-			//app->render->DrawTexture(pauseExit, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+			app->render->DrawTexture(menuPauseIG, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
+			app->render->DrawTexture(menuSettingIG, -app->render->camera.x, -app->render->camera.y, 0, 1, 1);
 		
 			//Resume button
-			app->render->DrawRectangle({ 300,200,100,50 }, 255, 255, 255);
-			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 150 && mouse.y < 200))
+			//app->render->DrawRectangle({ 275,175,175,50 }, 255, 255, 255);
+			if ((mouse.x > 275 && mouse.x < 450) && (mouse.y > 175 && mouse.y < 225))
 			{
 				if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
 					app->pause = !app->pause;
 			}
 
 			//Back to title button.
-			app->render->DrawRectangle({ 300,325,100,50 }, 255, 255, 255);
-			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 275 && mouse.y < 325))
+			//app->render->DrawRectangle({ 275,325,225,100 }, 255, 255, 255);
+			if ((mouse.x > 275 && mouse.x < 500) && (mouse.y > 275 && mouse.y < 400))
 			{
 				if (app->input->GetMouseButtonDown(1) == KEY_DOWN)
 				{
@@ -1102,23 +1117,23 @@ bool Scene::Update(float dt)
 			}
 
 			//Exit button
-			app->render->DrawRectangle({ 300,450,100,50 }, 255, 255, 255);
-			if ((mouse.x > 300 && mouse.x < 400) && (mouse.y > 400 && mouse.y < 450))
+			//app->render->DrawRectangle({ 500,450,100,50 }, 255, 255, 255);
+			if ((mouse.x > 275 && mouse.x < 400) && (mouse.y > 450 && mouse.y < 500))
 			{
 				if(app->input->GetMouseButtonDown(1) == KEY_DOWN)
 					ret = false;
 			}
 
 
-			app->render->DrawTexture(fxBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(musicBar, 0, 0, NULL, 1);
-			app->render->DrawTexture(fxCircle, fxCircle_X, 393, NULL, 1);
-			app->render->DrawTexture(fxCircle, musicCircle_X, 237, NULL, 1);
-
+			app->render->DrawTexture(fxBar, -app->render->camera.x, -app->render->camera.y - 50, NULL, 1);
+			app->render->DrawTexture(musicBar, -app->render->camera.x, -app->render->camera.y - 50, NULL, 1);
+			app->render->DrawTexture(fxCircle, -app->render->camera.x + fxCircle_X, -app->render->camera.y + 393 - 50, NULL, 1);
+			app->render->DrawTexture(fxCircle, -app->render->camera.x + musicCircle_X, -app->render->camera.y + 237 - 50, NULL, 1);
+			app->render->DrawTexture(menuSettingScreenIG, -app->render->camera.x, -app->render->camera.y + 325 - 50, NULL, 1);
 
 				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 190 && app->input->mouseY <= 255)
 				{
-					app->render->DrawTexture(musicSelectedZone, 0, 0, NULL, 1);
+					app->render->DrawTexture(musicSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 					musicCircle_X = app->input->mouseX - 40;
 
 				}
@@ -1131,11 +1146,9 @@ bool Scene::Update(float dt)
 					app->audio->volume_mix_max_music = 0;
 				}
 
-
-
 				if (app->input->GetMouseButtonDown(1) == KEY_REPEAT && app->input->mouseX <= 1290 && app->input->mouseX >= 820 && app->input->mouseY >= 346 && app->input->mouseY <= 411)
 				{
-					app->render->DrawTexture(fxSelectedZone, 0, 0, NULL, 1);
+					app->render->DrawTexture(fxSelectedZone, -app->render->camera.x, -app->render->camera.y, NULL, 1);
 					fxCircle_X = app->input->mouseX - 40;
 				}
 
@@ -1146,6 +1159,27 @@ bool Scene::Update(float dt)
 				if (app->audio->volume_mix_max_wav < 0)
 				{
 					app->audio->volume_mix_max_wav = 0;
+				}
+
+
+				if (app->input->GetMouseButtonDown(1) == KEY_DOWN && app->input->mouseX <= 1090 && app->input->mouseX >= 1010 && app->input->mouseY >= 475 && app->input->mouseY <= 550)
+				{
+					app->win->fullscreen = !app->win->fullscreen;
+					app->SaveGameRequest();
+				}
+
+				if (app->input->GetMouseButtonDown(1) == KEY_DOWN && app->input->mouseX <= 1090 && app->input->mouseX >= 1010 && app->input->mouseY >= 645 && app->input->mouseY <= 725)
+				{
+					app->render->vSync = !app->render->vSync;
+					app->SaveGameRequest();
+				}
+
+				if (app->win->fullscreen) {
+					app->render->DrawTexture(fullScreenTrue, -app->render->camera.x, -app->render->camera.y + 330 - 50, NULL, 1);
+				}
+
+				if (app->render->vSync == true) {
+					app->render->DrawTexture(fullScreenTrue, -app->render->camera.x, -app->render->camera.y + 495 - 50, NULL, 1);
 				}
 	}
 
